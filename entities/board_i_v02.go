@@ -14,7 +14,7 @@ type IBoardV02 interface {
 }
 
 // GetComputerMoveLesson09 - コンピューターの指し手。 SelfplayLesson09 から呼び出されます
-func GetComputerMoveLesson09(board IBoardV02, color int, printBoard func(int, int, int, int)) int {
+func GetComputerMoveLesson09(board IBoardV02, color int) int {
 
 	var z int
 	var start = time.Now()
@@ -23,8 +23,7 @@ func GetComputerMoveLesson09(board IBoardV02, color int, printBoard func(int, in
 	z = GetBestZByUct(
 		board,
 		color,
-		WrapSearchUct(board, printBoard),
-		printBoard)
+		WrapSearchUct(board))
 
 	var sec = time.Since(start).Seconds()
 	code.Console.Info("(GetComputerMoveLesson09) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",

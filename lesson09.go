@@ -33,11 +33,10 @@ func Lesson09() {
 // SelfplayLesson09 - コンピューター同士の対局。
 func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
 	var color = 1
-	var noPrintBoard = e.CreatePrintingOfBoardDuringPlayoutIdling() // プレイアウト中は盤を描画しません
 
 	for {
 		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
-		var z = e.GetComputerMoveLesson09(board, color, noPrintBoard)
+		var z = e.GetComputerMoveLesson09(board, color)
 
 		var recItem = new(e.RecordItemV01)
 		recItem.Z = z

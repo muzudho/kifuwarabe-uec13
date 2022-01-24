@@ -20,8 +20,7 @@ const (
 func GetBestZByUct(
 	board IBoardV02,
 	color int,
-	searchUct func(int, int) int,
-	printBoard func(int, int, int, int)) int {
+	searchUct func(int, int) int) int {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
@@ -60,9 +59,9 @@ func GetBestZByUct(
 }
 
 // WrapSearchUct - 盤とその描画関数を束縛変数として与えます
-func WrapSearchUct(board IBoardV02, printBoard func(int, int, int, int)) func(int, int) int {
+func WrapSearchUct(board IBoardV02) func(int, int) int {
 	var searchUct = func(color int, nodeN int) int {
-		return SearchUct(board, color, nodeN, printBoard)
+		return SearchUct(board, color, nodeN)
 	}
 
 	return searchUct
@@ -72,8 +71,7 @@ func WrapSearchUct(board IBoardV02, printBoard func(int, int, int, int)) func(in
 func SearchUct(
 	board IBoardV02,
 	color int,
-	nodeN int,
-	printBoard func(int, int, int, int)) int {
+	nodeN int) int {
 
 	var pN = &Nodes[nodeN]
 	var c *Child
@@ -94,12 +92,12 @@ func SearchUct(
 
 	var winner int // 手番が勝ちなら1、引分けなら0、手番の負けなら-1 としてください
 	if c.Games <= 0 {
-		winner = -Playout(board, FlipColor(color), printBoard, GettingOfWinnerOnDuringUCTPlayout)
+		winner = -Playout(board, FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
 	} else {
 		if c.Next == NodeEmpty {
 			c.Next = CreateNode(board)
 		}
-		winner = -SearchUct(board, FlipColor(color), c.Next, printBoard)
+		winner = -SearchUct(board, FlipColor(color), c.Next)
 	}
 	c.Rate = (c.Rate*float64(c.Games) + float64(winner)) / float64(c.Games+1)
 	c.Games++

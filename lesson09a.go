@@ -163,8 +163,7 @@ func PlayComputerMoveLesson09a(
 	z = e.GetBestZByUct(
 		board,
 		color,
-		e.WrapSearchUct(board, printBoardDuringPlayout),
-		printBoardDuringPlayout)
+		e.WrapSearchUct(board))
 
 	var sec = time.Since(st).Seconds()
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",

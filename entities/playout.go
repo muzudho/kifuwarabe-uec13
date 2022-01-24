@@ -23,7 +23,6 @@ func CreatePrintingOfBoardDuringPlayoutIdling() func(int, int, int, int) {
 func Playout(
 	board IBoardV01,
 	turnColor int,
-	printBoardDuringPlayout func(int, int, int, int),
 	getWinner func(int) int) int {
 
 	AllPlayouts++
@@ -74,8 +73,6 @@ func Playout(
 			break
 		}
 		previousZ = z
-
-		printBoardDuringPlayout(trial, z, color, emptyNum)
 
 		color = FlipColor(color)
 	}

@@ -1,8 +1,9 @@
 package entities
 
 import (
-	"fmt"
 	"time"
+
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 )
 
 // IBoardV02 - 盤。
@@ -37,7 +38,7 @@ func GetComputerMoveLesson09(board IBoardV02, color int, fUCT int, printBoard fu
 	}
 
 	var sec = time.Since(start).Seconds()
-	fmt.Printf("(GetComputerMoveLesson09) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d,fUCT=%d\n",
+	code.Console.Info("(GetComputerMoveLesson09) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d,fUCT=%d\n",
 		sec, float64(AllPlayouts)/sec, board.GetZ4(z), MovesNum, color, AllPlayouts, fUCT)
 	return z
 }

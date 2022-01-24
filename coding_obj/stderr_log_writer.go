@@ -60,6 +60,12 @@ func (writer StderrLogWriter) Fatal(text string, args ...interface{}) {
 	writer.logger.Fatal(text, args...) // ログ
 }
 
+// Print - 必ず出力します。
+func (writer StderrLogWriter) Print(text string, args ...interface{}) {
+	fmt.Printf(text, args...)          // 標準出力
+	writer.logger.Print(text, args...) // ログ
+}
+
 // Send - メッセージを送信します。
 func (writer StderrLogWriter) Send(conn net.Conn, text string, args ...interface{}) {
 	_, err := fmt.Fprintf(conn, text, args...) // 出力先指定

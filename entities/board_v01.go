@@ -18,14 +18,11 @@ type BoardV01 struct {
 // InitBoard - 盤の初期化。
 func (board *BoardV01) InitBoard() {
 	boardMax := board.SentinelBoardArea()
-	// G.Chat.Trace("# (^q^) boardMax=%d\n", boardMax)
 
 	// 枠線
 	for z := 0; z < boardMax; z++ {
 		board.SetColor(z, 3)
 	}
-
-	// G.Chat.Trace("# (^q^) 盤を 3 で埋めた☆\n")
 
 	// 盤上
 	var onPoint = func(z int) {
@@ -33,12 +30,8 @@ func (board *BoardV01) InitBoard() {
 	}
 	board.iteratorWithoutWall(onPoint)
 
-	// G.Chat.Trace("# (^q^) 石は置いた☆\n")
-
 	MovesNum = 0
 	KoZ = 0
-
-	// G.Chat.Trace("# (^q^) 盤の初期化は終わったぜ☆\n")
 }
 
 // BoardSize - 何路盤か

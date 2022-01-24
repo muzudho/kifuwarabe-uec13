@@ -1,8 +1,9 @@
 package entities
 
 import (
-	"fmt"
 	"os"
+
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 )
 
 // Child - 子。
@@ -41,7 +42,7 @@ func addChild(pN *Node, z int) {
 func CreateNode(board IBoardV02) int {
 
 	if NodeNum == NodeMax {
-		fmt.Printf("node over Err\n")
+		code.Console.Error("node over Err\n")
 		os.Exit(0)
 	}
 	var pN = &Nodes[NodeNum]

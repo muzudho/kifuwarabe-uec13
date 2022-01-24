@@ -1,8 +1,9 @@
 package entities
 
 import (
-	"fmt"
 	"math/rand"
+
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 )
 
 // CreatePrintingOfBoardDuringPlayoutIdling - プレイアウト中の盤の描画（何も描画しません）
@@ -20,7 +21,7 @@ func CreatePrintingOfBoardDuringPlayout1(board IBoardV01, printBoard func(IBoard
 		var z4 = board.GetZ4(z)     // XXYY
 		var koZ4 = board.GetZ4(KoZ) // XXYY
 		printBoard(board, -1)
-		fmt.Printf("trial=%d,z4=%04d,clr=%d,emptyNum=%d,koZ4=%04d\n",
+		code.Console.Info("trial=%d,z4=%04d,clr=%d,emptyNum=%d,koZ4=%04d\n",
 			trial, z4, color, emptyNum, koZ4)
 	}
 

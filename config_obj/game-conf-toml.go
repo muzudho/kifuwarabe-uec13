@@ -35,18 +35,14 @@ type Game struct {
 func (config Config) GetBoardArray() []int {
 	// 最後のカンマを削除しないと、要素数が 1 多くなってしまいます
 	var s = strings.TrimRight(config.Game.BoardData, ",")
-	// fmt.Println("s=", s)
 	var nodes = strings.Split(s, ",")
 	var array = make([]int, len(nodes))
 	for i, s := range nodes {
 		var s = strings.Trim(s, " ")
 		var color, _ = strconv.Atoi(s)
-		// fmt.Println("strconv.Atoi(", s, ")=", color)
 		array[i] = color
 	}
 
-	// fmt.Println("nodes=", nodes)
-	// fmt.Println("array=", array)
 	return array
 }
 
@@ -82,39 +78,13 @@ func LoadGameConf(
 	var fileData, err = ioutil.ReadFile(path)
 	if err != nil {
 		onFatal(fmt.Sprintf("path=%s", path))
-		// e.G.Chat.Fatal("path=%s", path)
 		panic(err)
 	}
-	// fmt.Print(string(fileData))
-
-	/*
-		// Toml解析
-		tomlTree, err := toml.Load(string(fileData))
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("Success.")
-
-		komi := tomlTree.Get("Game.Komi").(float64)
-		fmt.Printf("komi=%f\n", komi)
-
-		boardSize := tomlTree.Get("Game.BoardSize").(int64)
-		fmt.Printf("boardSize=%d\n", boardSize)
-
-		maxMoves := tomlTree.Get("Game.MaxMovesNum").(int64)
-		fmt.Printf("maxMoves=%d\n", maxMoves)
-	*/
 
 	// Toml解析
 	var binary = []byte(string(fileData))
 	var config = Config{}
 	toml.Unmarshal(binary, &config)
-	/*
-		fmt.Println("Komi=", config.Game.Komi)
-		fmt.Println("BoardSize=", config.Game.BoardSize)
-		fmt.Println("MaxMovesNum=", config.Game.MaxMovesNum)
-	*/
 
 	return config
 }

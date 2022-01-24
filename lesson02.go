@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
@@ -22,7 +20,7 @@ func Lesson02() {
 	var z = board.GetZFromXy(7-1, 5-1)
 	var color = 2
 	var err = e.PutStone(board, z, color, exceptPutStoneL01)
-	fmt.Printf("err=%d\n", err)
+	code.Console.Trace("err=%d\n", err)
 
 	p.PrintBoard(board, -1)
 }

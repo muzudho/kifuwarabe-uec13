@@ -1,7 +1,7 @@
 package entities
 
 import (
-	"fmt"
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 )
 
 // GettingOfWinnerForPlayoutEverDraw - Lesson04以前に使用。「常に引分け（0）を返す関数」を作成します。つまり勝者判定を行いません
@@ -94,9 +94,9 @@ func GetWinnerV05BlackSideView(board IBoardV01, colorIsNotUsed int) int {
 	if 0 < float64(score)-board.Komi() { // float32 → float64
 		win = 1
 	}
-	fmt.Printf("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
-	fmt.Printf("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
-	fmt.Printf("score=%d, win=%d\n", score, win)
+	code.Console.Info("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
+	code.Console.Info("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
+	code.Console.Info("score=%d, win=%d\n", score, win)
 	return win
 }
 
@@ -134,9 +134,6 @@ func GetWinnerV06BlackSideView(board IBoardV01, colorIsNotUsed int) int {
 	if 0 < float64(score)-board.Komi() { // float32 → float64
 		win = 1
 	}
-	// fmt.Printf("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
-	// fmt.Printf("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
-	// fmt.Printf("score=%d, win=%d\n", score, win)
 	return win
 }
 
@@ -178,8 +175,5 @@ func GetWinnerV07SelfView(board IBoardV01, turnColor int) int {
 		win = -win
 	} // gogo07
 
-	// fmt.Printf("blackSum=%2d, (stones=%2d, area=%2d)\n", blackSum, kind[1], blackArea)
-	// fmt.Printf("whiteSum=%2d, (stones=%2d, area=%2d)\n", whiteSum, kind[2], whiteArea)
-	// fmt.Printf("score=%d, win=%d\n", score, win)
 	return win
 }

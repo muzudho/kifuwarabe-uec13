@@ -1,7 +1,6 @@
 package entities
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
 	"os"
@@ -90,7 +89,7 @@ func SearchUct(
 			break
 		}
 		c.Z = IllegalZ
-		// fmt.Printf("ILLEGAL:z=%04d\n", GetZ4(z))
+		// code.Console.Debug("ILLEGAL:z=%04d\n", GetZ4(z))
 	}
 
 	var winner int // 手番が勝ちなら1、引分けなら0、手番の負けなら-1 としてください
@@ -132,7 +131,7 @@ func selectBestUcb(nodeN int) int {
 
 	// 異常終了
 	if selectI == -1 {
-		fmt.Printf("Err! select\n")
+		code.Console.Error("Err! select\n")
 		os.Exit(0)
 	}
 

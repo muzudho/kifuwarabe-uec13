@@ -30,6 +30,8 @@ func RunGtpEngine() {
 	var scanner = bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		var command = scanner.Text()
+		code.Gtp.Log(command + "\n")
+
 		var tokens = strings.Split(command, " ")
 		switch tokens[0] {
 		case "boardsize":

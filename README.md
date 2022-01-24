@@ -13,13 +13,18 @@ GoGo をベースとしています
 
 設定ファイルは 📂`input/gameConf.toml` です  
 
-# Build
+# Set up
 
 ```shell
 go build
 ```
 
 👆 実行ファイルを作成してください。 `kifuwarabe-uec13.exe` ファイルが作成されます  
+
+![202201go1.png](./doc/img/202201go1.png)  
+
+👆 もし CgfGoBan を使うなら、 `cgfgoban.exe` ファイルが 相対ファイルパスの起点になりますから、  
+`cgfgoban.exe` ファイルと同じディレクトリーに `📂input/game_conf.toml` と `📂output` を置いてください  
 
 # Run
 

@@ -1,9 +1,5 @@
 package entities
 
-import (
-	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
-)
-
 func InitBestValueForPrimitiveMonteCalroV6(color int) float64 {
 	var bestValue float64
 
@@ -38,25 +34,9 @@ func CreateCalcWinnerForPrimitiveMonteCalroV7(board IBoardV01) func(int, func(in
 	return calcWinner
 }
 
-func IsBestUpdateForPrimitiveMonteCalroV6(color int, bestValue float64, winRate float64) bool {
-	var isBestUpdate = (color == 1 && bestValue < winRate) ||
-		(color == 2 && winRate < bestValue)
-	return isBestUpdate
-}
-
 func IsBestUpdateForPrimitiveMonteCalroV7(color int, bestValue float64, winRate float64) bool {
 	var isBestUpdate = bestValue < winRate
 	return isBestUpdate
-}
-
-// CreatePrintingOfInfoForPrimitiveMonteCalroV6 - 盤を束縛変数として与えます
-func CreatePrintingOfInfoForPrimitiveMonteCalroV6(board IBoardV01) func(color int, tryNum int, bestZ int, bestValue float64) {
-	var printInfo = func(color int, tryNum int, bestZ int, bestValue float64) {
-		var bestZ4 = board.GetZ4(bestZ)
-		code.Console.Info("(PrimitiveMonteCalro) bestZ4=%04d,color=%d,v=%5.3f,tryNum=%d\n", bestZ4, color, bestValue, tryNum)
-	}
-
-	return printInfo
 }
 
 func CreatePrintingOfInfoForPrimitiveMonteCalroIdling() func(color int, tryNum int, bestZ int, bestValue float64) {

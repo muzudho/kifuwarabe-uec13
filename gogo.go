@@ -33,30 +33,11 @@ func main() {
 
 	code.Console.Trace("# Author: %s\n", e.Author)
 
-	if lessonVer == "Lesson01" {
-		Lesson01()
-	} else if lessonVer == "Lesson02" {
-		Lesson02()
-	} else if lessonVer == "Lesson03" {
-		Lesson03()
-	} else if lessonVer == "Lesson04" {
-		Lesson04()
-	} else if lessonVer == "Lesson05" {
-		Lesson05()
-	} else if lessonVer == "Lesson06" {
-		Lesson06()
-	} else if lessonVer == "Lesson07" {
-		Lesson07()
-	} else if lessonVer == "Lesson08" {
-		Lesson08()
-	} else if lessonVer == "Lesson09" {
+	if lessonVer == "Lesson09" {
 		Lesson09()
-	} else if lessonVer == "Lesson09a" {
-		Lesson09a() // GTP
 	} else {
 		Lesson09a() // GTP
 	}
-	//KifuwarabeV1()
 }
 
 func OnFatal(errorMessage string) {

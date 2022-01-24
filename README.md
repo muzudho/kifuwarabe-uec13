@@ -20,6 +20,9 @@ go build
 
 ```shell
 kifuwarabe-uec13
+
+# 動作テストするなら
+kifuwarabe-uec13 Lesson09
 ```
 
 👆 拡張子を省いた実行ファイル名を打鍵してください

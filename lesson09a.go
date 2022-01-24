@@ -146,7 +146,7 @@ func PlayComputerMoveLesson09a(
 	printBoardDuringPlayout func(int, int, int, int),
 	printBoardOutOfPlayout func(e.IBoardV01, int)) int {
 
-	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinnerForPlayoutLesson07SelfView(board)
+	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
 
 	var boardSize = board.BoardSize()
 	if boardSize < 10 {

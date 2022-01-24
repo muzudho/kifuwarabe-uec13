@@ -23,52 +23,6 @@ func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01)
 	MovesNum++
 }
 
-// Lesson01 石を置けないケースを判定します
-func CreateExceptionForPutStoneLesson1(board IBoardV01) func(int, int, int, int, int) int {
-	var exceptType1 = func(z int, space int, wall int, mycolSafe int, captureSum int) int {
-		// 中断処理1～4
-		if captureSum == 0 && space == 0 && mycolSafe == 0 {
-			return 1
-		}
-		if z == KoZ {
-			return 2
-		}
-		// if wall + mycolSafe == 4 {
-		//		return 3
-		// }
-		if board.Exists(z) {
-			return 4
-		}
-
-		return 0
-	}
-
-	return exceptType1
-}
-
-// CreateExceptionForPutStoneLesson3 - Lesson03 目には打たないようにします
-func CreateExceptionForPutStoneLesson3(board IBoardV01) func(int, int, int, int, int) int {
-	var except = func(z int, space int, wall int, mycolSafe int, captureSum int) int {
-		// 中断処理1～4
-		if captureSum == 0 && space == 0 && mycolSafe == 0 {
-			return 1
-		}
-		if z == KoZ {
-			return 2
-		}
-		if wall+mycolSafe == 4 { // 目には打たないようにします
-			return 3
-		}
-		if board.Exists(z) {
-			return 4
-		}
-
-		return 0
-	}
-
-	return except
-}
-
 // Lesson04 プレイアウト中は目にも打てるよう選べるようにします
 // * `board` - 盤
 // * `fillEyeErr` - 目潰しの有無

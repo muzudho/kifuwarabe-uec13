@@ -27,7 +27,6 @@ func Lesson09() {
 	e.ExceptPutStoneOnPrimitiveMonteCalro = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
 	e.ExceptPutStoneDuringPlayout = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
 
-	// TestPlayoutLesson09(board, p.PrintBoard)
 	SelfplayLesson09(board, p.PrintBoard)
 }
 
@@ -44,7 +43,7 @@ func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
 			fUCT = 1
 		}
 
-		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinnerForPlayoutLesson07SelfView(board)
+		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
 		var z = e.GetComputerMoveLesson09(board, color, fUCT, noPrintBoard)
 
 		var recItem = new(e.RecordItemV01)
@@ -63,20 +62,5 @@ func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
 		color = e.FlipColor(color)
 	}
 
-	p.PrintSgf(board, e.MovesNum, e.Record)
-}
-
-// TestPlayoutLesson09 - 試しにプレイアウトする。
-func TestPlayoutLesson09(
-	board e.IBoardV01,
-	printBoardDuringPlayout func(int, int, int, int),
-	getWinner func(int) int,
-	printBoardOutOfPlayout func(e.IBoardV01, int)) {
-
-	e.FlagTestPlayout = 1
-
-	e.Playout(board, 1, printBoardDuringPlayout, getWinner)
-
-	printBoardOutOfPlayout(board, e.MovesNum)
 	p.PrintSgf(board, e.MovesNum, e.Record)
 }

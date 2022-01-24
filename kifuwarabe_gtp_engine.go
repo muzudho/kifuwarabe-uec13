@@ -16,14 +16,15 @@ import (
 // GTP2NNGS に対応しているのでは？
 func RunGtpEngine() {
 	code.Console.Trace("# GoGo RunGtpEngine プログラム開始☆（＾～＾）\n")
-	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 
+	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
+	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.Komi(), config.MaxMovesNum())
 	board.InitBoard()
 
 	e.AdjustParameters(board) // パラーメーター調整
 
-	code.Console.Trace("何か標準入力しろだぜ☆（＾～＾）\n")
+	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 
 	// GUI から 囲碁エンジン へ入力があった、と考えてください
 	var scanner = bufio.NewScanner(os.Stdin)
@@ -31,7 +32,9 @@ func RunGtpEngine() {
 		var command = scanner.Text()
 		var tokens = strings.Split(command, " ")
 		switch tokens[0] {
-		case "boardsize": // TODO 盤のサイズを変えたい
+		case "boardsize":
+			// TODO 盤のサイズを変えたい
+			// boardsize 19
 
 			e.AdjustParameters(board) // パラーメーター再調整
 
@@ -64,8 +67,9 @@ func RunGtpEngine() {
 			// 未実装
 			code.Gtp.Print("= \n\n")
 
-		// genmove b
 		case "genmove":
+			// genmove b
+
 			var color int
 			if 1 < len(tokens) && strings.ToLower(tokens[1]) == "w" {
 				color = 2
@@ -75,17 +79,18 @@ func RunGtpEngine() {
 			var z = PlayComputerMoveLesson09a(board, color, p.PrintBoard)
 			code.Gtp.Print("= %s\n\n", p.GetCharZ(board, z))
 
-		// play b a3
-		// play w d4
-		// play b d5
-		// play w e5
-		// play b e4
-		// play w d6
-		// play b f5
-		// play w c5
-		// play b pass
-		// play w pass
 		case "play":
+			// play b a3
+			// play w d4
+			// play b d5
+			// play w e5
+			// play b e4
+			// play w d6
+			// play b f5
+			// play w c5
+			// play b pass
+			// play w pass
+
 			var color = 1
 			if 1 < len(tokens) && strings.ToLower(tokens[1]) == "w" {
 				color = 2

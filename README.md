@@ -24,7 +24,7 @@ go build
 # Run
 
 ```shell
-# 思考エンジンとして対局するなら
+# GTP形式の思考エンジンとして対局するなら
 kifuwarabe-uec13
 
 # 動作テストするなら

@@ -112,14 +112,14 @@ func Lesson09a() {
 
 			if 2 < len(tokens) {
 				var ax = strings.ToLower(tokens[2])
-				code.Console.Print("ax=%s\n", ax)
+				code.Console.Trace("ax=%s\n", ax)
 				var x = ax[0] - 'a' + 1
 				if ax[0] >= 'i' {
 					x--
 				}
 				var y = int(ax[1] - '0')
 				var z = board.GetZFromXy(int(x)-1, board.BoardSize()-y)
-				code.Console.Print("x=%d y=%d z=%04d\n", x, y, board.GetZ4(z))
+				code.Console.Trace("x=%d y=%d z=%04d\n", x, y, board.GetZ4(z))
 				if ax == "pass" {
 					z = 0
 				}
@@ -179,7 +179,7 @@ func PlayComputerMoveLesson09a(
 			printBoardDuringPlayout)
 	}
 	var sec = time.Since(st).Seconds()
-	code.Console.Print("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d,fUCT=%d\n",
+	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d,fUCT=%d\n",
 		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts, fUCT)
 
 	var recItem = new(e.RecordItemV02)

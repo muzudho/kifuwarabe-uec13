@@ -50,12 +50,12 @@ func GetBestZByUct(
 			bestI = i
 			max = c.Games
 		}
-		code.Console.Print("(UCT Calculating...) %2d:z=%04d,rate=%.4f,games=%3d\n", i, board.GetZ4(c.Z), c.Rate, c.Games)
+		code.Console.Info("(UCT Calculating...) %2d:z=%04d,rate=%.4f,games=%3d\n", i, board.GetZ4(c.Z), c.Rate, c.Games)
 	}
 
 	// 結果
 	var bestZ = pN.Children[bestI].Z
-	code.Console.Print("(UCT Calculated    ) bestZ=%04d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
+	code.Console.Info("(UCT Calculated    ) bestZ=%04d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
 		board.GetZ4(bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
 	return bestZ
 }

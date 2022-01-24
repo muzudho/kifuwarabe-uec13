@@ -13,7 +13,7 @@ func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01)
 	var err = PutStone(board, z, color, exceptPutStoneL04)
 
 	if err != 0 {
-		code.Console.Print("(PutStoneOnRecord) Err!\n")
+		code.Console.Error("(PutStoneOnRecord) Err!\n")
 		os.Exit(0)
 	}
 

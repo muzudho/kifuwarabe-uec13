@@ -19,8 +19,17 @@ func main() {
 	// 乱数の種を設定
 	rand.Seed(time.Now().UnixNano())
 
-	// ロガーの作成。
-	code.Log.SetPath(
+	// ログの書込み先設定
+	code.GtpLog.SetPath(
+		"output/gtp_trace.log",
+		"output/gtp_debug.log",
+		"output/gtp_info.log",
+		"output/gtp_notice.log",
+		"output/gtp_warn.log",
+		"output/gtp_error.log",
+		"output/gtp_fatal.log",
+		"output/gtp_print.log")
+	code.ConsoleLog.SetPath(
 		"output/trace.log",
 		"output/debug.log",
 		"output/info.log",
@@ -30,8 +39,7 @@ func main() {
 		"output/fatal.log",
 		"output/print.log")
 
-	// 標準出力への表示と、ログへの書き込みを同時に行います。
-	code.Console.Trace("Author: %s\n", e.Author)
+	code.Console.Trace("# Author: %s\n", e.Author)
 
 	if lessonVer == "Lesson01" {
 		Lesson01()

@@ -89,7 +89,7 @@ func Lesson09a() {
 				color = 1
 			}
 			var printBoard = e.CreatePrintingOfBoardDuringPlayoutIdling()
-			var z = PlayComputerMoveLesson09a(board, color, 1, printBoard, p.PrintBoard)
+			var z = PlayComputerMoveLesson09a(board, color, printBoard, p.PrintBoard)
 			code.Gtp.Print("= %s\n\n", p.GetCharZ(board, z))
 
 		// play b a3
@@ -142,7 +142,6 @@ func Lesson09a() {
 func PlayComputerMoveLesson09a(
 	board e.IBoardV02,
 	color int,
-	fUCT int,
 	printBoardDuringPlayout func(int, int, int, int),
 	printBoardOutOfPlayout func(e.IBoardV01, int)) int {
 
@@ -160,27 +159,16 @@ func PlayComputerMoveLesson09a(
 	var st = time.Now()
 	e.AllPlayouts = 0
 
-	if fUCT != 0 {
-		e.ExceptPutStoneOnSearchUct = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
-		z = e.GetBestZByUct(
-			board,
-			color,
-			e.WrapSearchUct(board, printBoardDuringPlayout),
-			printBoardDuringPlayout)
-	} else {
-		var printInfo = e.CreatePrintingOfInfoForPrimitiveMonteCalroIdling()
-		z = e.PrimitiveMonteCalro(
-			board,
-			color,
-			e.InitBestValueForPrimitiveMonteCalroV7,
-			e.CreateCalcWinnerForPrimitiveMonteCalroV7(board),
-			e.IsBestUpdateForPrimitiveMonteCalroV7,
-			printInfo,
-			printBoardDuringPlayout)
-	}
+	e.ExceptPutStoneOnSearchUct = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
+	z = e.GetBestZByUct(
+		board,
+		color,
+		e.WrapSearchUct(board, printBoardDuringPlayout),
+		printBoardDuringPlayout)
+
 	var sec = time.Since(st).Seconds()
-	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d,fUCT=%d\n",
-		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts, fUCT)
+	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
+		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts)
 
 	var recItem = new(e.RecordItemV02)
 	recItem.Z = z

@@ -36,15 +36,8 @@ func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
 	var noPrintBoard = e.CreatePrintingOfBoardDuringPlayoutIdling() // プレイアウト中は盤を描画しません
 
 	for {
-		var fUCT int
-		if color == 1 {
-			fUCT = 0
-		} else {
-			fUCT = 1
-		}
-
 		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
-		var z = e.GetComputerMoveLesson09(board, color, fUCT, noPrintBoard)
+		var z = e.GetComputerMoveLesson09(board, color, noPrintBoard)
 
 		var recItem = new(e.RecordItemV01)
 		recItem.Z = z

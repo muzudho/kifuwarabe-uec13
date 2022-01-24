@@ -11,6 +11,8 @@ GoGo をベースとしています
 
 👆 Go言語をインストールしてください  
 
+設定ファイルは 📂`input/gameConf.toml` です  
+
 # Build
 
 ```shell

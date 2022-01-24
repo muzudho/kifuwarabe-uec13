@@ -79,7 +79,7 @@ func RunGtpEngine() {
 				color = 1
 			}
 			var z = PlayComputerMoveLesson09a(board, color, p.PrintBoard)
-			code.Gtp.Print("= %s\n\n", p.GetCharZ(board, z))
+			code.Gtp.Print("= %s\n\n", p.GetGtpZ(board, z))
 
 		case "play":
 			// play b a3

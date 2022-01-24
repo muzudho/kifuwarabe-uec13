@@ -8,11 +8,11 @@ import (
 
 // StderrLogWriter - エラー出力とロガーを一緒にしただけです
 type StderrLogWriter struct {
-	logger *Logger
+	logger *StderrLogger
 }
 
 // NewStderrLogWriter - オブジェクト作成
-func NewStderrLogWriter(logger *Logger) *StderrLogWriter {
+func NewStderrLogWriter(logger *StderrLogger) *StderrLogWriter {
 	writer := new(StderrLogWriter)
 	writer.logger = logger
 	return writer

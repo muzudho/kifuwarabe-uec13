@@ -7,11 +7,11 @@ import (
 
 // StdoutLogWriter - 標準出力とロガーを一緒にしただけです
 type StdoutLogWriter struct {
-	logger *Logger
+	logger *StdoutLogger
 }
 
 // NewStdoutLogWriter - オブジェクト作成
-func NewStdoutLogWriter(logger *Logger) *StdoutLogWriter {
+func NewStdoutLogWriter(logger *StdoutLogger) *StdoutLogWriter {
 	writer := new(StdoutLogWriter)
 	writer.logger = logger
 	return writer

@@ -1,11 +1,10 @@
 package presenter
 
 import (
-	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
 )
 
@@ -98,5 +97,5 @@ func PrintBoard(board e.IBoard, movesNum int) {
 	}
 	b.WriteString("\n")
 
-	fmt.Fprint(os.Stderr, b.String())
+	code.Console.Notice(b.String())
 }

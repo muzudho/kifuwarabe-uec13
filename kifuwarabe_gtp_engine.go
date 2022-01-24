@@ -12,10 +12,10 @@ import (
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
 )
 
-// Lesson09a - レッスン９a
+// RunGtpEngine - レッスン９a
 // GTP2NNGS に対応しているのでは？
-func Lesson09a() {
-	code.Console.Trace("# GoGo Lesson09a プログラム開始☆（＾～＾）\n")
+func RunGtpEngine() {
+	code.Console.Trace("# GoGo RunGtpEngine プログラム開始☆（＾～＾）\n")
 	var config = cnf.LoadGameConf("input/example-v3.gameConf.toml", OnFatal)
 
 	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.Komi(), config.MaxMovesNum())
@@ -121,7 +121,7 @@ func Lesson09a() {
 	}
 }
 
-// PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 Lesson09 から呼び出されます。
+// PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
 	board e.IBoard,
 	color int,

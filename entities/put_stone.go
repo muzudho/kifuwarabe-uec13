@@ -6,7 +6,7 @@ import (
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 )
 
-// PutStoneOnRecord - Lesson08, Lesson09/Selfplay, Lesson09a から呼び出されます
+// PutStoneOnRecord - SelfPlay, RunGtpEngine から呼び出されます
 func PutStoneOnRecord(board IBoard, z int, color int, recItem IRecordItemV01) {
 	var err = PutStone(board, z, color)
 	if err != 0 {

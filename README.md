@@ -1,6 +1,9 @@
 # kifuwarabe-uec13
 
-第１３回UEC杯コンピュータ囲碁大会向けきふわらべ
+第１３回UEC杯コンピュータ囲碁大会向けきふわらべ  
+
+GoGo をベースとしています  
+[https://github.com/bleu48/GoGo](https://github.com/bleu48/GoGo)  
 
 # Set up
 
@@ -19,10 +22,11 @@ go build
 # Run
 
 ```shell
+# 思考エンジンとして対局するなら
 kifuwarabe-uec13
 
 # 動作テストするなら
-kifuwarabe-uec13 Lesson09
+kifuwarabe-uec13 SelfPlay
 ```
 
 👆 拡張子を省いた実行ファイル名を打鍵してください

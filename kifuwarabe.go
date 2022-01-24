@@ -33,10 +33,10 @@ func main() {
 
 	code.Console.Trace("# Author: %s\n", e.Author)
 
-	if lessonVer == "Lesson09" {
-		Lesson09()
+	if lessonVer == "SelfPlay" {
+		SelfPlay()
 	} else {
-		Lesson09a() // GTP
+		RunGtpEngine() // GTP
 	}
 }
 

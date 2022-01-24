@@ -16,7 +16,7 @@ const (
 	IllegalZ = -1
 )
 
-// GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveLesson09 などから呼び出されます。
+// GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
 func GetBestZByUct(
 	board IBoard,
 	color int,

@@ -4,8 +4,8 @@ import (
 	"math/rand"
 )
 
-// BoardV01 - 盤
-type BoardV01 struct {
+// Board - 盤
+type Board struct {
 	data                []int
 	boardSize           int
 	sentinelWidth       int
@@ -13,10 +13,32 @@ type BoardV01 struct {
 	komi                float64
 	maxMoves            int
 	iteratorWithoutWall func(func(int))
+
+	uctChildrenSize int
+}
+
+// NewBoard - 盤を作成します。
+// TODO Board の NewBoard を呼び出す方法がない？
+func NewBoard(data []int, boardSize int, sentinelBoardArea int, komi float64, maxMoves int) *Board {
+	var board = new(Board)
+	board.data = data
+	board.boardSize = boardSize
+	board.sentinelWidth = boardSize + 2
+	board.sentinelBoardArea = sentinelBoardArea
+	board.komi = komi
+	board.maxMoves = maxMoves
+	board.uctChildrenSize = boardSize*boardSize + 1
+	board.iteratorWithoutWall = CreateBoardIteratorWithoutWall(board)
+
+	checkBoard = make([]int, board.SentinelBoardArea())
+	Record = make([]IRecordItemV01, board.MaxMovesNum())
+	Dir4 = [4]int{1, board.SentinelWidth(), -1, -board.SentinelWidth()}
+
+	return board
 }
 
 // InitBoard - 盤の初期化。
-func (board *BoardV01) InitBoard() {
+func (board *Board) InitBoard() {
 	boardMax := board.SentinelBoardArea()
 
 	// 枠線
@@ -35,52 +57,52 @@ func (board *BoardV01) InitBoard() {
 }
 
 // BoardSize - 何路盤か
-func (board BoardV01) BoardSize() int {
+func (board Board) BoardSize() int {
 	return board.boardSize
 }
 
 // SentinelWidth - 枠付きの盤の一辺の交点数
-func (board BoardV01) SentinelWidth() int {
+func (board Board) SentinelWidth() int {
 	return board.sentinelWidth
 }
 
 // SentinelBoardArea - 枠付きの盤の交点数
-func (board BoardV01) SentinelBoardArea() int {
+func (board Board) SentinelBoardArea() int {
 	return board.sentinelBoardArea
 }
 
 // Komi - コミ
-func (board BoardV01) Komi() float64 {
+func (board Board) Komi() float64 {
 	return board.komi
 }
 
 // MaxMovesNum - 最大手数
-func (board BoardV01) MaxMovesNum() int {
+func (board Board) MaxMovesNum() int {
 	return board.maxMoves
 }
 
 // ColorAt - 指定した交点の石の色
-func (board BoardV01) ColorAt(z int) int {
+func (board Board) ColorAt(z int) int {
 	return board.data[z]
 }
 
 // ColorAtXy - 指定した交点の石の色
-func (board BoardV01) ColorAtXy(x int, y int) int {
+func (board Board) ColorAtXy(x int, y int) int {
 	return board.data[(y+1)*board.sentinelWidth+x+1]
 }
 
 // Exists - 指定の交点に石があるか？
-func (board BoardV01) Exists(z int) bool {
+func (board Board) Exists(z int) bool {
 	return board.data[z] != 0
 }
 
 // SetColor - 盤データ。
-func (board *BoardV01) SetColor(z int, color int) {
+func (board *Board) SetColor(z int, color int) {
 	board.data[z] = color
 }
 
 // CopyData - 盤データのコピー。
-func (board BoardV01) CopyData() []int {
+func (board Board) CopyData() []int {
 	boardArea := board.SentinelBoardArea()
 
 	var boardCopy2 = make([]int, boardArea)
@@ -89,12 +111,12 @@ func (board BoardV01) CopyData() []int {
 }
 
 // ImportData - 盤データのコピー。
-func (board *BoardV01) ImportData(boardCopy2 []int) {
+func (board *Board) ImportData(boardCopy2 []int) {
 	copy(board.data[:], boardCopy2[:])
 }
 
 // GetZ4 - z（配列のインデックス）を XXYY形式（3～4桁の数）の座標へ変換します。
-func (board BoardV01) GetZ4(z int) int {
+func (board Board) GetZ4(z int) int {
 	if z == 0 {
 		return 0
 	}
@@ -105,12 +127,12 @@ func (board BoardV01) GetZ4(z int) int {
 
 // GetZFromXy - x,y を z （配列のインデックス）へ変換します。
 // x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
-func (board BoardV01) GetZFromXy(x int, y int) int {
+func (board Board) GetZFromXy(x int, y int) int {
 	return (y+1)*board.SentinelWidth() + x + 1
 }
 
 // GetEmptyZ - 空点の z （配列のインデックス）を返します。
-func (board BoardV01) GetEmptyZ() int {
+func (board Board) GetEmptyZ() int {
 	var x, y, z int
 	for {
 		// ランダムに交点を選んで、空点を見つけるまで繰り返します。
@@ -124,7 +146,7 @@ func (board BoardV01) GetEmptyZ() int {
 	return z
 }
 
-func (board BoardV01) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
+func (board Board) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
 	checkBoard[z] = 1
 	*pStone++
 	for i := 0; i < 4; i++ {
@@ -144,7 +166,7 @@ func (board BoardV01) countLibertySub(z int, color int, pLiberty *int, pStone *i
 }
 
 // CountLiberty - 呼吸点を数えます。
-func (board BoardV01) CountLiberty(z int, pLiberty *int, pStone *int) {
+func (board Board) CountLiberty(z int, pLiberty *int, pStone *int) {
 	*pLiberty = 0
 	*pStone = 0
 	boardMax := board.SentinelBoardArea()
@@ -156,7 +178,7 @@ func (board BoardV01) CountLiberty(z int, pLiberty *int, pStone *int) {
 }
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
-func (board *BoardV01) TakeStone(z int, color int) {
+func (board *Board) TakeStone(z int, color int) {
 	board.data[z] = 0
 	for dir := 0; dir < 4; dir++ {
 		z2 := z + Dir4[dir]
@@ -167,6 +189,11 @@ func (board *BoardV01) TakeStone(z int, color int) {
 }
 
 // IterateWithoutWall - 盤イテレーター
-func (board BoardV01) IterateWithoutWall(onPoint func(int)) {
+func (board Board) IterateWithoutWall(onPoint func(int)) {
 	board.iteratorWithoutWall(onPoint)
+}
+
+// UctChildrenSize - UCTの最大手数
+func (board Board) UctChildrenSize() int {
+	return board.uctChildrenSize
 }

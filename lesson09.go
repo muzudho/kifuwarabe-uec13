@@ -15,15 +15,7 @@ func Lesson09() {
 	var config = cnf.LoadGameConf("input/example-v3.gameConf.toml", OnFatal)
 	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.Komi(), config.MaxMovesNum())
 
-	var boardSize = board.BoardSize()
-	if boardSize < 10 {
-		// 10路盤より小さいとき
-		e.PlayoutTrialCount = boardSize*boardSize + 200
-		e.PrimitiveMonteCalroTrialCount = 30
-	} else {
-		e.PlayoutTrialCount = boardSize * boardSize
-		e.PrimitiveMonteCalroTrialCount = 3
-	}
+	e.AdjustParameters(board) // パラーメーター調整
 
 	SelfplayLesson09(board, p.PrintBoard)
 }

@@ -21,14 +21,7 @@ func Lesson09a() {
 	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.Komi(), config.MaxMovesNum())
 	board.InitBoard()
 
-	// パラーメーター調整
-	var boardSize = board.BoardSize()
-	if boardSize < 10 {
-		// 10路盤より小さいとき
-		e.PlayoutTrialCount = boardSize*boardSize + 200
-	} else {
-		e.PlayoutTrialCount = boardSize * boardSize
-	}
+	e.AdjustParameters(board) // パラーメーター調整
 
 	code.Console.Trace("何か標準入力しろだぜ☆（＾～＾）\n")
 
@@ -40,14 +33,7 @@ func Lesson09a() {
 		switch tokens[0] {
 		case "boardsize": // TODO 盤のサイズを変えたい
 
-			// パラーメーター再調整
-			boardSize := board.BoardSize()
-			if boardSize < 10 {
-				// 10路盤より小さいとき
-				e.PlayoutTrialCount = boardSize*boardSize + 200
-			} else {
-				e.PlayoutTrialCount = boardSize * boardSize
-			}
+			e.AdjustParameters(board) // パラーメーター再調整
 
 			code.Gtp.Print("= \n\n")
 
@@ -143,13 +129,7 @@ func PlayComputerMoveLesson09a(
 
 	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
 
-	var boardSize = board.BoardSize()
-	if boardSize < 10 {
-		// 10路盤より小さいとき
-		e.PrimitiveMonteCalroTrialCount = 30
-	} else {
-		e.PrimitiveMonteCalroTrialCount = 3
-	}
+	e.AdjustParameters(board)
 
 	var z int
 	var st = time.Now()

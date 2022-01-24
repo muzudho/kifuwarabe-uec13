@@ -30,8 +30,6 @@ func Lesson09a() {
 		e.PlayoutTrialCount = boardSize * boardSize
 	}
 
-	e.ExceptPutStoneDuringPlayout = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
-
 	code.Console.Trace("何か標準入力しろだぜ☆（＾～＾）\n")
 
 	// GUI から 囲碁エンジン へ入力があった、と考えてください
@@ -88,8 +86,7 @@ func Lesson09a() {
 			} else {
 				color = 1
 			}
-			var printBoard = e.CreatePrintingOfBoardDuringPlayoutIdling()
-			var z = PlayComputerMoveLesson09a(board, color, printBoard, p.PrintBoard)
+			var z = PlayComputerMoveLesson09a(board, color, p.PrintBoard)
 			code.Gtp.Print("= %s\n\n", p.GetCharZ(board, z))
 
 		// play b a3
@@ -142,7 +139,6 @@ func Lesson09a() {
 func PlayComputerMoveLesson09a(
 	board e.IBoardV02,
 	color int,
-	printBoardDuringPlayout func(int, int, int, int),
 	printBoardOutOfPlayout func(e.IBoardV01, int)) int {
 
 	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
@@ -159,7 +155,6 @@ func PlayComputerMoveLesson09a(
 	var st = time.Now()
 	e.AllPlayouts = 0
 
-	e.ExceptPutStoneOnSearchUct = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
 	z = e.GetBestZByUct(
 		board,
 		color,

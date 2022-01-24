@@ -23,10 +23,6 @@ func Lesson09() {
 		e.PrimitiveMonteCalroTrialCount = 3
 	}
 
-	e.ExceptPutStoneOnSearchUct = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
-	e.ExceptPutStoneOnPrimitiveMonteCalro = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
-	e.ExceptPutStoneDuringPlayout = e.CreateExceptionForPutStoneLesson4(board, e.FillEyeErr)
-
 	SelfplayLesson09(board, p.PrintBoard)
 }
 

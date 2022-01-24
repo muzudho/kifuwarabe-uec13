@@ -4,17 +4,7 @@ import (
 	"math/rand"
 )
 
-// CreatePrintingOfBoardDuringPlayoutIdling - プレイアウト中の盤の描画（何も描画しません）
-func CreatePrintingOfBoardDuringPlayoutIdling() func(int, int, int, int) {
-	var printBoardDuringPlayout = func(trial int, z4 int, color int, emptyNum int) {
-		// 何もしません
-	}
-
-	return printBoardDuringPlayout
-}
-
 // Playout - 最後まで石を打ちます。得点を返します
-// * `printBoardDuringPlayout` - プレイアウト中の盤の描画
 // * `getWinner` - 地計算
 //
 // # Returns
@@ -54,7 +44,7 @@ func Playout(
 				z = empty[r]
 			}
 
-			var err = PutStone(board, z, color, ExceptPutStoneDuringPlayout)
+			var err = PutStone(board, z, color)
 
 			if err == 0 {
 				break

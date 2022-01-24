@@ -81,7 +81,7 @@ func SearchUct(
 		c = &pN.Children[selectI]
 		var z = c.Z
 
-		var err = PutStone(board, z, color, ExceptPutStoneOnSearchUct) // Lesson08 や Lesson09
+		var err = PutStone(board, z, color)
 
 		if err == 0 {
 			break

@@ -8,10 +8,7 @@ import (
 
 // PutStoneOnRecord - Lesson08, Lesson09/Selfplay, Lesson09a から呼び出されます
 func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01) {
-
-	var exceptPutStoneL04 = CreateExceptionForPutStoneLesson4(board, FillEyeOk)
-	var err = PutStone(board, z, color, exceptPutStoneL04)
-
+	var err = PutStone(board, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")
 		os.Exit(0)
@@ -23,35 +20,9 @@ func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01)
 	MovesNum++
 }
 
-// Lesson04 プレイアウト中は目にも打てるよう選べるようにします
-// * `board` - 盤
-// * `fillEyeErr` - 目潰しの有無
-func CreateExceptionForPutStoneLesson4(board IBoardV01, fillEyeErr int) func(int, int, int, int, int) int {
-	var exceptPutStone = func(z int, space int, wall int, mycolSafe int, captureSum int) int {
-		// 中断処理1～4
-		if captureSum == 0 && space == 0 && mycolSafe == 0 {
-			return 1
-		}
-		if z == KoZ {
-			return 2
-		}
-		if wall+mycolSafe == 4 && fillEyeErr == FillEyeErr {
-			return 3
-		}
-		if board.Exists(z) {
-			return 4
-		}
-
-		return 0
-	}
-
-	return exceptPutStone
-}
-
 // PutStone - 石を置きます。
 // * `z` - 交点。壁有り盤の配列インデックス
-// * `except` - 石を置けないケースを判定する関数
-func PutStone(board IBoardV01, z int, color int, except func(int, int, int, int, int) int) int {
+func PutStone(board IBoardV01, z int, color int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
 	var unCol = FlipColor(color)
@@ -95,9 +66,17 @@ func PutStone(board IBoardV01, z int, color int, except func(int, int, int, int,
 	}
 
 	// 石を置けないケースを判定します
-	var returnCode = except(z, space, wall, mycolSafe, captureSum)
-	if returnCode != 0 {
-		return returnCode
+	if captureSum == 0 && space == 0 && mycolSafe == 0 {
+		return 1
+	}
+	if z == KoZ {
+		return 2
+	}
+	if wall+mycolSafe == 4 {
+		return 3
+	}
+	if board.Exists(z) {
+		return 4
 	}
 
 	for dir := 0; dir < 4; dir++ {
@@ -121,10 +100,10 @@ func PutStone(board IBoardV01, z int, color int, except func(int, int, int, int,
 }
 
 // PlayOneMove - Lesson03で使用。置けるとこに置く
-func PlayOneMove(board IBoardV01, color int, exceptPutStoneL03 func(int, int, int, int, int) int) int {
+func PlayOneMove(board IBoardV01, color int) int {
 	for i := 0; i < 100; i++ {
 		var z = board.GetEmptyZ()
-		var err = PutStone(board, z, color, exceptPutStoneL03)
+		var err = PutStone(board, z, color)
 		if err == 0 {
 			return z
 		}
@@ -132,6 +111,6 @@ func PlayOneMove(board IBoardV01, color int, exceptPutStoneL03 func(int, int, in
 
 	// 0 はパス。
 	const z = 0
-	PutStone(board, z, color, exceptPutStoneL03)
+	PutStone(board, z, color)
 	return z
 }

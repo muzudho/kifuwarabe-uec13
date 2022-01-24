@@ -39,7 +39,7 @@ func addChild(pN *Node, z int) {
 }
 
 // CreateNode - ノード作成。 searchUctV8, GetBestZByUct, searchUctLesson09 から呼び出されます。
-func CreateNode(board IBoardV02) int {
+func CreateNode(board IBoard) int {
 
 	if NodeNum == NodeMax {
 		code.Console.Error("node over Err\n")

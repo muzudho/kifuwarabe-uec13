@@ -1,7 +1,7 @@
 package entities
 
-// IBoardV01 - 盤。
-type IBoardV01 interface {
+// IBoard - 盤。
+type IBoard interface {
 	// 指定した交点の石の色
 	ColorAt(z int) int
 	ColorAtXy(x int, y int) int
@@ -30,11 +30,14 @@ type IBoardV01 interface {
 	GetZ4(z int) int
 
 	IterateWithoutWall(func(int))
+
+	// UctChildrenSize - UCTの最大手数
+	UctChildrenSize() int
 }
 
 // CreateBoardIteratorWithoutWall - 盤の（壁を除く）全ての交点に順にアクセスする boardIterator 関数を生成します
 func CreateBoardIteratorWithoutWall(
-	board IBoardV01) func(func(int)) {
+	board IBoard) func(func(int)) {
 
 	var boardSize = board.BoardSize()
 	var boardIterator = func(onPoint func(int)) {

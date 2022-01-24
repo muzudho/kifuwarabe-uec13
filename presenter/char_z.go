@@ -7,7 +7,7 @@ import (
 )
 
 // GetCharZ - YX座標の文字表示？
-func GetCharZ(board e.IBoardV01, z int) string {
+func GetCharZ(board e.IBoard, z int) string {
 	if z == 0 {
 		return "pass"
 	}

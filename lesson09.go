@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
@@ -27,12 +29,12 @@ func Lesson09() {
 }
 
 // SelfplayLesson09 - コンピューター同士の対局。
-func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
+func SelfplayLesson09(board e.IBoard, printBoard func(e.IBoard, int)) {
 	var color = 1
 
 	for {
 		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
-		var z = e.GetComputerMoveLesson09(board, color)
+		var z = GetComputerMoveLesson09(board, color)
 
 		var recItem = new(e.RecordItemV01)
 		recItem.Z = z
@@ -51,4 +53,22 @@ func SelfplayLesson09(board e.IBoardV02, printBoard func(e.IBoardV01, int)) {
 	}
 
 	p.PrintSgf(board, e.MovesNum, e.Record)
+}
+
+// GetComputerMoveLesson09 - コンピューターの指し手。 SelfplayLesson09 から呼び出されます
+func GetComputerMoveLesson09(board e.IBoard, color int) int {
+
+	var z int
+	var start = time.Now()
+	e.AllPlayouts = 0
+
+	z = e.GetBestZByUct(
+		board,
+		color,
+		e.WrapSearchUct(board))
+
+	var sec = time.Since(start).Seconds()
+	code.Console.Info("(GetComputerMoveLesson09) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
+		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts)
+	return z
 }

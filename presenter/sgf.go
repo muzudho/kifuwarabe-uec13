@@ -6,7 +6,7 @@ import (
 )
 
 // PrintSgf - SGF形式の棋譜表示。
-func PrintSgf(board e.IBoardV01, movesNum int, record []e.IRecordItemV01) {
+func PrintSgf(board e.IBoard, movesNum int, record []e.IRecordItemV01) {
 	var boardSize = board.BoardSize()
 
 	code.Console.Print("(;GM[1]SZ[%d]KM[%.1f]PB[]PW[]\n", boardSize, board.Komi())

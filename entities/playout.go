@@ -11,7 +11,7 @@ import (
 //
 // 勝者（黒番が1なのか、白番が1なのか、手番が1なのかは設定によって異なります）
 func Playout(
-	board IBoardV01,
+	board IBoard,
 	turnColor int,
 	getWinner func(int) int) int {
 

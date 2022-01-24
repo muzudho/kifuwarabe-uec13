@@ -137,9 +137,9 @@ func Lesson09a() {
 
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 Lesson09 から呼び出されます。
 func PlayComputerMoveLesson09a(
-	board e.IBoardV02,
+	board e.IBoard,
 	color int,
-	printBoardOutOfPlayout func(e.IBoardV01, int)) int {
+	printBoardOutOfPlayout func(e.IBoard, int)) int {
 
 	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
 

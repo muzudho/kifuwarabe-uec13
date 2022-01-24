@@ -7,7 +7,7 @@ import (
 )
 
 // PutStoneOnRecord - Lesson08, Lesson09/Selfplay, Lesson09a から呼び出されます
-func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01) {
+func PutStoneOnRecord(board IBoard, z int, color int, recItem IRecordItemV01) {
 	var err = PutStone(board, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")
@@ -22,7 +22,7 @@ func PutStoneOnRecord(board IBoardV01, z int, color int, recItem IRecordItemV01)
 
 // PutStone - 石を置きます。
 // * `z` - 交点。壁有り盤の配列インデックス
-func PutStone(board IBoardV01, z int, color int) int {
+func PutStone(board IBoard, z int, color int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
 	var unCol = FlipColor(color)
@@ -97,20 +97,4 @@ func PutStone(board IBoardV01, z int, color int) int {
 	}
 
 	return 0
-}
-
-// PlayOneMove - Lesson03で使用。置けるとこに置く
-func PlayOneMove(board IBoardV01, color int) int {
-	for i := 0; i < 100; i++ {
-		var z = board.GetEmptyZ()
-		var err = PutStone(board, z, color)
-		if err == 0 {
-			return z
-		}
-	}
-
-	// 0 はパス。
-	const z = 0
-	PutStone(board, z, color)
-	return z
 }

@@ -1,7 +1,7 @@
 package entities
 
 // WrapGettingOfWinner - 盤を束縛変数として与えます
-func WrapGettingOfWinner(board IBoardV01) func(turnColor int) int {
+func WrapGettingOfWinner(board IBoard) func(turnColor int) int {
 	// 「手番の勝ちなら1、引き分けなら0、手番の負けなら-1を返す関数（自分視点）」を作成します
 	// * `turnColor` - 手番の石の色
 	var getWinner = func(turnColor int) int {
@@ -13,7 +13,7 @@ func WrapGettingOfWinner(board IBoardV01) func(turnColor int) int {
 
 // 手番の勝ちなら1、引き分けなら0、手番の負けなら-1（自分視点）
 // * `turnColor` - 手番の石の色
-func getWinner(board IBoardV01, turnColor int) int {
+func getWinner(board IBoard, turnColor int) int {
 	var mk = [4]int{}
 	var kind = [3]int{0, 0, 0}
 	var score, blackArea, whiteArea, blackSum, whiteSum int

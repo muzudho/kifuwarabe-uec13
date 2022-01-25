@@ -31,6 +31,7 @@ func RunGtpEngine() {
 	for scanner.Scan() {
 		var command = scanner.Text()
 		code.Gtp.Log(command + "\n")
+		code.ConsoleLog.Notice(command + "\n")
 
 		var tokens = strings.Split(command, " ")
 		switch tokens[0] {

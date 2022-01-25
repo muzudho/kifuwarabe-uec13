@@ -71,10 +71,10 @@ func RunGtpEngine() {
 			code.Gtp.Print("= \n\n")
 
 		case "genmove":
-			// genmove b
-
+			// genmove black
+			// genmove white
 			var color int
-			if 1 < len(tokens) && strings.ToLower(tokens[1]) == "w" {
+			if 1 < len(tokens) && strings.ToLower(tokens[1][0:1]) == "w" {
 				color = 2
 			} else {
 				color = 1

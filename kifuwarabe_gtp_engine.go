@@ -53,7 +53,7 @@ func RunGtpEngine() {
 			code.Gtp.Print("= 2\n\n")
 
 		case "name":
-			code.Gtp.Print("= GoGo\n\n")
+			code.Gtp.Print("= KifuwarabeUEC13\n\n")
 
 		case "version":
 			code.Gtp.Print("= 0.0.1\n\n")
@@ -78,53 +78,29 @@ func RunGtpEngine() {
 			} else {
 				color = 1
 			}
-			var z = PlayComputerMoveLesson09a(board, color, p.PrintBoard)
+			var z = PlayComputerMoveLesson09a(board, color)
 			code.Gtp.Print("= %s\n\n", p.GetGtpZ(board, z))
 
 		case "play":
-			// play b a3
-			// play w d4
-			// play b d5
-			// play w e5
-			// play b e4
-			// play w d6
-			// play b f5
-			// play w c5
-			// play b pass
-			// play w pass
-
-			var color = 1
-			if 1 < len(tokens) && strings.ToLower(tokens[1]) == "w" {
-				color = 2
-			} else {
-				color = 1
-			}
-
+			// play black A3
+			// play white D4
+			// play black D5
+			// play white E5
+			// play black E4
+			// play white D6
+			// play black F5
+			// play white C5
+			// play black pass
+			// play white pass
 			if 2 < len(tokens) {
-				// 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定
-				var gtp_z = strings.ToLower(tokens[2])
-				code.Console.Trace("# gtp_z=%s\n", gtp_z)
-
-				// 筋
-				var x = gtp_z[0] - 'a' + 1
-				if gtp_z[0] >= 'i' {
-					x--
+				var color int
+				if strings.ToLower(tokens[1][0:1]) == "w" {
+					color = 2
+				} else {
+					color = 1
 				}
 
-				// 段
-				var y = int(gtp_z[1] - '0')
-				if 2 < len(gtp_z) {
-					y *= 10
-					y += int(gtp_z[2] - '0')
-				}
-
-				// インデックス
-				var z = board.GetZFromXy(int(x)-1, y-1)
-				code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, board.GetZ4(z))
-				if gtp_z == "pass" {
-					z = 0
-				}
-
+				var z = p.GetZFromGtp(board, tokens[2])
 				var recItem = new(e.RecordItemV02)
 				recItem.Z = z
 				recItem.Time = 0
@@ -133,6 +109,7 @@ func RunGtpEngine() {
 
 				code.Gtp.Print("= \n\n")
 			}
+
 		default:
 			code.Gtp.Print("? unknown_command\n\n")
 		}
@@ -142,8 +119,7 @@ func RunGtpEngine() {
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
 	board e.IBoard,
-	color int,
-	printBoardOutOfPlayout func(e.IBoard, int)) int {
+	color int) int {
 
 	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
 
@@ -166,7 +142,7 @@ func PlayComputerMoveLesson09a(
 	recItem.Z = z
 	recItem.Time = sec
 	e.PutStoneOnRecord(board, z, color, recItem)
-	printBoardOutOfPlayout(board, e.MovesNum)
+	p.PrintBoard(board, e.MovesNum)
 
 	return z
 }

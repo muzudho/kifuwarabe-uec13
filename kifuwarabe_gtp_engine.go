@@ -101,16 +101,27 @@ func RunGtpEngine() {
 			}
 
 			if 2 < len(tokens) {
-				var ax = strings.ToLower(tokens[2])
-				code.Console.Trace("ax=%s\n", ax)
-				var x = ax[0] - 'a' + 1
-				if ax[0] >= 'i' {
+				// 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定
+				var gtp_z = strings.ToLower(tokens[2])
+				code.Console.Trace("# gtp_z=%s\n", gtp_z)
+
+				// 筋
+				var x = gtp_z[0] - 'a' + 1
+				if gtp_z[0] >= 'i' {
 					x--
 				}
-				var y = int(ax[1] - '0')
-				var z = board.GetZFromXy(int(x)-1, board.BoardSize()-y)
-				code.Console.Trace("x=%d y=%d z=%04d\n", x, y, board.GetZ4(z))
-				if ax == "pass" {
+
+				// 段
+				var y = int(gtp_z[1] - '0')
+				if 2 < len(gtp_z) {
+					y *= 10
+					y += int(gtp_z[2] - '0')
+				}
+
+				// インデックス
+				var z = board.GetZFromXy(int(x)-1, y-1)
+				code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, board.GetZ4(z))
+				if gtp_z == "pass" {
 					z = 0
 				}
 

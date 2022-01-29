@@ -73,7 +73,7 @@ func RunGtpEngine() {
 			code.Gtp.Print("= KifuwarabeUEC13\n\n")
 
 		case "version":
-			code.Gtp.Print("= 0.0.1\n\n")
+			code.Gtp.Print("= 0.0.2\n\n")
 
 		case "list_commands":
 			code.Gtp.Print("= boardsize\nclear_board\nquit\nprotocol_version\nundo\n" +

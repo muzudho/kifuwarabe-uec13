@@ -109,28 +109,43 @@ BoardData = '''
 ![20220130go73a2.png](./doc/img/20220130go73a2.png)  
 
 👆 きふわらべのソースコードは、Git hub から入手できます  
-**がんばって** `GitHub Desktop` をインストールしておいてください。  
+
+![GitHub Desktop](./doc/img/20220130go74.png)  
+
+👆 ソースをダウンロードするのに `GitHub Desktop` を使いますが、 **がんばって** `GitHub Desktop` をインストールしておいてください。  
+そのあと がんばって ローカルPCに `kifuwarabe-uec13のリポジトリ―` を作ってください  
+何がなにやら分からないかも知れませんが **がんばって** ください  
 
 ![20220130go72.png](./doc/img/20220130go72.png)  
 
 📖 [Visual Studio Code](https://code.visualstudio.com/)  
 
 👆 プログラムを編集するツールとしては Visual Studio Code で十分でしょう。 **がんばって** インストールしてください  
-上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** 表示してください。  
+**がんばって** `kifuwarabe-uec13のリポジトリ―` の📂フォルダーを開いてください。  
+上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** ターミナルを表示してください。  
+
+## Set up - 5
 
 📖 [Go Downloads](https://go.dev/dl/)  
 
 👆 Go言語を **がんばって** インストールしてください  
 
-## Set up - 4
+## Set up - 6 Build
+
+Visual Studio Code に戻りまして。  
+
+![20220130go75a2.png](doc/img/20220130go75a2.png)  
 
 ```shell
 go build
 ```
 
-👆 実行ファイルを作成してください。 `kifuwarabe-uec13.exe` ファイルが作成されます  
+👆 ターミナルに上記のコマンドを打鍵してください。 `kifuwarabe-uec13.exe` 実行ファイルが作成されます。  
+お疲れさまでした。  
 
 # Run
+
+ターミナルで以下のコマンドを打鍵すると、ターミナルで実行することもできます。  
 
 ```shell
 # GTP形式の思考エンジンとして対局するなら
@@ -141,3 +156,23 @@ kifuwarabe-uec13 SelfPlay
 ```
 
 👆 拡張子を省いた実行ファイル名を打鍵してください
+
+## Set up - 7
+
+![20220130go76.png](doc/img/20220130go76.png)  
+
+👆 CgfGoBan を開いて、 `[設定] - [GTPの設定]` と進んでください  
+
+![20220130go77.png](doc/img/20220130go77.png)  
+
+👆 きふわらべの .exe へのフルパスを入れてください  
+
+![20220130go78.png](doc/img/20220130go78.png)  
+
+👆 `[対局] - [対局開始]` と進んでください  
+
+![20220130go79.png](doc/img/20220130go79.png)  
+
+👆 Black と White のどちらか片方を `Computer(GTP)` にしてください。  
+これで きふわらべと対局できます。  
+お疲れさまでした。  

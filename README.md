@@ -12,19 +12,34 @@ GoGo をベースとしています
 きふわらべは エンジンだけですので、GUI が別途必要です。  
 ここでは CgfGoBan で動かす例を示します。  
 
+![20220130go67a2.png](doc/img/20220130go67a2.png)  
+
 📖 [CgfGoBan](http://www.yss-aya.com/cgfgoban_j.html)  
 
-👆 CgfGoBan のページから英語版に飛んでダウンロードしてきてください
+👆 CgfGoBan のページから英語版に飛んでください  
+
+![20220130go68a2.png](doc/img/20220130go68a2.png)  
+
+👆 `Download CgfGoBan 1.08 2015/03/16` をクリックして `cgfgoban108.zip` ファイルをダウンロードしてきてください  
+
+![20220130go69.png](doc/img/20220130go69.png)  
+
+👆 がんばって好きなところに解凍してください  
+
+![20220130go70.png](doc/img/20220130go70.png)  
+
+👆 最初の中身はこんな感じです  
 
 ## Set up - 2
 
 ![202201go1.png](./doc/img/202201go1.png)  
 
-👆 CgfGoBan を使うなら、 `cgfgoban.exe` ファイルが 相対ファイルパスの起点になりますから、  
-以下の図を参考に、`cgfgoban.exe` ファイルと同じディレクトリーに `📂input/game_conf.toml` と `📂output`（空ディレクトリー） を置いてください  
+👆 CgfGoBan の `cgfgoban.exe` ファイルと同じディレクトリーに、  
+以下の図を参考に `📂input/game_conf.toml` と `📂output`（空ディレクトリー） を置いてください  
+`game_conf.toml` は、この Git hub の `📂input` の中に置いてあります  
 
 ```plain
-📂 cgfgoban
+📂 cgfgoban108
 |
 +----📂 input
 |    |

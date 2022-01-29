@@ -15,7 +15,8 @@ func SelfPlay() {
 	code.Console.Trace("# GoGo SelfPlay 自己対局開始☆（＾～＾）\n")
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	e.Komi = config.Komi()
-	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.MaxMovesNum())
+	e.MaxMovesNum = config.MaxMovesNum()
+	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
 
 	e.AdjustParameters(board) // パラーメーター調整
 

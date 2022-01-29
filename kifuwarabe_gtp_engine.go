@@ -23,7 +23,8 @@ func RunGtpEngine() {
 	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	e.Komi = config.Komi()
-	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.MaxMovesNum())
+	e.MaxMovesNum = config.MaxMovesNum()
+	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
 	board.InitBoard()
 
 	e.AdjustParameters(board) // パラーメーター調整

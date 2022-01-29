@@ -10,7 +10,6 @@ type Board struct {
 	boardSize           int
 	sentinelWidth       int
 	sentinelBoardArea   int
-	maxMoves            int
 	iteratorWithoutWall func(func(int))
 
 	uctChildrenSize int
@@ -18,18 +17,17 @@ type Board struct {
 
 // NewBoard - 盤を作成します。
 // TODO Board の NewBoard を呼び出す方法がない？
-func NewBoard(data []int, boardSize int, sentinelBoardArea int, maxMoves int) *Board {
+func NewBoard(data []int, boardSize int, sentinelBoardArea int) *Board {
 	var board = new(Board)
 	board.data = data
 	board.boardSize = boardSize
 	board.sentinelWidth = boardSize + 2
 	board.sentinelBoardArea = sentinelBoardArea
-	board.maxMoves = maxMoves
 	board.uctChildrenSize = boardSize*boardSize + 1
 	board.iteratorWithoutWall = CreateBoardIteratorWithoutWall(board)
 
 	checkBoard = make([]int, board.SentinelBoardArea())
-	Record = make([]IRecordItemV01, board.MaxMovesNum())
+	Record = make([]IRecordItemV01, MaxMovesNum)
 	Dir4 = [4]int{1, board.SentinelWidth(), -1, -board.SentinelWidth()}
 
 	return board
@@ -67,11 +65,6 @@ func (board Board) SentinelWidth() int {
 // SentinelBoardArea - 枠付きの盤の交点数
 func (board Board) SentinelBoardArea() int {
 	return board.sentinelBoardArea
-}
-
-// MaxMovesNum - 最大手数
-func (board Board) MaxMovesNum() int {
-	return board.maxMoves
 }
 
 // ColorAt - 指定した交点の石の色

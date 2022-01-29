@@ -8,6 +8,9 @@ const (
 // Komi - コミ。 6.5 といった数字を入れるだけ。実行速度優先で 64bitに。
 var Komi float64
 
+// MaxMovesNum - 上限手数
+var MaxMovesNum int
+
 // Record - 棋譜
 var Record []IRecordItemV01
 

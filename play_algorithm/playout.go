@@ -28,21 +28,23 @@ func Playout(
 		var empty = make([]int, boardMax)
 		var emptyNum, r, z int
 
+		// 空点を記憶します
 		var onPoint = func(z int) {
-			if !position.Exists(z) {
+			if !position.Exists(z) { // 空点なら
 				empty[emptyNum] = z
 				emptyNum++
 			}
 		}
-
 		position.IterateWithoutWall(onPoint)
 
 		r = 0
-		for {
-			if emptyNum == 0 {
+		var randomPigeonX = GetRandomPigeonX(emptyNum) // 見切りを付ける試行回数を算出
+		var i int
+		for i = 0; i < randomPigeonX; i++ {
+			if emptyNum == 0 { // 空点が無ければ投了します
 				z = 0
 			} else {
-				r = rand.Intn(emptyNum)
+				r = rand.Intn(emptyNum) // 空点を適当に選びます
 				z = empty[r]
 			}
 
@@ -53,6 +55,9 @@ func Playout(
 			}
 			empty[r] = empty[emptyNum-1]
 			emptyNum--
+		}
+		if i == randomPigeonX {
+			z = 0
 		}
 
 		// テストのときは棋譜を残します

@@ -18,13 +18,11 @@ func SelfPlay() {
 	e.MaxMovesNum = config.MaxMovesNum()
 	e.SetBoardSize(config.BoardSize())
 	var position = e.NewPosition(config.GetBoardArray())
-
-	pl.AdjustParameters(position) // パラーメーター調整
+	pl.InitPosition(position)
 
 	var color = 1
 
 	for {
-		pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(position)
 		var z = GetComputerMoveDuringSelfPlay(position, color)
 
 		var recItem = new(e.RecordItem)
@@ -56,7 +54,7 @@ func GetComputerMoveDuringSelfPlay(position *e.Position, color int) int {
 	z = pl.GetBestZByUct(
 		position,
 		color,
-		pl.WrapSearchUct(position))
+		pl.SearchingOfUct)
 
 	var sec = time.Since(start).Seconds()
 	code.Console.Info("(GetComputerMoveDuringSelfPlay) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",

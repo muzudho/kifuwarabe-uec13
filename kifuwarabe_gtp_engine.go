@@ -26,9 +26,7 @@ func RunGtpEngine() {
 	e.MaxMovesNum = config.MaxMovesNum()
 	e.SetBoardSize(config.BoardSize())
 	var position = e.NewPosition(config.GetBoardArray())
-	position.InitPosition()
-
-	pl.AdjustParameters(position) // パラーメーター調整
+	pl.InitPosition(position)
 
 	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 
@@ -43,14 +41,25 @@ func RunGtpEngine() {
 		switch tokens[0] {
 		case "boardsize":
 			// boardsize 19
+			// 盤のサイズを変えます
+			if 2 <= len(tokens) {
+				var boardSize, err = strconv.Atoi(tokens[1])
 
-			// TODO 盤のサイズを変えたい
-			pl.AdjustParameters(position) // パラーメーター再調整
+				if err != nil {
+					code.Console.Fatal(fmt.Sprintf("command=%s", command))
+					panic(err)
+				}
 
-			code.Gtp.Print("= \n\n")
+				e.SetBoardSize(boardSize)
+				pl.InitPosition(position)
+
+				code.Gtp.Print("= \n\n")
+			} else {
+				code.Gtp.Print("?What is a %s\n\n", command)
+			}
 
 		case "clear_board":
-			position.InitPosition()
+			pl.InitPosition(position)
 			code.Gtp.Print("= \n\n")
 
 		case "quit":
@@ -82,7 +91,7 @@ func RunGtpEngine() {
 				e.Komi = komi
 				code.Gtp.Print("= %d\n\n", e.Komi)
 			} else {
-				code.Gtp.Print("?What is a komi\n\n", e.Komi)
+				code.Gtp.Print("?What is a %s\n\n", command)
 			}
 
 			// TODO 消す code.Gtp.Print("= 6.5\n\n")
@@ -143,9 +152,6 @@ func PlayComputerMoveLesson09a(
 	position *e.Position,
 	color int) int {
 
-	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(position)
-	pl.AdjustParameters(position)
-
 	var z int
 	var st = time.Now()
 	pl.AllPlayouts = 0
@@ -153,7 +159,7 @@ func PlayComputerMoveLesson09a(
 	z = pl.GetBestZByUct(
 		position,
 		color,
-		pl.WrapSearchUct(position))
+		pl.SearchingOfUct)
 
 	var sec = time.Since(st).Seconds()
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",

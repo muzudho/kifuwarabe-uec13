@@ -39,6 +39,9 @@ func NewPosition(board []int) *Position {
 func (position *Position) InitPosition() {
 	var boardMax = SentinelBoardArea
 
+	// サイズが変わっているケースに対応
+	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
+
 	// 枠線
 	for z := 0; z < boardMax; z++ {
 		position.SetColor(z, 3)

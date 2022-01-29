@@ -53,12 +53,12 @@ var labelOfRows = [20]string{" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8
 var stoneLabels = [4]string{" .", " x", " o", " #"}
 
 // PrintBoard - 盤を描画。
-func PrintBoard(board *e.Board, movesNum int) {
+func PrintBoard(position *e.Position, movesNum int) {
 
 	var b = &strings.Builder{}
 	b.Grow(sz8k)
 
-	var boardSize = board.BoardSize()
+	var boardSize = position.BoardSize()
 
 	// Header
 	b.WriteString("\n   ")
@@ -76,7 +76,7 @@ func PrintBoard(board *e.Board, movesNum int) {
 		b.WriteString(labelOfRows[y+1])
 		b.WriteString("|")
 		for x := 0; x < boardSize; x++ {
-			b.WriteString(stoneLabels[board.ColorAtXy(x, y)])
+			b.WriteString(stoneLabels[position.ColorAtXy(x, y)])
 		}
 		b.WriteString(" |\n")
 	}
@@ -90,7 +90,7 @@ func PrintBoard(board *e.Board, movesNum int) {
 
 	// Info
 	b.WriteString("  KoZ=")
-	b.WriteString(strconv.Itoa(board.GetZ4(e.KoZ)))
+	b.WriteString(strconv.Itoa(position.GetZ4(e.KoZ)))
 	if movesNum != -1 {
 		b.WriteString(",movesNum=")
 		b.WriteString(strconv.Itoa(movesNum))

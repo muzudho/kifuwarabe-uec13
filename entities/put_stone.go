@@ -7,8 +7,8 @@ import (
 )
 
 // PutStoneOnRecord - SelfPlay, RunGtpEngine から呼び出されます
-func PutStoneOnRecord(board *Board, z int, color int, recItem IRecordItemV01) {
-	var err = PutStone(board, z, color)
+func PutStoneOnRecord(position *Position, z int, color int, recItem IRecordItemV01) {
+	var err = PutStone(position, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")
 		os.Exit(0)
@@ -22,7 +22,7 @@ func PutStoneOnRecord(board *Board, z int, color int, recItem IRecordItemV01) {
 
 // PutStone - 石を置きます。
 // * `z` - 交点。壁有り盤の配列インデックス
-func PutStone(board *Board, z int, color int) int {
+func PutStone(position *Position, z int, color int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
 	var unCol = FlipColor(color)
@@ -41,7 +41,7 @@ func PutStone(board *Board, z int, color int) int {
 		around[dir][1] = 0
 		around[dir][2] = 0
 		var z2 = z + Dir4[dir]
-		var color2 = board.ColorAt(z2)
+		var color2 = position.ColorAt(z2)
 		if color2 == 0 {
 			space++
 		}
@@ -51,7 +51,7 @@ func PutStone(board *Board, z int, color int) int {
 		if color2 == 0 || color2 == 3 {
 			continue
 		}
-		board.CountLiberty(z2, &liberty, &stone)
+		position.CountLiberty(z2, &liberty, &stone)
 		around[dir][0] = liberty
 		around[dir][1] = stone
 		around[dir][2] = color2
@@ -75,20 +75,20 @@ func PutStone(board *Board, z int, color int) int {
 	if wall+mycolSafe == 4 {
 		return 3
 	}
-	if board.Exists(z) {
+	if position.Exists(z) {
 		return 4
 	}
 
 	for dir := 0; dir < 4; dir++ {
 		var lib = around[dir][0]
 		var color2 = around[dir][2]
-		if color2 == unCol && lib == 1 && board.Exists(z+Dir4[dir]) {
-			board.TakeStone(z+Dir4[dir], unCol)
+		if color2 == unCol && lib == 1 && position.Exists(z+Dir4[dir]) {
+			position.TakeStone(z+Dir4[dir], unCol)
 		}
 	}
 
-	board.SetColor(z, color)
-	board.CountLiberty(z, &liberty, &stone)
+	position.SetColor(z, color)
+	position.CountLiberty(z, &liberty, &stone)
 
 	if captureSum == 1 && stone == 1 && liberty == 1 {
 		KoZ = koMaybe

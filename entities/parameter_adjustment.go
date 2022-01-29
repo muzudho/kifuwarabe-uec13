@@ -11,8 +11,8 @@ var UctLoopCount = 4500
 // var UctLoopCount = 5000 // ペンキ塗りはしなくなる
 // var UctLoopCount = 10000 // 多め（遅い感じ）
 
-func AdjustParameters(board *Board) {
-	var boardSize = board.BoardSize()
+func AdjustParameters(position *Position) {
+	var boardSize = position.BoardSize()
 	if boardSize < 10 {
 		// 10路盤より小さいとき
 		PlayoutTrialCount = boardSize*boardSize + 200

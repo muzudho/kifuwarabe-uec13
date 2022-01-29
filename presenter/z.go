@@ -9,13 +9,13 @@ import (
 )
 
 // GetGtpZ - XY座標をアルファベット、数字で表したもの。 例: Q10
-func GetGtpZ(board *e.Board, z int) string {
+func GetGtpZ(position *e.Position, z int) string {
 	if z == 0 {
 		return "PASS"
 	}
 
-	var y = z / board.SentinelWidth()
-	var x = z % board.SentinelWidth()
+	var y = z / position.SentinelWidth()
+	var x = z % position.SentinelWidth()
 
 	// 筋が25（'Z'）より大きくなることは想定していません
 	var alphabet_x = 'A' + x - 1
@@ -30,7 +30,7 @@ func GetGtpZ(board *e.Board, z int) string {
 
 // GetZFromGtp - GTPの座標符号を z に変換します
 // * `gtp_z` - 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定。 例: q10
-func GetZFromGtp(board *e.Board, gtp_z string) int {
+func GetZFromGtp(position *e.Position, gtp_z string) int {
 	gtp_z = strings.ToUpper(gtp_z)
 	code.Console.Trace("# gtp_z=%s\n", gtp_z)
 
@@ -52,7 +52,7 @@ func GetZFromGtp(board *e.Board, gtp_z string) int {
 	}
 
 	// インデックス
-	var z = board.GetZFromXy(int(x)-1, y-1)
-	code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, board.GetZ4(z))
+	var z = position.GetZFromXy(int(x)-1, y-1)
+	code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, position.GetZ4(z))
 	return z
 }

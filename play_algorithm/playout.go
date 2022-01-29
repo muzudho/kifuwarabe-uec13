@@ -13,7 +13,7 @@ import (
 //
 // 手番が勝ったら 1、引分けなら 0、 相手が勝ったら -1
 func Playout(
-	board *e.Board,
+	position *e.Position,
 	turnColor int,
 	getWinner func(int) int) int {
 
@@ -21,7 +21,7 @@ func Playout(
 
 	var color = turnColor
 	var previousZ = 0
-	var boardMax = board.SentinelBoardArea()
+	var boardMax = position.SentinelBoardArea()
 
 	var playoutTrialCount = e.PlayoutTrialCount
 	for trial := 0; trial < playoutTrialCount; trial++ {
@@ -29,13 +29,13 @@ func Playout(
 		var emptyNum, r, z int
 
 		var onPoint = func(z int) {
-			if !board.Exists(z) {
+			if !position.Exists(z) {
 				empty[emptyNum] = z
 				emptyNum++
 			}
 		}
 
-		board.IterateWithoutWall(onPoint)
+		position.IterateWithoutWall(onPoint)
 
 		r = 0
 		for {
@@ -46,7 +46,7 @@ func Playout(
 				z = empty[r]
 			}
 
-			var err = e.PutStone(board, z, color)
+			var err = e.PutStone(position, z, color)
 
 			if err == 0 {
 				break

@@ -24,10 +24,10 @@ func RunGtpEngine() {
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	e.Komi = config.Komi()
 	e.MaxMovesNum = config.MaxMovesNum()
-	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
-	board.InitBoard()
+	var position = e.NewPosition(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
+	position.InitBoard()
 
-	e.AdjustParameters(board) // パラーメーター調整
+	e.AdjustParameters(position) // パラーメーター調整
 
 	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 
@@ -44,12 +44,12 @@ func RunGtpEngine() {
 			// boardsize 19
 
 			// TODO 盤のサイズを変えたい
-			e.AdjustParameters(board) // パラーメーター再調整
+			e.AdjustParameters(position) // パラーメーター再調整
 
 			code.Gtp.Print("= \n\n")
 
 		case "clear_board":
-			board.InitBoard()
+			position.InitBoard()
 			code.Gtp.Print("= \n\n")
 
 		case "quit":
@@ -99,8 +99,8 @@ func RunGtpEngine() {
 			} else {
 				color = 1
 			}
-			var z = PlayComputerMoveLesson09a(board, color)
-			code.Gtp.Print("= %s\n\n", p.GetGtpZ(board, z))
+			var z = PlayComputerMoveLesson09a(position, color)
+			code.Gtp.Print("= %s\n\n", p.GetGtpZ(position, z))
 
 		case "play":
 			// play black A3
@@ -121,12 +121,12 @@ func RunGtpEngine() {
 					color = 1
 				}
 
-				var z = p.GetZFromGtp(board, tokens[2])
+				var z = p.GetZFromGtp(position, tokens[2])
 				var recItem = new(e.RecordItemV02)
 				recItem.Z = z
 				recItem.Time = 0
-				e.PutStoneOnRecord(board, z, color, recItem)
-				p.PrintBoard(board, e.MovesNum)
+				e.PutStoneOnRecord(position, z, color, recItem)
+				p.PrintBoard(position, e.MovesNum)
 
 				code.Gtp.Print("= \n\n")
 			}
@@ -139,31 +139,31 @@ func RunGtpEngine() {
 
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
-	board *e.Board,
+	position *e.Position,
 	color int) int {
 
-	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(board)
+	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(position)
 
-	e.AdjustParameters(board)
+	e.AdjustParameters(position)
 
 	var z int
 	var st = time.Now()
 	pl.AllPlayouts = 0
 
 	z = pl.GetBestZByUct(
-		board,
+		position,
 		color,
-		pl.WrapSearchUct(board))
+		pl.WrapSearchUct(position))
 
 	var sec = time.Since(st).Seconds()
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(pl.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, pl.AllPlayouts)
+		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), e.MovesNum, color, pl.AllPlayouts)
 
 	var recItem = new(e.RecordItemV02)
 	recItem.Z = z
 	recItem.Time = sec
-	e.PutStoneOnRecord(board, z, color, recItem)
-	p.PrintBoard(board, e.MovesNum)
+	e.PutStoneOnRecord(position, z, color, recItem)
+	p.PrintBoard(position, e.MovesNum)
 
 	return z
 }

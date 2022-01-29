@@ -19,24 +19,24 @@ const (
 
 // GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
 func GetBestZByUct(
-	board *e.Board,
+	position *e.Position,
 	color int,
 	searchUct func(int, int) int) int {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
-	var next = CreateNode(board)
+	var next = CreateNode(position)
 	var uctLoopCount = e.UctLoopCount
 	for i := 0; i < uctLoopCount; i++ {
 		// 一時記憶
-		var copiedBoard = board.CopyData()
+		var copiedBoard = position.CopyData()
 		var copiedKoZ = e.KoZ
 
 		searchUct(color, next)
 
 		// 復元
 		e.KoZ = copiedKoZ
-		board.ImportData(copiedBoard)
+		position.ImportData(copiedBoard)
 	}
 
 	// ベスト値検索フェーズ
@@ -49,20 +49,20 @@ func GetBestZByUct(
 			bestI = i
 			max = c.Games
 		}
-		code.Console.Info("(UCT Calculating...) %2d:z=%04d,rate=%.4f,games=%3d\n", i, board.GetZ4(c.Z), c.Rate, c.Games)
+		code.Console.Info("(UCT Calculating...) %2d:z=%04d,rate=%.4f,games=%3d\n", i, position.GetZ4(c.Z), c.Rate, c.Games)
 	}
 
 	// 結果
 	var bestZ = pN.Children[bestI].Z
 	code.Console.Info("(UCT Calculated    ) bestZ=%04d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
-		board.GetZ4(bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
+		position.GetZ4(bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
 	return bestZ
 }
 
 // WrapSearchUct - 盤とその描画関数を束縛変数として与えます
-func WrapSearchUct(board *e.Board) func(int, int) int {
+func WrapSearchUct(position *e.Position) func(int, int) int {
 	var searchUct = func(color int, nodeN int) int {
-		return SearchUct(board, color, nodeN)
+		return SearchUct(position, color, nodeN)
 	}
 
 	return searchUct
@@ -70,7 +70,7 @@ func WrapSearchUct(board *e.Board) func(int, int) int {
 
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます
 func SearchUct(
-	board *e.Board,
+	position *e.Position,
 	color int,
 	nodeN int) int {
 
@@ -82,7 +82,7 @@ func SearchUct(
 		c = &pN.Children[selectI]
 		var z = c.Z
 
-		var err = e.PutStone(board, z, color)
+		var err = e.PutStone(position, z, color)
 		if err == 0 {
 			break
 		}
@@ -92,12 +92,12 @@ func SearchUct(
 
 	var winner int // 手番が勝ちなら1、引分けなら0、手番の負けなら-1 としてください
 	if c.Games <= 0 {
-		winner = -Playout(board, e.FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
+		winner = -Playout(position, e.FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
 	} else {
 		if c.Next == NodeEmpty {
-			c.Next = CreateNode(board)
+			c.Next = CreateNode(position)
 		}
-		winner = -SearchUct(board, e.FlipColor(color), c.Next)
+		winner = -SearchUct(position, e.FlipColor(color), c.Next)
 	}
 	c.Rate = (c.Rate*float64(c.Games) + float64(winner)) / float64(c.Games+1)
 	c.Games++

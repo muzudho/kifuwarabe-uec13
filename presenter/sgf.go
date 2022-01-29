@@ -6,14 +6,14 @@ import (
 )
 
 // PrintSgf - SGF形式の棋譜表示。
-func PrintSgf(board *e.Board, movesNum int, record []e.IRecordItemV01) {
-	var boardSize = board.BoardSize()
+func PrintSgf(position *e.Position, movesNum int, record []e.IRecordItemV01) {
+	var boardSize = position.BoardSize()
 
 	code.Console.Print("(;GM[1]SZ[%d]KM[%.1f]PB[]PW[]\n", boardSize, e.Komi)
 	for i := 0; i < movesNum; i++ {
 		var z = record[i].GetZ()
-		var y = z / board.SentinelWidth()
-		var x = z - y*board.SentinelWidth()
+		var y = z / position.SentinelWidth()
+		var x = z - y*position.SentinelWidth()
 		var sStone = [2]string{"B", "W"}
 		code.Console.Print(";%s", sStone[i&1])
 		if z == 0 {

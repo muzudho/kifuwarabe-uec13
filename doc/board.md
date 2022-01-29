@@ -1,4 +1,4 @@
-# Board
+# Position
 
 `input/*.gameConf.toml`:  
 

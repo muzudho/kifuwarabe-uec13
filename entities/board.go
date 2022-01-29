@@ -10,6 +10,8 @@ type Position struct {
 	board []int
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
 	KoZ int
+	// MovesNum - 手数
+	MovesNum int
 	// 二重ループ
 	iteratorWithoutWall func(func(int))
 	// UCT計算中の子の数
@@ -46,7 +48,7 @@ func (position *Position) InitPosition() {
 	}
 	position.iteratorWithoutWall(onPoint)
 
-	MovesNum = 0
+	position.MovesNum = 0
 	position.KoZ = 0
 }
 

@@ -35,9 +35,6 @@ var Dir4 = [4]int{1, 9, -1, 9}
 // For count liberty.
 var checkBoard = []int{}
 
-// MovesNum - 手数？
-var MovesNum int
-
 // FlipColor - 白黒反転させます。
 func FlipColor(col int) int {
 	return 3 - col

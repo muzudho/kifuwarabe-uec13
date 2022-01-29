@@ -127,7 +127,7 @@ func RunGtpEngine() {
 				recItem.Z = z
 				recItem.Time = 0
 				e.PutStoneOnRecord(position, z, color, recItem)
-				p.PrintBoard(position, e.MovesNum)
+				p.PrintBoard(position, position.MovesNum)
 
 				code.Gtp.Print("= \n\n")
 			}
@@ -158,13 +158,13 @@ func PlayComputerMoveLesson09a(
 
 	var sec = time.Since(st).Seconds()
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), e.MovesNum, color, pl.AllPlayouts)
+		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), position.MovesNum, color, pl.AllPlayouts)
 
 	var recItem = new(e.RecordItemV02)
 	recItem.Z = z
 	recItem.Time = sec
 	e.PutStoneOnRecord(position, z, color, recItem)
-	p.PrintBoard(position, e.MovesNum)
+	p.PrintBoard(position, position.MovesNum)
 
 	return z
 }

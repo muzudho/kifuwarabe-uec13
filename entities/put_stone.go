@@ -15,9 +15,9 @@ func PutStoneOnRecord(position *Position, z int, color int, recItem IRecordItemV
 	}
 
 	// 棋譜に記録
-	Record[MovesNum] = recItem
+	Record[position.MovesNum] = recItem
 
-	MovesNum++
+	position.MovesNum++
 }
 
 // PutStone - 石を置きます。

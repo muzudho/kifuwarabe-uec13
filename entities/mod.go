@@ -5,6 +5,9 @@ const (
 	Author = "Satoshi Takahashi"
 )
 
+// Komi - コミ。 6.5 といった数字を入れるだけ。実行速度優先で 64bitに。
+var Komi float64
+
 // Record - 棋譜
 var Record []IRecordItemV01
 

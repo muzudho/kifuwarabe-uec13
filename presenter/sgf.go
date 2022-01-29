@@ -9,7 +9,7 @@ import (
 func PrintSgf(board *e.Board, movesNum int, record []e.IRecordItemV01) {
 	var boardSize = board.BoardSize()
 
-	code.Console.Print("(;GM[1]SZ[%d]KM[%.1f]PB[]PW[]\n", boardSize, board.Komi())
+	code.Console.Print("(;GM[1]SZ[%d]KM[%.1f]PB[]PW[]\n", boardSize, e.Komi)
 	for i := 0; i < movesNum; i++ {
 		var z = record[i].GetZ()
 		var y = z / board.SentinelWidth()

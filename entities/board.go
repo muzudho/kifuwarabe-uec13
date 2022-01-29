@@ -10,7 +10,6 @@ type Board struct {
 	boardSize           int
 	sentinelWidth       int
 	sentinelBoardArea   int
-	komi                float64
 	maxMoves            int
 	iteratorWithoutWall func(func(int))
 
@@ -19,13 +18,12 @@ type Board struct {
 
 // NewBoard - 盤を作成します。
 // TODO Board の NewBoard を呼び出す方法がない？
-func NewBoard(data []int, boardSize int, sentinelBoardArea int, komi float64, maxMoves int) *Board {
+func NewBoard(data []int, boardSize int, sentinelBoardArea int, maxMoves int) *Board {
 	var board = new(Board)
 	board.data = data
 	board.boardSize = boardSize
 	board.sentinelWidth = boardSize + 2
 	board.sentinelBoardArea = sentinelBoardArea
-	board.komi = komi
 	board.maxMoves = maxMoves
 	board.uctChildrenSize = boardSize*boardSize + 1
 	board.iteratorWithoutWall = CreateBoardIteratorWithoutWall(board)
@@ -69,11 +67,6 @@ func (board Board) SentinelWidth() int {
 // SentinelBoardArea - 枠付きの盤の交点数
 func (board Board) SentinelBoardArea() int {
 	return board.sentinelBoardArea
-}
-
-// Komi - コミ。 6.5 といった数字を入れるだけ。実行速度優先で 64bitに。
-func (board Board) Komi() float64 {
-	return board.komi
 }
 
 // MaxMovesNum - 最大手数

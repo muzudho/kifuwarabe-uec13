@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -20,7 +22,8 @@ func RunGtpEngine() {
 
 	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
-	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.Komi(), config.MaxMovesNum())
+	e.Komi = config.Komi()
+	var board = e.NewBoard(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea(), config.MaxMovesNum())
 	board.InitBoard()
 
 	e.AdjustParameters(board) // パラーメーター調整
@@ -37,9 +40,9 @@ func RunGtpEngine() {
 		var tokens = strings.Split(command, " ")
 		switch tokens[0] {
 		case "boardsize":
-			// TODO 盤のサイズを変えたい
 			// boardsize 19
 
+			// TODO 盤のサイズを変えたい
 			e.AdjustParameters(board) // パラーメーター再調整
 
 			code.Gtp.Print("= \n\n")
@@ -65,7 +68,22 @@ func RunGtpEngine() {
 				"name\nversion\nlist_commands\nkomi\ngenmove\nplay\n\n")
 
 		case "komi":
-			code.Gtp.Print("= 6.5\n\n")
+			// komi 6.5
+			if 2 <= len(tokens) {
+				var komi, err = strconv.ParseFloat(tokens[1], 64)
+
+				if err != nil {
+					code.Console.Fatal(fmt.Sprintf("command=%s", command))
+					panic(err)
+				}
+
+				e.Komi = komi
+				code.Gtp.Print("= %d\n\n", e.Komi)
+			} else {
+				code.Gtp.Print("?What is a komi\n\n", e.Komi)
+			}
+
+			// TODO 消す code.Gtp.Print("= 6.5\n\n")
 
 		case "undo":
 			// 未実装

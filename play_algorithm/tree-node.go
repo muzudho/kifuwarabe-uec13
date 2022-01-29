@@ -1,9 +1,10 @@
-package entities
+package play_algorithm
 
 import (
 	"os"
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
+	e "github.com/muzudho/kifuwarabe-uec13/entities"
 )
 
 // Child - 子。
@@ -39,7 +40,7 @@ func addChild(pN *Node, z int) {
 }
 
 // CreateNode - ノード作成。 searchUctV8, GetBestZByUct, searchUctLesson09 から呼び出されます。
-func CreateNode(board IBoard) int {
+func CreateNode(board e.IBoard) int {
 
 	if NodeNum == NodeMax {
 		code.Console.Error("node over Err\n")

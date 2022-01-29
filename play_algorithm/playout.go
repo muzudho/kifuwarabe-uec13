@@ -1,7 +1,9 @@
-package entities
+package play_algorithm
 
 import (
 	"math/rand"
+
+	e "github.com/muzudho/kifuwarabe-uec13/entities"
 )
 
 // Playout - 最後まで石を打ちます。得点を返します
@@ -9,9 +11,9 @@ import (
 //
 // # Returns
 //
-// 勝者（黒番が1なのか、白番が1なのか、手番が1なのかは設定によって異なります）
+// 手番が勝ったら 1、引分けなら 0、 相手が勝ったら -1
 func Playout(
-	board IBoard,
+	board e.IBoard,
 	turnColor int,
 	getWinner func(int) int) int {
 
@@ -21,7 +23,7 @@ func Playout(
 	var previousZ = 0
 	var boardMax = board.SentinelBoardArea()
 
-	var playoutTrialCount = PlayoutTrialCount
+	var playoutTrialCount = e.PlayoutTrialCount
 	for trial := 0; trial < playoutTrialCount; trial++ {
 		var empty = make([]int, boardMax)
 		var emptyNum, r, z int
@@ -44,7 +46,7 @@ func Playout(
 				z = empty[r]
 			}
 
-			var err = PutStone(board, z, color)
+			var err = e.PutStone(board, z, color)
 
 			if err == 0 {
 				break
@@ -55,8 +57,8 @@ func Playout(
 
 		// テストのときは棋譜を残します
 		if FlagTestPlayout != 0 {
-			Record[MovesNum].SetZ(z)
-			MovesNum++
+			e.Record[e.MovesNum].SetZ(z)
+			e.MovesNum++
 		}
 
 		if z == 0 && previousZ == 0 {
@@ -64,7 +66,7 @@ func Playout(
 		}
 		previousZ = z
 
-		color = FlipColor(color)
+		color = e.FlipColor(color)
 	}
 
 	return getWinner(turnColor)

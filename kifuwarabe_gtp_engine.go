@@ -9,6 +9,7 @@ import (
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
+	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
 )
 
@@ -122,22 +123,22 @@ func PlayComputerMoveLesson09a(
 	board e.IBoard,
 	color int) int {
 
-	e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
+	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(board)
 
 	e.AdjustParameters(board)
 
 	var z int
 	var st = time.Now()
-	e.AllPlayouts = 0
+	pl.AllPlayouts = 0
 
-	z = e.GetBestZByUct(
+	z = pl.GetBestZByUct(
 		board,
 		color,
-		e.WrapSearchUct(board))
+		pl.WrapSearchUct(board))
 
 	var sec = time.Since(st).Seconds()
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts)
+		sec, float64(pl.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, pl.AllPlayouts)
 
 	var recItem = new(e.RecordItemV02)
 	recItem.Z = z

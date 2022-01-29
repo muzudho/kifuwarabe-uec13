@@ -6,6 +6,7 @@ import (
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
+	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
 )
 
@@ -20,7 +21,7 @@ func SelfPlay() {
 	var color = 1
 
 	for {
-		e.GettingOfWinnerOnDuringUCTPlayout = e.WrapGettingOfWinner(board)
+		pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(board)
 		var z = GetComputerMoveDuringSelfPlay(board, color)
 
 		var recItem = new(e.RecordItemV01)
@@ -47,15 +48,15 @@ func GetComputerMoveDuringSelfPlay(board e.IBoard, color int) int {
 
 	var z int
 	var start = time.Now()
-	e.AllPlayouts = 0
+	pl.AllPlayouts = 0
 
-	z = e.GetBestZByUct(
+	z = pl.GetBestZByUct(
 		board,
 		color,
-		e.WrapSearchUct(board))
+		pl.WrapSearchUct(board))
 
 	var sec = time.Since(start).Seconds()
 	code.Console.Info("(GetComputerMoveDuringSelfPlay) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(e.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, e.AllPlayouts)
+		sec, float64(pl.AllPlayouts)/sec, board.GetZ4(z), e.MovesNum, color, pl.AllPlayouts)
 	return z
 }

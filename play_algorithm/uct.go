@@ -1,4 +1,4 @@
-package entities
+package play_algorithm
 
 import (
 	"math"
@@ -6,6 +6,7 @@ import (
 	"os"
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
+	e "github.com/muzudho/kifuwarabe-uec13/entities"
 )
 
 // UCT
@@ -18,23 +19,23 @@ const (
 
 // GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
 func GetBestZByUct(
-	board IBoard,
+	board e.IBoard,
 	color int,
 	searchUct func(int, int) int) int {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
 	var next = CreateNode(board)
-	var uctLoopCount = UctLoopCount
+	var uctLoopCount = e.UctLoopCount
 	for i := 0; i < uctLoopCount; i++ {
 		// 一時記憶
 		var copiedBoard = board.CopyData()
-		var copiedKoZ = KoZ
+		var copiedKoZ = e.KoZ
 
 		searchUct(color, next)
 
 		// 復元
-		KoZ = copiedKoZ
+		e.KoZ = copiedKoZ
 		board.ImportData(copiedBoard)
 	}
 
@@ -59,7 +60,7 @@ func GetBestZByUct(
 }
 
 // WrapSearchUct - 盤とその描画関数を束縛変数として与えます
-func WrapSearchUct(board IBoard) func(int, int) int {
+func WrapSearchUct(board e.IBoard) func(int, int) int {
 	var searchUct = func(color int, nodeN int) int {
 		return SearchUct(board, color, nodeN)
 	}
@@ -69,7 +70,7 @@ func WrapSearchUct(board IBoard) func(int, int) int {
 
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます
 func SearchUct(
-	board IBoard,
+	board e.IBoard,
 	color int,
 	nodeN int) int {
 
@@ -81,7 +82,7 @@ func SearchUct(
 		c = &pN.Children[selectI]
 		var z = c.Z
 
-		var err = PutStone(board, z, color)
+		var err = e.PutStone(board, z, color)
 		if err == 0 {
 			break
 		}
@@ -91,12 +92,12 @@ func SearchUct(
 
 	var winner int // 手番が勝ちなら1、引分けなら0、手番の負けなら-1 としてください
 	if c.Games <= 0 {
-		winner = -Playout(board, FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
+		winner = -Playout(board, e.FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
 	} else {
 		if c.Next == NodeEmpty {
 			c.Next = CreateNode(board)
 		}
-		winner = -SearchUct(board, FlipColor(color), c.Next)
+		winner = -SearchUct(board, e.FlipColor(color), c.Next)
 	}
 	c.Rate = (c.Rate*float64(c.Games) + float64(winner)) / float64(c.Games+1)
 	c.Games++

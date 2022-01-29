@@ -5,9 +5,6 @@ const (
 	Author = "Satoshi Takahashi"
 )
 
-// AllPlayouts - プレイアウトした回数。
-var AllPlayouts int
-
 // Record - 棋譜
 var Record []IRecordItemV01
 
@@ -23,12 +20,7 @@ var checkBoard = []int{}
 // MovesNum - 手数？
 var MovesNum int
 
-// FlagTestPlayout - ？。
-var FlagTestPlayout int
-
 // FlipColor - 白黒反転させます。
 func FlipColor(col int) int {
 	return 3 - col
 }
-
-var GettingOfWinnerOnDuringUCTPlayout func(int) int

@@ -30,12 +30,12 @@ func GetBestZByUct(
 	for i := 0; i < uctLoopCount; i++ {
 		// 一時記憶
 		var copiedBoard = position.CopyData()
-		var copiedKoZ = e.KoZ
+		var copiedKoZ = position.KoZ
 
 		searchUct(color, next)
 
 		// 復元
-		e.KoZ = copiedKoZ
+		position.KoZ = copiedKoZ
 		position.ImportData(copiedBoard)
 	}
 

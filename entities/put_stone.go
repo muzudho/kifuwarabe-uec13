@@ -33,7 +33,7 @@ func PutStone(position *Position, z int, color int) int {
 	var koMaybe = 0
 
 	if z == 0 {
-		KoZ = 0
+		position.KoZ = 0
 		return 0
 	}
 	for dir := 0; dir < 4; dir++ {
@@ -69,7 +69,7 @@ func PutStone(position *Position, z int, color int) int {
 	if captureSum == 0 && space == 0 && mycolSafe == 0 {
 		return 1
 	}
-	if z == KoZ {
+	if z == position.KoZ {
 		return 2
 	}
 	if wall+mycolSafe == 4 {
@@ -91,9 +91,9 @@ func PutStone(position *Position, z int, color int) int {
 	position.CountLiberty(z, &liberty, &stone)
 
 	if captureSum == 1 && stone == 1 && liberty == 1 {
-		KoZ = koMaybe
+		position.KoZ = koMaybe
 	} else {
-		KoZ = 0
+		position.KoZ = 0
 	}
 
 	return 0

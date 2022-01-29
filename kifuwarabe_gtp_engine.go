@@ -26,7 +26,7 @@ func RunGtpEngine() {
 	e.MaxMovesNum = config.MaxMovesNum()
 	e.SetBoardSize(config.BoardSize())
 	var position = e.NewPosition(config.GetBoardArray())
-	position.InitBoard()
+	position.InitPosition()
 
 	e.AdjustParameters(position) // パラーメーター調整
 
@@ -50,7 +50,7 @@ func RunGtpEngine() {
 			code.Gtp.Print("= \n\n")
 
 		case "clear_board":
-			position.InitBoard()
+			position.InitPosition()
 			code.Gtp.Print("= \n\n")
 
 		case "quit":

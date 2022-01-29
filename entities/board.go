@@ -7,7 +7,9 @@ import (
 // Position - 盤
 type Position struct {
 	// 盤
-	data []int
+	board []int
+	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
+	KoZ int
 	// 二重ループ
 	iteratorWithoutWall func(func(int))
 	// UCT計算中の子の数
@@ -16,9 +18,9 @@ type Position struct {
 
 // NewPosition - 盤を作成します。
 // TODO Position の NewPosition を呼び出す方法がない？
-func NewPosition(data []int) *Position {
+func NewPosition(board []int) *Position {
 	var position = new(Position)
-	position.data = data
+	position.board = board
 	position.uctChildrenSize = BoardSize*BoardSize + 1
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 
@@ -29,9 +31,9 @@ func NewPosition(data []int) *Position {
 	return position
 }
 
-// InitBoard - 盤の初期化。
-func (position *Position) InitBoard() {
-	boardMax := SentinelBoardArea
+// InitPosition - 局面の初期化。
+func (position *Position) InitPosition() {
+	var boardMax = SentinelBoardArea
 
 	// 枠線
 	for z := 0; z < boardMax; z++ {
@@ -45,27 +47,27 @@ func (position *Position) InitBoard() {
 	position.iteratorWithoutWall(onPoint)
 
 	MovesNum = 0
-	KoZ = 0
+	position.KoZ = 0
 }
 
 // ColorAt - 指定した交点の石の色
 func (position Position) ColorAt(z int) int {
-	return position.data[z]
+	return position.board[z]
 }
 
 // ColorAtXy - 指定した交点の石の色
 func (position Position) ColorAtXy(x int, y int) int {
-	return position.data[(y+1)*SentinelWidth+x+1]
+	return position.board[(y+1)*SentinelWidth+x+1]
 }
 
 // Exists - 指定の交点に石があるか？
 func (position Position) Exists(z int) bool {
-	return position.data[z] != 0
+	return position.board[z] != 0
 }
 
 // SetColor - 盤データ。
 func (position *Position) SetColor(z int, color int) {
-	position.data[z] = color
+	position.board[z] = color
 }
 
 // CopyData - 盤データのコピー。
@@ -73,13 +75,13 @@ func (position Position) CopyData() []int {
 	boardArea := SentinelBoardArea
 
 	var boardCopy2 = make([]int, boardArea)
-	copy(boardCopy2[:], position.data[:])
+	copy(boardCopy2[:], position.board[:])
 	return boardCopy2
 }
 
 // ImportData - 盤データのコピー。
 func (position *Position) ImportData(boardCopy2 []int) {
-	copy(position.data[:], boardCopy2[:])
+	copy(position.board[:], boardCopy2[:])
 }
 
 // GetZ4 - z（配列のインデックス）を XXYY形式（3～4桁の数）の座標へ変換します。
@@ -125,7 +127,7 @@ func (position Position) countLibertySub(z int, color int, pLiberty *int, pStone
 			checkBoard[z] = 1
 			*pLiberty++
 		}
-		if position.data[z] == color {
+		if position.board[z] == color {
 			position.countLibertySub(z, color, pLiberty, pStone)
 		}
 	}
@@ -141,15 +143,15 @@ func (position Position) CountLiberty(z int, pLiberty *int, pStone *int) {
 	for z2 := 0; z2 < boardMax; z2++ {
 		checkBoard[z2] = 0
 	}
-	position.countLibertySub(z, position.data[z], pLiberty, pStone)
+	position.countLibertySub(z, position.board[z], pLiberty, pStone)
 }
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
 func (position *Position) TakeStone(z int, color int) {
-	position.data[z] = 0
+	position.board[z] = 0
 	for dir := 0; dir < 4; dir++ {
 		z2 := z + Dir4[dir]
-		if position.data[z2] == color {
+		if position.board[z2] == color {
 			position.TakeStone(z2, color)
 		}
 	}

@@ -90,7 +90,7 @@ func PrintBoard(position *e.Position, movesNum int) {
 
 	// Info
 	b.WriteString("  KoZ=")
-	b.WriteString(strconv.Itoa(position.GetZ4(e.KoZ)))
+	b.WriteString(strconv.Itoa(position.GetZ4(position.KoZ)))
 	if movesNum != -1 {
 		b.WriteString(",movesNum=")
 		b.WriteString(strconv.Itoa(movesNum))

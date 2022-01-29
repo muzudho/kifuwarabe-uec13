@@ -57,7 +57,7 @@ func Playout(
 
 		// テストのときは棋譜を残します
 		if FlagTestPlayout != 0 {
-			e.Record[position.MovesNum].SetZ(z)
+			position.Record[position.MovesNum].SetZ(z)
 			position.MovesNum++
 		}
 

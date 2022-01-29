@@ -15,8 +15,7 @@ func PutStoneOnRecord(position *Position, z int, color int, recItem *RecordItem)
 	}
 
 	// 棋譜に記録
-	Record[position.MovesNum] = recItem
-
+	position.Record[position.MovesNum] = recItem
 	position.MovesNum++
 }
 

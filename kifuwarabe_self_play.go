@@ -33,7 +33,7 @@ func SelfPlay() {
 		p.PrintBoard(position, position.MovesNum)
 
 		// パスで２手目以降で棋譜の１つ前（相手）もパスなら終了します。
-		if z == 0 && 1 < position.MovesNum && e.Record[position.MovesNum-2].GetZ() == 0 {
+		if z == 0 && 1 < position.MovesNum && position.Record[position.MovesNum-2].GetZ() == 0 {
 			break
 		}
 		// 自己対局は300手で終了します。
@@ -43,7 +43,7 @@ func SelfPlay() {
 		color = e.FlipColor(color)
 	}
 
-	p.PrintSgf(position, position.MovesNum, e.Record)
+	p.PrintSgf(position, position.MovesNum, position.Record)
 }
 
 // GetComputerMoveDuringSelfPlay - コンピューターの指し手。 SelfplayLesson09 から呼び出されます

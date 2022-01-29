@@ -12,6 +12,8 @@ type Position struct {
 	KoZ int
 	// MovesNum - 手数
 	MovesNum int
+	// Record - 棋譜
+	Record []*RecordItem
 	// 二重ループ
 	iteratorWithoutWall func(func(int))
 	// UCT計算中の子の数
@@ -23,11 +25,11 @@ type Position struct {
 func NewPosition(board []int) *Position {
 	var position = new(Position)
 	position.board = board
+	position.Record = make([]*RecordItem, MaxMovesNum)
 	position.uctChildrenSize = BoardSize*BoardSize + 1
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 
 	checkBoard = make([]int, SentinelBoardArea)
-	Record = make([]*RecordItem, MaxMovesNum)
 	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
 
 	return position
@@ -53,17 +55,17 @@ func (position *Position) InitPosition() {
 }
 
 // ColorAt - 指定した交点の石の色
-func (position Position) ColorAt(z int) int {
+func (position *Position) ColorAt(z int) int {
 	return position.board[z]
 }
 
 // ColorAtXy - 指定した交点の石の色
-func (position Position) ColorAtXy(x int, y int) int {
+func (position *Position) ColorAtXy(x int, y int) int {
 	return position.board[(y+1)*SentinelWidth+x+1]
 }
 
 // Exists - 指定の交点に石があるか？
-func (position Position) Exists(z int) bool {
+func (position *Position) Exists(z int) bool {
 	return position.board[z] != 0
 }
 
@@ -73,7 +75,7 @@ func (position *Position) SetColor(z int, color int) {
 }
 
 // CopyData - 盤データのコピー。
-func (position Position) CopyData() []int {
+func (position *Position) CopyData() []int {
 	boardArea := SentinelBoardArea
 
 	var boardCopy2 = make([]int, boardArea)
@@ -87,7 +89,7 @@ func (position *Position) ImportData(boardCopy2 []int) {
 }
 
 // GetZ4 - z（配列のインデックス）を XXYY形式（3～4桁の数）の座標へ変換します。
-func (position Position) GetZ4(z int) int {
+func (position *Position) GetZ4(z int) int {
 	if z == 0 {
 		return 0
 	}
@@ -98,12 +100,12 @@ func (position Position) GetZ4(z int) int {
 
 // GetZFromXy - x,y 形式の座標を、 z （配列のインデックス）へ変換します。
 // x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
-func (position Position) GetZFromXy(x int, y int) int {
+func (position *Position) GetZFromXy(x int, y int) int {
 	return (y+1)*SentinelWidth + x + 1
 }
 
 // GetEmptyZ - 空点の z （配列のインデックス）を返します。
-func (position Position) GetEmptyZ() int {
+func (position *Position) GetEmptyZ() int {
 	var x, y, z int
 	for {
 		// ランダムに交点を選んで、空点を見つけるまで繰り返します。
@@ -117,7 +119,7 @@ func (position Position) GetEmptyZ() int {
 	return z
 }
 
-func (position Position) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
+func (position *Position) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
 	checkBoard[z] = 1
 	*pStone++
 	for i := 0; i < 4; i++ {
@@ -137,7 +139,7 @@ func (position Position) countLibertySub(z int, color int, pLiberty *int, pStone
 }
 
 // CountLiberty - 呼吸点を数えます。
-func (position Position) CountLiberty(z int, pLiberty *int, pStone *int) {
+func (position *Position) CountLiberty(z int, pLiberty *int, pStone *int) {
 	*pLiberty = 0
 	*pStone = 0
 	boardMax := SentinelBoardArea
@@ -160,12 +162,12 @@ func (position *Position) TakeStone(z int, color int) {
 }
 
 // IterateWithoutWall - 盤イテレーター
-func (position Position) IterateWithoutWall(onPoint func(int)) {
+func (position *Position) IterateWithoutWall(onPoint func(int)) {
 	position.iteratorWithoutWall(onPoint)
 }
 
 // UctChildrenSize - UCTの最大手数
-func (position Position) UctChildrenSize() int {
+func (position *Position) UctChildrenSize() int {
 	return position.uctChildrenSize
 }
 

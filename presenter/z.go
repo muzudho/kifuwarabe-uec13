@@ -9,7 +9,7 @@ import (
 )
 
 // GetGtpZ - XY座標をアルファベット、数字で表したもの。 例: Q10
-func GetGtpZ(board e.IBoard, z int) string {
+func GetGtpZ(board *e.Board, z int) string {
 	if z == 0 {
 		return "PASS"
 	}
@@ -30,7 +30,7 @@ func GetGtpZ(board e.IBoard, z int) string {
 
 // GetZFromGtp - GTPの座標符号を z に変換します
 // * `gtp_z` - 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定。 例: q10
-func GetZFromGtp(board e.IBoard, gtp_z string) int {
+func GetZFromGtp(board *e.Board, gtp_z string) int {
 	gtp_z = strings.ToUpper(gtp_z)
 	code.Console.Trace("# gtp_z=%s\n", gtp_z)
 

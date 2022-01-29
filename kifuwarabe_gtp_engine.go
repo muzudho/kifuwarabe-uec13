@@ -120,7 +120,7 @@ func RunGtpEngine() {
 
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
-	board e.IBoard,
+	board *e.Board,
 	color int) int {
 
 	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(board)

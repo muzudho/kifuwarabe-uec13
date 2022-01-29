@@ -7,7 +7,7 @@ import (
 )
 
 // PutStoneOnRecord - SelfPlay, RunGtpEngine から呼び出されます
-func PutStoneOnRecord(board IBoard, z int, color int, recItem IRecordItemV01) {
+func PutStoneOnRecord(board *Board, z int, color int, recItem IRecordItemV01) {
 	var err = PutStone(board, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")
@@ -22,7 +22,7 @@ func PutStoneOnRecord(board IBoard, z int, color int, recItem IRecordItemV01) {
 
 // PutStone - 石を置きます。
 // * `z` - 交点。壁有り盤の配列インデックス
-func PutStone(board IBoard, z int, color int) int {
+func PutStone(board *Board, z int, color int) int {
 	var around = [4][3]int{}
 	var liberty, stone int
 	var unCol = FlipColor(color)

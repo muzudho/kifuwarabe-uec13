@@ -19,7 +19,7 @@ const (
 
 // GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
 func GetBestZByUct(
-	board e.IBoard,
+	board *e.Board,
 	color int,
 	searchUct func(int, int) int) int {
 
@@ -60,7 +60,7 @@ func GetBestZByUct(
 }
 
 // WrapSearchUct - 盤とその描画関数を束縛変数として与えます
-func WrapSearchUct(board e.IBoard) func(int, int) int {
+func WrapSearchUct(board *e.Board) func(int, int) int {
 	var searchUct = func(color int, nodeN int) int {
 		return SearchUct(board, color, nodeN)
 	}
@@ -70,7 +70,7 @@ func WrapSearchUct(board e.IBoard) func(int, int) int {
 
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます
 func SearchUct(
-	board e.IBoard,
+	board *e.Board,
 	color int,
 	nodeN int) int {
 

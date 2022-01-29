@@ -13,7 +13,7 @@ import (
 //
 // 手番が勝ったら 1、引分けなら 0、 相手が勝ったら -1
 func Playout(
-	board e.IBoard,
+	board *e.Board,
 	turnColor int,
 	getWinner func(int) int) int {
 

@@ -71,7 +71,7 @@ func (board Board) SentinelBoardArea() int {
 	return board.sentinelBoardArea
 }
 
-// Komi - コミ
+// Komi - コミ。 6.5 といった数字を入れるだけ。実行速度優先で 64bitに。
 func (board Board) Komi() float64 {
 	return board.komi
 }
@@ -125,7 +125,7 @@ func (board Board) GetZ4(z int) int {
 	return x*100 + y
 }
 
-// GetZFromXy - x,y を z （配列のインデックス）へ変換します。
+// GetZFromXy - x,y 形式の座標を、 z （配列のインデックス）へ変換します。
 // x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
 func (board Board) GetZFromXy(x int, y int) int {
 	return (y+1)*board.SentinelWidth() + x + 1
@@ -196,4 +196,23 @@ func (board Board) IterateWithoutWall(onPoint func(int)) {
 // UctChildrenSize - UCTの最大手数
 func (board Board) UctChildrenSize() int {
 	return board.uctChildrenSize
+}
+
+// CreateBoardIteratorWithoutWall - 盤の（壁を除く）全ての交点に順にアクセスする boardIterator 関数を生成します
+func CreateBoardIteratorWithoutWall(
+	board *Board) func(func(int)) {
+
+	var boardSize = board.BoardSize()
+	var boardIterator = func(onPoint func(int)) {
+
+		// x,y は壁無しの盤での0から始まる座標、 z は壁有りの盤での0から始まる座標
+		for y := 0; y < boardSize; y++ {
+			for x := 0; x < boardSize; x++ {
+				var z = board.GetZFromXy(x, y)
+				onPoint(z)
+			}
+		}
+	}
+
+	return boardIterator
 }

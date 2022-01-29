@@ -3,13 +3,13 @@
 第１３回UEC杯コンピュータ囲碁大会向けきふわらべ  
 
 GoGo をベースとしています  
-[https://github.com/bleu48/GoGo](https://github.com/bleu48/GoGo)  
+📖 [GoGo](https://github.com/bleu48/GoGo)  
 
 # Set up
 
 ## Set up - 1
 
-きふわらべは エンジンだけですので、GUI が別途必要です。  
+きふわらべは 思考エンジンだけですので、GUI が別途必要です。  
 ここでは CgfGoBan で動かす例を示します。  
 
 ![20220130go67a2.png](doc/img/20220130go67a2.png)  
@@ -93,13 +93,34 @@ BoardData = '''
 
 ## Set up - 3
 
-次に、 きふわらべの .exe を作りたいと思います。  
+次に、以下から きふわらべの `kifuwarabe-uec13.exe` ファイルを入手してください。  
+
+![20220130go71a2.png](doc/img/20220130go71a2.png)  
+
+📖 [Kifuwarabe-uec13 Release 0.0.1](https://github.com/muzudho/kifuwarabe-uec13/releases/tag/0.0.1)
+
+👆 .zip に圧縮されているので、解凍してください。  
+もし ウィルス扱いされてダウンロードできないなら、 以下の方法で、ソースをビルドして kifuwarabe-uec13.exe を作ってください。  
+
+## Set up - 4
+
+きふわらべの .exe をソースからビルドして作る方法です。  
+
+![20220130go73a2.png](./doc/img/20220130go73a2.png)  
+
+👆 きふわらべのソースコードは、Git hub から入手できます  
+**がんばって** `GitHub Desktop` をインストールしておいてください。  
+
+![20220130go72.png](./doc/img/20220130go72.png)  
+
+📖 [Visual Studio Code](https://code.visualstudio.com/)  
+
+👆 プログラムを編集するツールとしては Visual Studio Code で十分でしょう。 **がんばって** インストールしてください  
+上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** 表示してください。  
 
 📖 [Go Downloads](https://go.dev/dl/)  
 
-👆 Go言語をインストールしてください  
-
-設定ファイルは 📂`input/gameConf.toml` です  
+👆 Go言語を **がんばって** インストールしてください  
 
 ## Set up - 4
 

@@ -8,12 +8,6 @@ import (
 type Position struct {
 	// 盤
 	data []int
-	// 盤サイズ
-	boardSize int
-	// 壁付き盤サイズ
-	sentinelWidth int
-	// 壁付き盤の面積
-	sentinelBoardArea int
 	// 二重ループ
 	iteratorWithoutWall func(func(int))
 	// UCT計算中の子の数
@@ -22,25 +16,22 @@ type Position struct {
 
 // NewPosition - 盤を作成します。
 // TODO Position の NewPosition を呼び出す方法がない？
-func NewPosition(data []int, boardSize int, sentinelBoardArea int) *Position {
+func NewPosition(data []int) *Position {
 	var position = new(Position)
 	position.data = data
-	position.boardSize = boardSize
-	position.sentinelWidth = boardSize + 2
-	position.sentinelBoardArea = sentinelBoardArea
-	position.uctChildrenSize = boardSize*boardSize + 1
+	position.uctChildrenSize = BoardSize*BoardSize + 1
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 
-	checkBoard = make([]int, position.SentinelBoardArea())
+	checkBoard = make([]int, SentinelBoardArea)
 	Record = make([]IRecordItemV01, MaxMovesNum)
-	Dir4 = [4]int{1, position.SentinelWidth(), -1, -position.SentinelWidth()}
+	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
 
 	return position
 }
 
 // InitBoard - 盤の初期化。
 func (position *Position) InitBoard() {
-	boardMax := position.SentinelBoardArea()
+	boardMax := SentinelBoardArea
 
 	// 枠線
 	for z := 0; z < boardMax; z++ {
@@ -57,21 +48,6 @@ func (position *Position) InitBoard() {
 	KoZ = 0
 }
 
-// BoardSize - 何路盤か
-func (position Position) BoardSize() int {
-	return position.boardSize
-}
-
-// SentinelWidth - 枠付きの盤の一辺の交点数
-func (position Position) SentinelWidth() int {
-	return position.sentinelWidth
-}
-
-// SentinelBoardArea - 枠付きの盤の交点数
-func (position Position) SentinelBoardArea() int {
-	return position.sentinelBoardArea
-}
-
 // ColorAt - 指定した交点の石の色
 func (position Position) ColorAt(z int) int {
 	return position.data[z]
@@ -79,7 +55,7 @@ func (position Position) ColorAt(z int) int {
 
 // ColorAtXy - 指定した交点の石の色
 func (position Position) ColorAtXy(x int, y int) int {
-	return position.data[(y+1)*position.sentinelWidth+x+1]
+	return position.data[(y+1)*SentinelWidth+x+1]
 }
 
 // Exists - 指定の交点に石があるか？
@@ -94,7 +70,7 @@ func (position *Position) SetColor(z int, color int) {
 
 // CopyData - 盤データのコピー。
 func (position Position) CopyData() []int {
-	boardArea := position.SentinelBoardArea()
+	boardArea := SentinelBoardArea
 
 	var boardCopy2 = make([]int, boardArea)
 	copy(boardCopy2[:], position.data[:])
@@ -111,15 +87,15 @@ func (position Position) GetZ4(z int) int {
 	if z == 0 {
 		return 0
 	}
-	y := z / position.SentinelWidth()
-	x := z - y*position.SentinelWidth()
+	y := z / SentinelWidth
+	x := z - y*SentinelWidth
 	return x*100 + y
 }
 
 // GetZFromXy - x,y 形式の座標を、 z （配列のインデックス）へ変換します。
 // x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
 func (position Position) GetZFromXy(x int, y int) int {
-	return (y+1)*position.SentinelWidth() + x + 1
+	return (y+1)*SentinelWidth + x + 1
 }
 
 // GetEmptyZ - 空点の z （配列のインデックス）を返します。
@@ -160,7 +136,7 @@ func (position Position) countLibertySub(z int, color int, pLiberty *int, pStone
 func (position Position) CountLiberty(z int, pLiberty *int, pStone *int) {
 	*pLiberty = 0
 	*pStone = 0
-	boardMax := position.SentinelBoardArea()
+	boardMax := SentinelBoardArea
 	// 初期化
 	for z2 := 0; z2 < boardMax; z2++ {
 		checkBoard[z2] = 0
@@ -193,7 +169,7 @@ func (position Position) UctChildrenSize() int {
 func CreateBoardIteratorWithoutWall(
 	position *Position) func(func(int)) {
 
-	var boardSize = position.BoardSize()
+	var boardSize = BoardSize
 	var boardIterator = func(onPoint func(int)) {
 
 		// x,y は壁無しの盤での0から始まる座標、 z は壁有りの盤での0から始まる座標

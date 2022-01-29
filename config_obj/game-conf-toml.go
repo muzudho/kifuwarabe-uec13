@@ -51,14 +51,6 @@ func (config Config) BoardSize() int {
 	return int(config.Game.BoardSize)
 }
 
-// SentinelBoardArea - 枠付きの盤上の交点の数
-func (config Config) SentinelBoardArea() int {
-	// Width - 枠込み。
-	var Width = int(config.Game.BoardSize) + 2
-	// BoardMax - 枠込み盤の配列サイズ
-	return Width * Width
-}
-
 // Komi - float 32bit で足りるが、実行速度優先で float 64bit に変換して返します
 func (config Config) Komi() float64 {
 	return float64(config.Game.Komi)

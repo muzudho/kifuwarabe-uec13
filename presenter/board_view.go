@@ -58,7 +58,7 @@ func PrintBoard(position *e.Position, movesNum int) {
 	var b = &strings.Builder{}
 	b.Grow(sz8k)
 
-	var boardSize = position.BoardSize()
+	var boardSize = e.BoardSize
 
 	// Header
 	b.WriteString("\n   ")

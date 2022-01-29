@@ -24,7 +24,8 @@ func RunGtpEngine() {
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	e.Komi = config.Komi()
 	e.MaxMovesNum = config.MaxMovesNum()
-	var position = e.NewPosition(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
+	e.SetBoardSize(config.BoardSize())
+	var position = e.NewPosition(config.GetBoardArray())
 	position.InitBoard()
 
 	e.AdjustParameters(position) // パラーメーター調整

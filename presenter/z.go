@@ -14,8 +14,8 @@ func GetGtpZ(position *e.Position, z int) string {
 		return "PASS"
 	}
 
-	var y = z / position.SentinelWidth()
-	var x = z % position.SentinelWidth()
+	var y = z / e.SentinelWidth
+	var x = z % e.SentinelWidth
 
 	// 筋が25（'Z'）より大きくなることは想定していません
 	var alphabet_x = 'A' + x - 1

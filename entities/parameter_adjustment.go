@@ -12,7 +12,7 @@ var UctLoopCount = 4500
 // var UctLoopCount = 10000 // 多め（遅い感じ）
 
 func AdjustParameters(position *Position) {
-	var boardSize = position.BoardSize()
+	var boardSize = BoardSize
 	if boardSize < 10 {
 		// 10路盤より小さいとき
 		PlayoutTrialCount = boardSize*boardSize + 200

@@ -5,6 +5,21 @@ const (
 	Author = "Satoshi Takahashi"
 )
 
+func SetBoardSize(boardSize int) {
+	BoardSize = boardSize
+	SentinelWidth = BoardSize + 2
+	SentinelBoardArea = SentinelWidth * SentinelWidth
+}
+
+// BoardSize - 何路盤
+var BoardSize int
+
+// SentinelWidth - 枠付きの盤の一辺の交点数
+var SentinelWidth int
+
+// SentinelBoardArea - 壁付き盤の面積
+var SentinelBoardArea int
+
 // Komi - コミ。 6.5 といった数字を入れるだけ。実行速度優先で 64bitに。
 var Komi float64
 

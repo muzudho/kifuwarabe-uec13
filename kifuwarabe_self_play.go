@@ -16,7 +16,8 @@ func SelfPlay() {
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
 	e.Komi = config.Komi()
 	e.MaxMovesNum = config.MaxMovesNum()
-	var position = e.NewPosition(config.GetBoardArray(), config.BoardSize(), config.SentinelBoardArea())
+	e.SetBoardSize(config.BoardSize())
+	var position = e.NewPosition(config.GetBoardArray())
 
 	e.AdjustParameters(position) // パラーメーター調整
 

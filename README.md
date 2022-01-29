@@ -174,5 +174,8 @@ kifuwarabe-uec13 SelfPlay
 ![20220130go79.png](doc/img/20220130go79.png)  
 
 👆 Black と White のどちらか片方を `Computer(GTP)` にしてください。  
-これで きふわらべと対局できます。  
+
+![20220130go80.png](doc/img/20220130go80.png)  
+
+👆 これで きふわらべと対局できました。  
 お疲れさまでした。  

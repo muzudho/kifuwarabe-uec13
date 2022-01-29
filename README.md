@@ -7,7 +7,7 @@ GoGo をベースとしています
 
 # Set up
 
-## Set up - 1
+## Set up - 1 - Get a GUI
 
 きふわらべは 思考エンジンだけですので、GUI が別途必要です。  
 ここでは CgfGoBan で動かす例を示します。  
@@ -30,7 +30,7 @@ GoGo をベースとしています
 
 👆 最初の中身はこんな感じです  
 
-## Set up - 2
+## Set up - 2 - Make directories
 
 ![202201go1.png](./doc/img/202201go1.png)  
 
@@ -91,7 +91,7 @@ BoardData = '''
 '''
 ```
 
-## Set up - 3
+## Set up - 3 - Download exe
 
 次に、以下から きふわらべの `kifuwarabe-uec13.exe` ファイルを入手してください。  
 
@@ -102,19 +102,27 @@ BoardData = '''
 👆 .zip に圧縮されているので、解凍してください。  
 もし ウィルス扱いされてダウンロードできないなら、 以下の方法で、ソースをビルドして kifuwarabe-uec13.exe を作ってください。  
 
-## Set up - 4
+## Set up - 4 - Download source
 
 きふわらべの .exe をソースからビルドして作る方法です。  
+きふわらべのソースコードは、２つの方法で入手できます  
+
+![20220130go71a3.png](./doc/img/20220130go71a3.png)  
+
+📖 [Kifuwarabe-uec13 Release 0.0.1](https://github.com/muzudho/kifuwarabe-uec13/releases/tag/0.0.1)
+
+👆 1つ目は、 リリースページの src をクリックする方法です。  
 
 ![20220130go73a2.png](./doc/img/20220130go73a2.png)  
 
-👆 きふわらべのソースコードは、Git hub から入手できます  
+👆 2つ目は、 `GitHub Desktop` を使ってダウンロードする方法です。 **がんばって** `GitHub Desktop` をインストールしておいてください。  
 
 ![GitHub Desktop](./doc/img/20220130go74.png)  
 
-👆 ソースをダウンロードするのに `GitHub Desktop` を使いますが、 **がんばって** `GitHub Desktop` をインストールしておいてください。  
-そのあと がんばって ローカルPCに `kifuwarabe-uec13のリポジトリ―` を作ってください  
+👆 そのあと がんばって ローカルPCに `kifuwarabe-uec13のリポジトリ―` を作ってください  
 何がなにやら分からないかも知れませんが **がんばって** ください  
+
+## Set up - 5 - Editor
 
 ![20220130go72.png](./doc/img/20220130go72.png)  
 
@@ -124,13 +132,13 @@ BoardData = '''
 **がんばって** `kifuwarabe-uec13のリポジトリ―` の📂フォルダーを開いてください。  
 上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** ターミナルを表示してください。  
 
-## Set up - 5
+## Set up - 6 - Programming Language
 
 📖 [Go Downloads](https://go.dev/dl/)  
 
 👆 Go言語を **がんばって** インストールしてください  
 
-## Set up - 6 Build
+## Set up - 7 - Build
 
 Visual Studio Code に戻りまして。  
 
@@ -157,7 +165,7 @@ kifuwarabe-uec13 SelfPlay
 
 👆 拡張子を省いた実行ファイル名を打鍵してください
 
-## Set up - 7
+## Set up - 8 - CgfGoBan
 
 ![20220130go76.png](doc/img/20220130go76.png)  
 

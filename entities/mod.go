@@ -7,12 +7,16 @@ const (
 
 func SetBoardSize(boardSize int) {
 	BoardSize = boardSize
+	BoardArea = BoardSize * BoardSize
 	SentinelWidth = BoardSize + 2
 	SentinelBoardArea = SentinelWidth * SentinelWidth
 }
 
 // BoardSize - 何路盤
 var BoardSize int
+
+// BoardArea - 壁無し盤の面積
+var BoardArea int
 
 // SentinelWidth - 枠付きの盤の一辺の交点数
 var SentinelWidth int

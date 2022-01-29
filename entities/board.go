@@ -26,7 +26,7 @@ func NewPosition(board []int) *Position {
 	var position = new(Position)
 	position.board = board
 	position.Record = make([]*RecordItem, MaxMovesNum)
-	position.uctChildrenSize = BoardSize*BoardSize + 1
+	position.uctChildrenSize = BoardArea + 1
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 
 	checkBoard = make([]int, SentinelBoardArea)

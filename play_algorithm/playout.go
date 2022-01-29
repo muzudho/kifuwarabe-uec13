@@ -15,7 +15,7 @@ import (
 func Playout(
 	position *e.Position,
 	turnColor int,
-	getWinner func(int) int) int {
+	getWinner *func(int) int) int {
 
 	AllPlayouts++
 
@@ -69,5 +69,5 @@ func Playout(
 		color = e.FlipColor(color)
 	}
 
-	return getWinner(turnColor)
+	return (*getWinner)(turnColor)
 }

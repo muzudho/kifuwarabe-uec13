@@ -5,14 +5,14 @@ import (
 )
 
 // WrapGettingOfWinner - 盤を束縛変数として与えます
-func WrapGettingOfWinner(position *e.Position) func(turnColor int) int {
+func WrapGettingOfWinner(position *e.Position) *func(turnColor int) int {
 	// 「手番の勝ちなら1、引き分けなら0、手番の負けなら-1を返す関数（自分視点）」を作成します
 	// * `turnColor` - 手番の石の色
 	var getWinner = func(turnColor int) int {
 		return getWinner(position, turnColor)
 	}
 
-	return getWinner
+	return &getWinner
 }
 
 // 手番の勝ちなら1、引き分けなら0、手番の負けなら-1（自分視点）

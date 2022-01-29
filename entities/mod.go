@@ -33,9 +33,6 @@ var MaxMovesNum int
 // Dir4 - ４方向（右、下、左、上）の番地。初期値は仮の値。
 var Dir4 = [4]int{1, 9, -1, 9}
 
-// For count liberty.
-var checkBoard = []int{}
-
 // FlipColor - 白黒反転させます。
 func FlipColor(col int) int {
 	return 3 - col

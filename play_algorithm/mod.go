@@ -12,6 +12,7 @@ var SearchingOfUct *func(color int, nodeN int) int
 var FlagTestPlayout int
 
 func InitPosition(position *e.Position) {
+	// 盤サイズが変わっていることもあるので、先に初期化します
 	position.InitPosition()
 
 	GettingOfWinnerOnDuringUCTPlayout = WrapGettingOfWinner(position)

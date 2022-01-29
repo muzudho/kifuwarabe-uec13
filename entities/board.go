@@ -8,6 +8,8 @@ import (
 type Position struct {
 	// 盤
 	board []int
+	// 呼吸点を数えるための一時盤
+	checkBoard []int
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
 	KoZ int
 	// MovesNum - 手数
@@ -20,27 +22,23 @@ type Position struct {
 	uctChildrenSize int
 }
 
-// NewPosition - 盤を作成します。
-// TODO Position の NewPosition を呼び出す方法がない？
-func NewPosition(board []int) *Position {
-	var position = new(Position)
-	position.board = board
-	position.Record = make([]*RecordItem, MaxMovesNum)
-	position.uctChildrenSize = BoardArea + 1
-	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
-
-	checkBoard = make([]int, SentinelBoardArea)
-	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
-
-	return position
+// NewPosition - 空っぽの局面を生成します
+// あとで InitPosition() を呼び出してください
+func NewPosition() *Position {
+	return new(Position)
 }
 
 // InitPosition - 局面の初期化。
 func (position *Position) InitPosition() {
-	var boardMax = SentinelBoardArea
+	position.Record = make([]*RecordItem, MaxMovesNum)
+	position.uctChildrenSize = BoardArea + 1
 
-	// サイズが変わっているケースに対応
+	// サイズが変わっているケースに対応するため、配列の作り直し
+	var boardMax = SentinelBoardArea
+	position.board = make([]int, boardMax)
+	position.checkBoard = make([]int, boardMax)
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
+	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
 
 	// 枠線
 	for z := 0; z < boardMax; z++ {
@@ -55,6 +53,11 @@ func (position *Position) InitPosition() {
 
 	position.MovesNum = 0
 	position.KoZ = 0
+}
+
+// SetBoard - 盤面を設定します
+func (position *Position) SetBoard(board []int) {
+	position.board = board
 }
 
 // ColorAt - 指定した交点の石の色
@@ -123,15 +126,15 @@ func (position *Position) GetEmptyZ() int {
 }
 
 func (position *Position) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
-	checkBoard[z] = 1
+	position.checkBoard[z] = 1
 	*pStone++
 	for i := 0; i < 4; i++ {
 		z := z + Dir4[i]
-		if checkBoard[z] != 0 {
+		if position.checkBoard[z] != 0 {
 			continue
 		}
 		if !position.Exists(z) {
-			checkBoard[z] = 1
+			position.checkBoard[z] = 1
 			*pLiberty++
 		}
 		if position.board[z] == color {
@@ -148,7 +151,7 @@ func (position *Position) CountLiberty(z int, pLiberty *int, pStone *int) {
 	boardMax := SentinelBoardArea
 	// 初期化
 	for z2 := 0; z2 < boardMax; z2++ {
-		checkBoard[z2] = 0
+		position.checkBoard[z2] = 0
 	}
 	position.countLibertySub(z, position.board[z], pLiberty, pStone)
 }
@@ -175,8 +178,7 @@ func (position *Position) UctChildrenSize() int {
 }
 
 // CreateBoardIteratorWithoutWall - 盤の（壁を除く）全ての交点に順にアクセスする boardIterator 関数を生成します
-func CreateBoardIteratorWithoutWall(
-	position *Position) func(func(int)) {
+func CreateBoardIteratorWithoutWall(position *Position) func(func(int)) {
 
 	var boardSize = BoardSize
 	var boardIterator = func(onPoint func(int)) {

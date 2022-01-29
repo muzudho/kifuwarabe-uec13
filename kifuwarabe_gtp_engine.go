@@ -25,8 +25,9 @@ func RunGtpEngine() {
 	e.Komi = config.Komi()
 	e.MaxMovesNum = config.MaxMovesNum()
 	e.SetBoardSize(config.BoardSize())
-	var position = e.NewPosition(config.GetBoardArray())
+	var position = e.NewPosition()
 	pl.InitPosition(position)
+	position.SetBoard(config.GetBoardArray())
 
 	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 

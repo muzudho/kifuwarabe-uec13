@@ -21,7 +21,7 @@ const (
 func GetBestZByUct(
 	position *e.Position,
 	color int,
-	searchUct func(int, int) int) int {
+	searchUct *func(int, int) int) int {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
@@ -32,7 +32,7 @@ func GetBestZByUct(
 		var copiedBoard = position.CopyData()
 		var copiedKoZ = position.KoZ
 
-		searchUct(color, next)
+		(*searchUct)(color, next)
 
 		// 復元
 		position.KoZ = copiedKoZ
@@ -59,13 +59,13 @@ func GetBestZByUct(
 	return bestZ
 }
 
-// WrapSearchUct - 盤とその描画関数を束縛変数として与えます
-func WrapSearchUct(position *e.Position) func(int, int) int {
+// WrapSearchUct - 局面を束縛変数として与えます
+func WrapSearchUct(position *e.Position) *func(int, int) int {
 	var searchUct = func(color int, nodeN int) int {
 		return SearchUct(position, color, nodeN)
 	}
 
-	return searchUct
+	return &searchUct
 }
 
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます

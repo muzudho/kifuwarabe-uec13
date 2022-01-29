@@ -23,7 +23,7 @@ type Node struct {
 	ChildGameSum int
 }
 
-// Nodes -ノード？
+// Nodes -ノードの配列？
 var Nodes = [NodeMax]Node{}
 
 // NodeNum - ノード数？

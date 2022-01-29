@@ -23,7 +23,7 @@ func Playout(
 	var previousZ = 0
 	var boardMax = e.SentinelBoardArea
 
-	var playoutTrialCount = e.PlayoutTrialCount
+	var playoutTrialCount = PlayoutTrialCount
 	for trial := 0; trial < playoutTrialCount; trial++ {
 		var empty = make([]int, boardMax)
 		var emptyNum, r, z int

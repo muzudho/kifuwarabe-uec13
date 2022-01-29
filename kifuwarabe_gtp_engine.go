@@ -28,7 +28,7 @@ func RunGtpEngine() {
 	var position = e.NewPosition(config.GetBoardArray())
 	position.InitPosition()
 
-	e.AdjustParameters(position) // パラーメーター調整
+	pl.AdjustParameters(position) // パラーメーター調整
 
 	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 
@@ -45,7 +45,7 @@ func RunGtpEngine() {
 			// boardsize 19
 
 			// TODO 盤のサイズを変えたい
-			e.AdjustParameters(position) // パラーメーター再調整
+			pl.AdjustParameters(position) // パラーメーター再調整
 
 			code.Gtp.Print("= \n\n")
 
@@ -144,8 +144,7 @@ func PlayComputerMoveLesson09a(
 	color int) int {
 
 	pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(position)
-
-	e.AdjustParameters(position)
+	pl.AdjustParameters(position)
 
 	var z int
 	var st = time.Now()

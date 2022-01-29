@@ -26,7 +26,7 @@ func GetBestZByUct(
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
 	var next = CreateNode(position)
-	var uctLoopCount = e.UctLoopCount
+	var uctLoopCount = UctLoopCount
 	for i := 0; i < uctLoopCount; i++ {
 		// 一時記憶
 		var copiedBoard = position.CopyData()

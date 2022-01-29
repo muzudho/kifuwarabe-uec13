@@ -19,7 +19,7 @@ func SelfPlay() {
 	e.SetBoardSize(config.BoardSize())
 	var position = e.NewPosition(config.GetBoardArray())
 
-	e.AdjustParameters(position) // パラーメーター調整
+	pl.AdjustParameters(position) // パラーメーター調整
 
 	var color = 1
 

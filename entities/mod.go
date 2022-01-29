@@ -26,9 +26,6 @@ var Komi float64
 // MaxMovesNum - 上限手数
 var MaxMovesNum int
 
-// Record - 棋譜
-var Record []*RecordItem
-
 // Dir4 - ４方向（右、下、左、上）の番地。初期値は仮の値。
 var Dir4 = [4]int{1, 9, -1, 9}
 

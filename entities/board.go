@@ -27,7 +27,7 @@ func NewPosition(board []int) *Position {
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 
 	checkBoard = make([]int, SentinelBoardArea)
-	Record = make([]IRecordItemV01, MaxMovesNum)
+	Record = make([]*RecordItem, MaxMovesNum)
 	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
 
 	return position

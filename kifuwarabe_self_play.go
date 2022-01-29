@@ -27,7 +27,7 @@ func SelfPlay() {
 		pl.GettingOfWinnerOnDuringUCTPlayout = pl.WrapGettingOfWinner(position)
 		var z = GetComputerMoveDuringSelfPlay(position, color)
 
-		var recItem = new(e.RecordItemV01)
+		var recItem = new(e.RecordItem)
 		recItem.Z = z
 		e.PutStoneOnRecord(position, z, color, recItem)
 		p.PrintBoard(position, position.MovesNum)

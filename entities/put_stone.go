@@ -7,7 +7,7 @@ import (
 )
 
 // PutStoneOnRecord - SelfPlay, RunGtpEngine から呼び出されます
-func PutStoneOnRecord(position *Position, z int, color int, recItem IRecordItemV01) {
+func PutStoneOnRecord(position *Position, z int, color int, recItem *RecordItem) {
 	var err = PutStone(position, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")

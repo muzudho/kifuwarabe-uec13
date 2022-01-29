@@ -123,7 +123,7 @@ func RunGtpEngine() {
 				}
 
 				var z = p.GetZFromGtp(position, tokens[2])
-				var recItem = new(e.RecordItemV02)
+				var recItem = new(e.RecordItem)
 				recItem.Z = z
 				recItem.Time = 0
 				e.PutStoneOnRecord(position, z, color, recItem)
@@ -160,7 +160,7 @@ func PlayComputerMoveLesson09a(
 	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
 		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), position.MovesNum, color, pl.AllPlayouts)
 
-	var recItem = new(e.RecordItemV02)
+	var recItem = new(e.RecordItem)
 	recItem.Z = z
 	recItem.Time = sec
 	e.PutStoneOnRecord(position, z, color, recItem)

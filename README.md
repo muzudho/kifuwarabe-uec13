@@ -105,6 +105,13 @@ BoardData = '''
 ## Set up - 4 - Download source
 
 きふわらべの .exe をソースからビルドして作る方法です。  
+
+![20220130thr-go9a2.png](./doc/img/20220130thr-go9a2.png)  
+
+👆 Go言語では ソースをどこに置くかは決まりがあるので、わたしは  
+`C:/Users/{ユーザー名}/go/src/github.com/muzudho/kifuwarabe-uec13`  
+に置いています  
+
 きふわらべのソースコードは、２つの方法で入手できます  
 
 ![20220130go71a3.png](./doc/img/20220130go71a3.png)  

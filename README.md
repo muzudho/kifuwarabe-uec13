@@ -24,7 +24,7 @@ GoGo をベースとしています
 
 ![20220130go69.png](doc/img/20220130go69.png)  
 
-👆 がんばって好きなところに解凍してください  
+👆 **がんばって** 好きなところに解凍してください  
 
 ![20220130go70.png](doc/img/20220130go70.png)  
 
@@ -132,11 +132,13 @@ BoardData = '''
 **がんばって** `kifuwarabe-uec13のリポジトリ―` の📂フォルダーを開いてください。  
 上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** ターミナルを表示してください。  
 
-## Set up - 6 - Programming Language
+## Set up - 6 - Install Go Programming Language
 
-📖 [Go Downloads](https://go.dev/dl/)  
+![20220130thr-go1a2.png](./doc/img/20220130thr-go1a2.png)  
 
-👆 Go言語を **がんばって** インストールしてください  
+📖 [きふわらべのGo言語インストール解説](./doc/install/go.md)  
+
+👆 Go言語のインストール方法を解説しました。読んでください  
 
 ## Set up - 7 - Build
 

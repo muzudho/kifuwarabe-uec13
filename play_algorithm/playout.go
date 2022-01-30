@@ -28,6 +28,7 @@ func Playout(
 		var empty = make([]int, boardMax)
 		var emptyNum, r, z int
 
+		// TODO 空点を差分更新できないか？ 毎回スキャンは重くないか？
 		// 空点を記憶します
 		var onPoint = func(z int) {
 			if !position.Exists(z) { // 空点なら

@@ -56,7 +56,7 @@ func RunGtpEngine() {
 
 				code.Gtp.Print("= \n\n")
 			} else {
-				code.Gtp.Print("?What is a %s\n\n", command)
+				code.Gtp.Print("? unknown_command %s\n\n", command)
 			}
 
 		case "clear_board":
@@ -92,7 +92,7 @@ func RunGtpEngine() {
 				e.Komi = komi
 				code.Gtp.Print("= %d\n\n", e.Komi)
 			} else {
-				code.Gtp.Print("?What is a %s\n\n", command)
+				code.Gtp.Print("? unknown_command %s\n\n", command)
 			}
 
 			// TODO 消す code.Gtp.Print("= 6.5\n\n")

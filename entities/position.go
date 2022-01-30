@@ -99,8 +99,8 @@ func (position *Position) GetZ4(z int) int {
 	if z == 0 {
 		return 0
 	}
-	y := z / SentinelWidth
-	x := z - y*SentinelWidth
+	var y = z / SentinelWidth
+	var x = z - y*SentinelWidth
 	return x*100 + y
 }
 

@@ -24,7 +24,7 @@ GoGo をベースとしています
 
 ![20220130go69.png](doc/img/20220130go69.png)  
 
-👆 がんばって好きなところに解凍してください  
+👆 **がんばって** 好きなところに解凍してください  
 
 ![20220130go70.png](doc/img/20220130go70.png)  
 
@@ -105,6 +105,13 @@ BoardData = '''
 ## Set up - 4 - Download source
 
 きふわらべの .exe をソースからビルドして作る方法です。  
+
+![20220130thr-go9a2.png](./doc/img/20220130thr-go9a2.png)  
+
+👆 Go言語では ソースをどこに置くかは決まりがあるので、わたしは  
+`C:/Users/{ユーザー名}/go/src/github.com/muzudho/kifuwarabe-uec13`  
+に置いています  
+
 きふわらべのソースコードは、２つの方法で入手できます  
 
 ![20220130go71a3.png](./doc/img/20220130go71a3.png)  
@@ -132,11 +139,13 @@ BoardData = '''
 **がんばって** `kifuwarabe-uec13のリポジトリ―` の📂フォルダーを開いてください。  
 上図画面下のコマンドを打つところは **ターミナル** という名前です。 **がんばって** ターミナルを表示してください。  
 
-## Set up - 6 - Programming Language
+## Set up - 6 - Install Go Programming Language
 
-📖 [Go Downloads](https://go.dev/dl/)  
+![20220130thr-go1a2.png](./doc/img/20220130thr-go1a2.png)  
 
-👆 Go言語を **がんばって** インストールしてください  
+📖 [きふわらべのGo言語インストール解説](./doc/install/go.md)  
+
+👆 Go言語のインストール方法を解説しました。読んでください  
 
 ## Set up - 7 - Build
 

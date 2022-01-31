@@ -50,10 +50,10 @@ func Playout(
 			}
 
 			var err = e.PutStone(position, z, color)
-
-			if err == 0 {
+			if err == 0 { // 石が置けたなら
 				break
 			}
+
 			empty[r] = empty[emptyNum-1]
 			emptyNum--
 		}

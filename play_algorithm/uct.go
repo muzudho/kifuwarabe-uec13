@@ -83,9 +83,10 @@ func SearchUct(
 		var z = c.Z
 
 		var err = e.PutStone(position, z, color)
-		if err == 0 {
+		if err == 0 { // 石が置けたなら
 			break
 		}
+
 		c.Z = IllegalZ
 		// code.Console.Debug("ILLEGAL:z=%04d\n", GetZ4(z))
 	}

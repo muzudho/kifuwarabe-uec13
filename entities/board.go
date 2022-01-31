@@ -125,9 +125,11 @@ func (position *Position) GetEmptyZ() int {
 	return z
 }
 
-func (position *Position) countLibertySub(z int, color int, pLiberty *int, pStone *int) {
+// * `libertyArea` - 呼吸点の数
+// * `renArea` - 連の石の数
+func (position *Position) countLibertySub(z int, color int, libertyArea *int, renArea *int) {
 	position.checkBoard[z] = 1
-	*pStone++
+	*renArea++
 	for i := 0; i < 4; i++ {
 		z := z + Dir4[i]
 		if position.checkBoard[z] != 0 {
@@ -135,25 +137,27 @@ func (position *Position) countLibertySub(z int, color int, pLiberty *int, pSton
 		}
 		if !position.Exists(z) {
 			position.checkBoard[z] = 1
-			*pLiberty++
+			*libertyArea++
 		}
 		if position.board[z] == color {
-			position.countLibertySub(z, color, pLiberty, pStone)
+			position.countLibertySub(z, color, libertyArea, renArea)
 		}
 	}
 
 }
 
 // CountLiberty - 呼吸点を数えます。
-func (position *Position) CountLiberty(z int, pLiberty *int, pStone *int) {
-	*pLiberty = 0
-	*pStone = 0
+// * `libertyArea` - 呼吸点の数
+// * `renArea` - 連の石の数
+func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
+	*libertyArea = 0
+	*renArea = 0
 	boardMax := SentinelBoardArea
 	// 初期化
 	for z2 := 0; z2 < boardMax; z2++ {
 		position.checkBoard[z2] = 0
 	}
-	position.countLibertySub(z, position.board[z], pLiberty, pStone)
+	position.countLibertySub(z, position.board[z], libertyArea, renArea)
 }
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。

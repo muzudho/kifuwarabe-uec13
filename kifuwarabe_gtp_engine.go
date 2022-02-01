@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -153,18 +154,24 @@ func PlayComputerMoveLesson09a(
 	position *e.Position,
 	color int) int {
 
-	var z int
 	var st = time.Now()
 	pl.AllPlayouts = 0
 
-	z = pl.GetBestZByUct(
+	var z, winRate = pl.GetBestZByUct(
 		position,
 		color,
 		pl.SearchingOfUct)
 
+	if 1 < position.MovesNum && // 初手ではないとして
+		position.Record[position.MovesNum-1].GetZ() == 0 && // １つ前の手がパスで
+		0.95 <= math.Abs(winRate) { // 95%以上の確率で勝ちか負けなら
+		// こちらもパスします
+		return 0
+	}
+
 	var sec = time.Since(st).Seconds()
-	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), position.MovesNum, color, pl.AllPlayouts)
+	code.Console.Info("%.1f sec, %.0f playout/sec, play_z=%04d,rate=%.4f,movesNum=%d,color=%d,playouts=%d\n",
+		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), winRate, position.MovesNum, color, pl.AllPlayouts)
 
 	var recItem = new(e.RecordItem)
 	recItem.Z = z

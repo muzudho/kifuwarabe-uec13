@@ -23,7 +23,7 @@ func GetGtpZ(position *e.Position, z int) string {
 		alphabet_x++
 	}
 
-	code.Console.Debug("y=%d x=%d z=%d alphabet_x=%d alphabet_x(char)=%c\n", y, x, z, alphabet_x, alphabet_x)
+	// code.Console.Debug("y=%d x=%d z=%d alphabet_x=%d alphabet_x(char)=%c\n", y, x, z, alphabet_x, alphabet_x)
 
 	return fmt.Sprintf("%c%d", alphabet_x, y)
 }

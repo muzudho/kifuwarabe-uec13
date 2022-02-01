@@ -35,8 +35,8 @@ func SelfPlay() {
 		if z == 0 && 1 < position.MovesNum && position.Record[position.MovesNum-2].GetZ() == 0 {
 			break
 		}
-		// 自己対局は300手で終了します。
-		if 300 < position.MovesNum {
+		// 自己対局は400手で終了します。
+		if 400 < position.MovesNum {
 			break
 		} // too long
 		color = e.FlipColor(color)
@@ -48,17 +48,16 @@ func SelfPlay() {
 // GetComputerMoveDuringSelfPlay - コンピューターの指し手。 SelfplayLesson09 から呼び出されます
 func GetComputerMoveDuringSelfPlay(position *e.Position, color int) int {
 
-	var z int
 	var start = time.Now()
 	pl.AllPlayouts = 0
 
-	z = pl.GetBestZByUct(
+	var z, winRate = pl.GetBestZByUct(
 		position,
 		color,
 		pl.SearchingOfUct)
 
 	var sec = time.Since(start).Seconds()
-	code.Console.Info("(GetComputerMoveDuringSelfPlay) %.1f sec, %.0f playout/sec, play_z=%04d,movesNum=%d,color=%d,playouts=%d\n",
-		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), position.MovesNum, color, pl.AllPlayouts)
+	code.Console.Info("(GetComputerMoveDuringSelfPlay) %.1f sec, %.0f playout/sec, play_z=%04d,rate=%.4f,movesNum=%d,color=%d,playouts=%d\n",
+		sec, float64(pl.AllPlayouts)/sec, position.GetZ4(z), winRate, position.MovesNum, color, pl.AllPlayouts)
 	return z
 }

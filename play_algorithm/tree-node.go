@@ -11,9 +11,9 @@ import (
 type Child struct {
 	// table index. 盤の交点の配列のインデックス。
 	Z     int
-	Games int
-	Rate  float64
-	Next  int
+	Games int     // UCT検索をした回数？
+	Rate  float64 // 勝率
+	Next  int     // 配列のインデックス
 }
 
 // Node - ノード。

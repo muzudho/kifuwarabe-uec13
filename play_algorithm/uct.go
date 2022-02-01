@@ -18,10 +18,13 @@ const (
 )
 
 // GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
+//
+// # Return
+// (bestZ int, winRate float64)
 func GetBestZByUct(
 	position *e.Position,
 	color int,
-	searchUct *func(int, int) int) int {
+	searchUct *func(int, int) int) (int, float64) {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
@@ -56,7 +59,7 @@ func GetBestZByUct(
 	var bestZ = pN.Children[bestI].Z
 	code.Console.Info("(UCT Calculated    ) bestZ=%04d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
 		position.GetZ4(bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
-	return bestZ
+	return bestZ, pN.Children[bestI].Rate
 }
 
 // WrapSearchUct - 局面を束縛変数として与えます

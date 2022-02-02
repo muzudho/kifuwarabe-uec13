@@ -75,7 +75,7 @@ func (position *Position) InitPosition() {
 	position.iteratorWithoutWall(onPoint)
 
 	position.MovesNum = 0
-	position.KoZ = 0
+	position.KoZ = 0 // コウの指定がないので消します
 }
 
 // SetBoard - 盤面を設定します

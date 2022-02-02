@@ -90,6 +90,8 @@ func PutStone(position *Position, z int, color int) int {
 		return 4
 	}
 
+	position.KoZ = 0 // コウを消します
+
 	// 石を取り上げます
 	for dir := 0; dir < 4; dir++ {
 		var adjZ = z + Dir4[dir]          // 隣接する交点

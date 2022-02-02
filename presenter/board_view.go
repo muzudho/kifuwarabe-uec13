@@ -17,7 +17,7 @@ var sz8k = 8 * 1024
 //  2| . . . . . . . . . . . . . . . . . . . |
 //  3| . . . . . . . . . . . . . . . . x . . |
 //  4| . . . . . . . . . . . . . . . . . . . |
-//  5| . . . . . . . . . . . . . . . . . . . |  KoZ=0,movesNum=999
+//  5| . . . . . . . . . . . . . . . . . . . |
 //  6| . . . . . . . . . . . . . . . . . . . |
 //  7| . . . . . . . . . . . . . . . . . . . |
 //  8| . . . . . . . . . . . . . . . . . . . |
@@ -33,6 +33,7 @@ var sz8k = 8 * 1024
 // 18| . . . . . . . . . . . . . . . . . . . |
 // 19| . . . . . . . . . . . . . . . . . . . |
 //   +---------------------------------------+
+//  KoZ=0,movesNum=999
 //
 // ASCII文字を使います（全角、半角の狂いがないため）
 // 黒石は x 、 白石は o （ダークモードでもライトモードでも識別できるため）
@@ -90,7 +91,12 @@ func PrintBoard(position *e.Position, movesNum int) {
 
 	// Info
 	b.WriteString("  KoZ=")
-	b.WriteString(strconv.Itoa(position.GetZ4(position.KoZ)))
+	if position.KoZ == e.Pass {
+		b.WriteString("_")
+	} else {
+		b.WriteString(GetGtpZ(position, position.KoZ))
+		// b.WriteString(strconv.Itoa(position.GetZ4(position.KoZ)))
+	}
 	if movesNum != -1 {
 		b.WriteString(",movesNum=")
 		b.WriteString(strconv.Itoa(movesNum))

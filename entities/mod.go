@@ -41,15 +41,15 @@ var Komi float64
 // MaxMovesNum - 上限手数
 var MaxMovesNum int
 
-// Dir4 - ４方向（右、下、左、上）の番地。初期値は仮の値。
-var Dir4 = [4]int{1, 9, -1, 9}
+// Dir4 - ４方向（東、北、西、南）の番地。初期値は仮の値。 2015年講習会サンプル、GoGo とは順序が違います
+var Dir4 = [4]int{1, -9, -1, 9}
 
 // Dir4に対応
 const (
 	East = iota
-	South
-	West
 	North
+	West
+	South
 )
 
 // Pass - パス

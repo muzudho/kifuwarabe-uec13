@@ -38,7 +38,7 @@ func (position *Position) InitPosition() {
 	position.board = make([]int, boardMax)
 	position.checkBoard = make([]int, boardMax)
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
-	Dir4 = [4]int{1, SentinelWidth, -1, -SentinelWidth}
+	Dir4 = [4]int{1, -SentinelWidth, -1, SentinelWidth}
 
 	// 枠線
 	for z := 0; z < boardMax; z++ {

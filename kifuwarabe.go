@@ -9,7 +9,9 @@ import (
 	"time"
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
+	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
+	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
 )
 
@@ -34,10 +36,19 @@ func main() {
 
 	code.Console.Trace("# Author: %s\n", e.Author)
 
+	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
+	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
+	e.Komi = config.Komi()
+	e.MaxMovesNum = config.MaxMovesNum()
+	e.SetBoardSize(config.BoardSize())
+	var position = e.NewPosition()
+	pl.InitPosition(position)
+	position.SetBoard(config.GetBoardArray())
+
 	if lessonVer == "SelfPlay" {
-		SelfPlay()
+		SelfPlay(position)
 	} else {
-		RunGtpEngine() // GTP
+		RunGtpEngine(position) // GTP
 	}
 }
 

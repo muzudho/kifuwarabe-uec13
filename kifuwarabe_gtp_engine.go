@@ -10,7 +10,6 @@ import (
 	"time"
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
-	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
 	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
@@ -18,18 +17,8 @@ import (
 
 // RunGtpEngine - レッスン９a
 // GTP2NNGS に対応しているのでは？
-func RunGtpEngine() {
+func RunGtpEngine(position *e.Position) {
 	code.Console.Trace("# GoGo RunGtpEngine プログラム開始☆（＾～＾）\n")
-
-	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
-	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
-	e.Komi = config.Komi()
-	e.MaxMovesNum = config.MaxMovesNum()
-	e.SetBoardSize(config.BoardSize())
-	var position = e.NewPosition()
-	pl.InitPosition(position)
-	position.SetBoard(config.GetBoardArray())
-
 	code.Console.Trace("# 何か標準入力しろだぜ☆（＾～＾）\n")
 
 	// GUI から 囲碁エンジン へ入力があった、と考えてください

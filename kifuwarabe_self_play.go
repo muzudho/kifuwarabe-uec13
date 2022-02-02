@@ -4,22 +4,14 @@ import (
 	"time"
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
-	cnf "github.com/muzudho/kifuwarabe-uec13/config_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
 	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 	p "github.com/muzudho/kifuwarabe-uec13/presenter"
 )
 
 // SelfPlay - コンピューター同士の対局。
-func SelfPlay() {
+func SelfPlay(position *e.Position) {
 	code.Console.Trace("# GoGo SelfPlay 自己対局開始☆（＾～＾）\n")
-	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
-	e.Komi = config.Komi()
-	e.MaxMovesNum = config.MaxMovesNum()
-	e.SetBoardSize(config.BoardSize())
-	var position = e.NewPosition()
-	pl.InitPosition(position)
-	position.SetBoard(config.GetBoardArray())
 
 	var color = 1
 

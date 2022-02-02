@@ -54,7 +54,9 @@ func GetComputerMoveDuringSelfPlay(position *e.Position, color int) int {
 	var z, winRate = pl.GetBestZByUct(
 		position,
 		color,
-		pl.SearchingOfUct)
+		pl.SearchingOfUct,
+		createPrintingOfCalc(),
+		createPrintingOfCalcFin())
 
 	var sec = time.Since(start).Seconds()
 	code.Console.Info("(GetComputerMoveDuringSelfPlay) %.1f sec, %.0f playout/sec, play_z=%04d,rate=%.4f,movesNum=%d,color=%d,playouts=%d\n",

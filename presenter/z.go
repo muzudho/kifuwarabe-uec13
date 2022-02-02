@@ -6,12 +6,15 @@ import (
 
 	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
+	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 )
 
 // GetGtpZ - XY座標をアルファベット、数字で表したもの。 例: Q10
 func GetGtpZ(position *e.Position, z int) string {
 	if z == 0 {
 		return "PASS"
+	} else if z == pl.IllegalZ {
+		return "ILLEGAL" // GTP の仕様外です
 	}
 
 	var y = z / e.SentinelWidth

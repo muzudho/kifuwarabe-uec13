@@ -160,7 +160,9 @@ func PlayComputerMoveLesson09a(
 	var z, winRate = pl.GetBestZByUct(
 		position,
 		color,
-		pl.SearchingOfUct)
+		pl.SearchingOfUct,
+		createPrintingOfCalc(),
+		createPrintingOfCalcFin())
 
 	if 1 < position.MovesNum && // 初手ではないとして
 		position.Record[position.MovesNum-1].GetZ() == 0 && // １つ前の手がパスで

@@ -13,8 +13,7 @@ import (
 const (
 	NodeMax   = 10000
 	NodeEmpty = -1
-	// Table index.
-	IllegalZ = -1
+	IllegalZ  = -1 // UCT計算中に石が置けなかった
 )
 
 // GetBestZByUct - Lesson08,09,09aで使用。 一番良いUCTである着手を選びます。 GetComputerMoveDuringSelfPlay などから呼び出されます。
@@ -24,7 +23,9 @@ const (
 func GetBestZByUct(
 	position *e.Position,
 	color int,
-	searchUct *func(int, int) int) (int, float64) {
+	searchUct *func(int, int) int,
+	print_calc *func(*e.Position, int, int, float64, int),
+	print_calc_fin *func(*e.Position, int, float64, int, int, int)) (int, float64) {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット
@@ -50,13 +51,15 @@ func GetBestZByUct(
 			bestI = i
 			max = c.Games
 		}
-		code.Console.Info("(UCT Calculating...) %2d:z=%04d,rate=%.4f,games=%3d\n", i, position.GetZ4(c.Z), c.Rate, c.Games)
+		(*print_calc)(position, i, c.Z, c.Rate, c.Games)
+		// code.Console.Info("(UCT Calculating...) %2d:z=%s,rate=%.4f,games=%3d\n", i, p.GetGtpZ(position, c.Z), c.Rate, c.Games)
 	}
 
 	// 結果
 	var bestZ = pN.Children[bestI].Z
-	code.Console.Info("(UCT Calculated    ) bestZ=%04d,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
-		position.GetZ4(bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
+	(*print_calc_fin)(position, bestZ, pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
+	//code.Console.Info("(UCT Calculated    ) bestZ=%s,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
+	//	p.GetGtpZ(position, bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
 	return bestZ, pN.Children[bestI].Rate
 }
 

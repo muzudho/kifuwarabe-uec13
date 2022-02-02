@@ -12,8 +12,8 @@ import (
 // WrapIsDislike - 盤を束縛変数として与えます
 func WrapIsDislike(position *e.Position) *func(int, int) bool {
 	// 「手番の勝ちなら1、引き分けなら0、手番の負けなら-1を返す関数（自分視点）」を作成します
-	// * `turnColor` - 手番の石の色
-	var isDislike = func(turnColor int, z int) bool {
+	// * `color` - 石の色
+	var isDislike = func(color int, z int) bool {
 		// 座標取得
 		// 432
 		// 5S1
@@ -30,28 +30,28 @@ func WrapIsDislike(position *e.Position) *func(int, int) bool {
 		// 東北
 		// **
 		// S*
-		if isEmptyTriangle(turnColor, [3]int{eastZ, northEastZ, northZ}) {
+		if isEmptyTriangle(position, color, [3]int{eastZ, northEastZ, northZ}) {
 			return true
 		}
 
 		// 西北
 		// **
 		// *S
-		if isEmptyTriangle(turnColor, [3]int{northZ, northWestZ, westZ}) {
+		if isEmptyTriangle(position, color, [3]int{northZ, northWestZ, westZ}) {
 			return true
 		}
 
 		// 西南
 		// *S
 		// **
-		if isEmptyTriangle(turnColor, [3]int{westZ, southWestZ, southZ}) {
+		if isEmptyTriangle(position, color, [3]int{westZ, southWestZ, southZ}) {
 			return true
 		}
 
 		// 東南
 		// S*
 		// **
-		if isEmptyTriangle(turnColor, [3]int{southZ, southEastZ, eastZ}) {
+		if isEmptyTriangle(position, color, [3]int{southZ, southEastZ, eastZ}) {
 			return true
 		}
 
@@ -61,14 +61,15 @@ func WrapIsDislike(position *e.Position) *func(int, int) bool {
 	return &isDislike
 }
 
-func isEmptyTriangle(myColor int, points [3]int) bool {
+func isEmptyTriangle(position *e.Position, myColor int, points [3]int) bool {
 	var myColorNum = 0
 	var emptyNum = 0
 
-	for _, v := range points {
-		if v == myColor {
+	for _, z := range points {
+		var color = position.ColorAt(z)
+		if color == myColor {
 			myColorNum++
-		} else if v == e.Empty {
+		} else if color == e.Empty {
 			emptyNum++
 		}
 	}

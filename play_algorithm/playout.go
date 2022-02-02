@@ -52,16 +52,17 @@ func Playout(
 			}
 
 			var err = e.PutStone(position, z, color)
-			if err == 0 { // 石が置けたなら
+			if err == 0 { // 石が置けたか、パスなら
 
-				if !(*isDislike)(color, z) { // 石を置きたくないわけでなければ
+				if z == e.Pass || // パスか、
+					!(*isDislike)(color, z) { // 石を置きたくないわけでなければ
 					break // 確定
 				}
 
 				dislikeZ = z // 候補が無かったときに使います
 			}
 
-			// 石を置かなかったら、その選択肢は削除します
+			// 石を置かなかったら、その選択肢は、最後尾の要素で置換し、最後尾の要素を消します
 			empty[r] = empty[emptyNum-1]
 			emptyNum--
 		}

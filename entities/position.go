@@ -93,9 +93,9 @@ func (position *Position) ColorAtXy(x int, y int) int {
 	return position.board[(y+1)*SentinelWidth+x+1]
 }
 
-// Exists - 指定の交点に石があるか？
-func (position *Position) Exists(z int) bool {
-	return position.board[z] != 0
+// IsEmpty - 指定の交点は空点か？
+func (position *Position) IsEmpty(z int) bool {
+	return position.board[z] == Empty
 }
 
 // SetColor - 盤データ。
@@ -127,7 +127,7 @@ func (position *Position) GetEmptyZ() int {
 		x = rand.Intn(9)
 		y = rand.Intn(9)
 		z = position.GetZFromXy(x, y)
-		if !position.Exists(z) {
+		if position.IsEmpty(z) { // 空点
 			break
 		}
 	}
@@ -140,11 +140,11 @@ func (position *Position) countLibertySub(z int, color int, libertyArea *int, re
 	position.checkBoard[z] = 1
 	*renArea++
 	for i := 0; i < 4; i++ {
-		z := z + Dir4[i]
+		var z = z + Dir4[i]
 		if position.checkBoard[z] != 0 {
 			continue
 		}
-		if !position.Exists(z) {
+		if position.IsEmpty(z) { // 空点
 			position.checkBoard[z] = 1
 			*libertyArea++
 		}
@@ -171,7 +171,7 @@ func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
 func (position *Position) TakeStone(z int, color int) {
-	position.board[z] = 0 // 石を消します
+	position.board[z] = Empty // 石を消します
 
 	for dir := 0; dir < 4; dir++ {
 		var z2 = z + Dir4[dir]

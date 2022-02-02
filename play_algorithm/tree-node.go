@@ -52,11 +52,10 @@ func CreateNode(position *e.Position) int {
 	pN.ChildGameSum = 0
 
 	var onPoint = func(z int) {
-		if !position.Exists(z) {
+		if position.IsEmpty(z) { // 空点なら
 			addChild(pN, z)
 		}
 	}
-
 	position.IterateWithoutWall(onPoint)
 
 	addChild(pN, 0)

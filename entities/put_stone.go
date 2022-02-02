@@ -44,10 +44,10 @@ func PutStone(position *Position, z int, color int) int {
 
 		var z2 = z + Dir4[dir]              // 隣の交点
 		var adjColor = position.ColorAt(z2) // 隣(adjacent)の交点の石の色
-		if adjColor == 0 {                  // 空点
+		if adjColor == Empty {              // 空点
 			space++
 			continue
-		} else if adjColor == 3 { // 壁
+		} else if adjColor == Wall { // 壁
 			wall++
 			continue
 		}
@@ -78,7 +78,7 @@ func PutStone(position *Position, z int, color int) int {
 		return 2
 	}
 	if wall+mycolSafe == 4 {
-		// 例えば黒番で 1, 2 の箇所に打つのは損なので、石を置きません
+		// 例えば黒番で 1, 2 の箇所（眼）に打つのは損なので、石を置きません
 		//
 		// #########
 		//  x2x  x1#
@@ -86,7 +86,7 @@ func PutStone(position *Position, z int, color int) int {
 		//         #
 		return 3
 	}
-	if position.Exists(z) { // 石の上には置けません
+	if !position.IsEmpty(z) { // 空点以外には置けません
 		return 4
 	}
 
@@ -96,15 +96,15 @@ func PutStone(position *Position, z int, color int) int {
 		var lib = around[dir].LibertyArea // 隣接する連の呼吸点の数
 		var adjColor = around[dir].Color  // 隣接する連の石の色
 
-		if adjColor == oppColor && // 隣接する連が相手の石で
+		if adjColor == oppColor && // 隣接する連が相手の石で（壁はここで除外されます）
 			lib == 1 && // その呼吸点は１つで、そこに今石を置いた
-			position.Exists(adjZ) { // 石はまだあるなら（上と右の石がくっついている、といったことを除外）
+			!position.IsEmpty(adjZ) { // 石はまだあるなら（上と右の石がくっついている、といったことを除外）
 
 			position.TakeStone(adjZ, oppColor)
 
 			// もし取った石の数が１個ならそこはコウ。また、図形上、コウは１個しか出現しません
 			if around[dir].StoneArea == 1 {
-				position.KoZ = z + Dir4[dir]
+				position.KoZ = adjZ
 			}
 		}
 	}

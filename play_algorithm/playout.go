@@ -32,7 +32,7 @@ func Playout(
 		// TODO 空点を差分更新できないか？ 毎回スキャンは重くないか？
 		// 空点を記憶します
 		var onPoint = func(z int) {
-			if !position.Exists(z) { // 空点なら
+			if position.IsEmpty(z) { // 空点なら
 				empty[emptyNum] = z
 				emptyNum++
 			}

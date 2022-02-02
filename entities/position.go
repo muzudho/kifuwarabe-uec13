@@ -171,10 +171,12 @@ func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
 func (position *Position) TakeStone(z int, color int) {
-	position.board[z] = 0
+	position.board[z] = 0 // 石を消します
+
 	for dir := 0; dir < 4; dir++ {
-		z2 := z + Dir4[dir]
-		if position.board[z2] == color {
+		var z2 = z + Dir4[dir]
+
+		if position.board[z2] == color { // 再帰します
 			position.TakeStone(z2, color)
 		}
 	}

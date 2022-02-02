@@ -90,13 +90,17 @@ func PutStone(position *Position, z int, color int) int {
 		return 4
 	}
 
+	// 石を取り上げます
 	for dir := 0; dir < 4; dir++ {
+		var adjZ = z + Dir4[dir]          // 隣接する交点
 		var lib = around[dir].LibertyArea // 隣接する連の呼吸点の数
 		var adjColor = around[dir].Color  // 隣接する連の石の色
-		if adjColor == oppColor &&        // 隣接する連が相手の石で
+
+		if adjColor == oppColor && // 隣接する連が相手の石で
 			lib == 1 && // その呼吸点は１つで、そこに今石を置いた
-			position.Exists(z+Dir4[dir]) { // 石はまだあるなら（上と右の石がくっついている、といったことを除外）
-			position.TakeStone(z+Dir4[dir], oppColor)
+			position.Exists(adjZ) { // 石はまだあるなら（上と右の石がくっついている、といったことを除外）
+
+			position.TakeStone(adjZ, oppColor)
 
 			// もし取った石の数が１個ならそこはコウ。また、図形上、コウは１個しか出現しません
 			if around[dir].StoneArea == 1 {

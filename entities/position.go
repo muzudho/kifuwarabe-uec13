@@ -55,6 +55,20 @@ func (position *Position) InitPosition() {
 	position.KoZ = 0
 }
 
+// CopyData - 盤データのコピー。
+func (position *Position) CopyData() []int {
+	boardArea := SentinelBoardArea
+
+	var boardCopy2 = make([]int, boardArea)
+	copy(boardCopy2[:], position.board[:])
+	return boardCopy2
+}
+
+// ImportData - 盤データのコピー。
+func (position *Position) ImportData(boardCopy2 []int) {
+	copy(position.board[:], boardCopy2[:])
+}
+
 // SetBoard - 盤面を設定します
 func (position *Position) SetBoard(board []int) {
 	position.board = board
@@ -78,20 +92,6 @@ func (position *Position) Exists(z int) bool {
 // SetColor - 盤データ。
 func (position *Position) SetColor(z int, color int) {
 	position.board[z] = color
-}
-
-// CopyData - 盤データのコピー。
-func (position *Position) CopyData() []int {
-	boardArea := SentinelBoardArea
-
-	var boardCopy2 = make([]int, boardArea)
-	copy(boardCopy2[:], position.board[:])
-	return boardCopy2
-}
-
-// ImportData - 盤データのコピー。
-func (position *Position) ImportData(boardCopy2 []int) {
-	copy(position.board[:], boardCopy2[:])
 }
 
 // GetZ4 - z（配列のインデックス）を XXYY形式（3～4桁の数）の座標へ変換します。

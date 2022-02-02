@@ -102,9 +102,9 @@ func PutStone(position *Position, z int, color int) int {
 
 			position.TakeStone(adjZ, oppColor)
 
-			// もし取った石の数が１個ならそこはコウ。また、図形上、コウは１個しか出現しません
+			// もし取った石の数が１個なら、その石のある隣接した交点はコウ。また、図形上、コウは１個しか出現しません
 			if around[dir].StoneArea == 1 {
-				position.KoZ = z
+				position.KoZ = adjZ
 			}
 		}
 	}

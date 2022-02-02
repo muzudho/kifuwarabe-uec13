@@ -39,19 +39,21 @@ func PutStone(position *Position, z int, color int) int {
 		return 0
 	}
 
+	// 呼吸点を計算します
 	for dir := 0; dir < 4; dir++ { // ４方向
 		around[dir] = NewRen(0, 0, 0) // 呼吸点の数, 連の石の数, 石の色
 
-		var z2 = z + Dir4[dir]              // 隣の交点
-		var adjColor = position.ColorAt(z2) // 隣(adjacent)の交点の石の色
-		if adjColor == Empty {              // 空点
+		var adjZ = z + Dir4[dir]              // 隣の交点
+		var adjColor = position.ColorAt(adjZ) // 隣(adjacent)の交点の石の色
+		if adjColor == Empty {                // 空点
 			space++
 			continue
-		} else if adjColor == Wall { // 壁
+		}
+		if adjColor == Wall { // 壁
 			wall++
 			continue
 		}
-		position.CountLiberty(z2, &libertyArea, &renArea)
+		position.CountLiberty(adjZ, &libertyArea, &renArea)
 		around[dir].LibertyArea = libertyArea         // 呼吸点の数
 		around[dir].StoneArea = renArea               // 連の意地の数
 		around[dir].Color = adjColor                  // 石の色

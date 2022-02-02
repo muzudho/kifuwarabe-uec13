@@ -174,10 +174,10 @@ func (position *Position) TakeStone(z int, color int) {
 	position.board[z] = Empty // 石を消します
 
 	for dir := 0; dir < 4; dir++ {
-		var z2 = z + Dir4[dir]
+		var adjZ = z + Dir4[dir]
 
-		if position.board[z2] == color { // 再帰します
-			position.TakeStone(z2, color)
+		if position.board[adjZ] == color { // 再帰します
+			position.TakeStone(adjZ, color)
 		}
 	}
 }

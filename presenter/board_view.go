@@ -103,5 +103,5 @@ func PrintBoard(position *e.Position, movesNum int) {
 	}
 	b.WriteString("\n")
 
-	code.Console.Notice(b.String())
+	code.Console.Print(b.String())
 }

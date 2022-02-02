@@ -104,7 +104,7 @@ func PutStone(position *Position, z int, color int) int {
 
 			// もし取った石の数が１個ならそこはコウ。また、図形上、コウは１個しか出現しません
 			if around[dir].StoneArea == 1 {
-				position.KoZ = adjZ
+				position.KoZ = z
 			}
 		}
 	}

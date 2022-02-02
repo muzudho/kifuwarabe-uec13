@@ -78,3 +78,46 @@ play white A2
 
 play black A3
 ```
+
+## Take by wall 2
+
+```plain
+    A B C D E F G H J
+  +-------------------+
+ 1| x . . . . . . . . |
+ 2| o x . . . . . . . |
+ 3| . o x . . . . . . |
+ 4| o x . . . . . . . |
+ 5| x . . . . . . . . |
+ 6| . . . . . . . . . |
+ 7| . . . . . . . . . |
+ 8| . . . . . . . . . |
+ 9| . . . . . . . . . |
+  +-------------------+
+
+boardsize 9
+clear_board
+play black A1
+play black B2
+play black C3
+play black B4
+play black A5
+play white A2
+play white B3
+play white A4
+
+    A B C D E F G H J
+  +-------------------+
+ 1| x . . . . . . . . |
+ 2| . x . . . . . . . |
+ 3| x . x . . . . . . |
+ 4| . x . . . . . . . |
+ 5| x . . . . . . . . |
+ 6| . . . . . . . . . |
+ 7| . . . . . . . . . |
+ 8| . . . . . . . . . |
+ 9| . . . . . . . . . |
+  +-------------------+
+
+play black A3
+```

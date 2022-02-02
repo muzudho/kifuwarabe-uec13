@@ -32,14 +32,12 @@ func GetBestZByUct(
 	var uctLoopCount = UctLoopCount
 	for i := 0; i < uctLoopCount; i++ {
 		// 一時記憶
-		var copiedBoard = position.CopyData()
-		var copiedKoZ = position.KoZ
+		var copiedPosition = position.CopyPosition()
 
 		(*searchUct)(color, next)
 
 		// 復元
-		position.KoZ = copiedKoZ
-		position.ImportData(copiedBoard)
+		position.ImportPosition(copiedPosition)
 	}
 
 	// ベスト値検索フェーズ

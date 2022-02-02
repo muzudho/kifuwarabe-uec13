@@ -22,6 +22,29 @@ type Position struct {
 	uctChildrenSize int
 }
 
+// TemporaryPosition - 盤をコピーするときの一時メモリーとして使います
+type TemporaryPosition struct {
+	// 盤
+	Board []int
+	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
+	KoZ int
+}
+
+// CopyPosition - 盤データのコピー。
+func (position *Position) CopyPosition() *TemporaryPosition {
+	var temp = new(TemporaryPosition)
+	temp.Board = make([]int, SentinelBoardArea)
+	copy(temp.Board[:], position.board[:])
+	temp.KoZ = position.KoZ
+	return temp
+}
+
+// ImportPosition - 盤データのコピー。
+func (position *Position) ImportPosition(temp *TemporaryPosition) {
+	copy(position.board[:], temp.Board[:])
+	position.KoZ = temp.KoZ
+}
+
 // NewPosition - 空っぽの局面を生成します
 // あとで InitPosition() を呼び出してください
 func NewPosition() *Position {
@@ -53,20 +76,6 @@ func (position *Position) InitPosition() {
 
 	position.MovesNum = 0
 	position.KoZ = 0
-}
-
-// CopyData - 盤データのコピー。
-func (position *Position) CopyData() []int {
-	boardArea := SentinelBoardArea
-
-	var boardCopy2 = make([]int, boardArea)
-	copy(boardCopy2[:], position.board[:])
-	return boardCopy2
-}
-
-// ImportData - 盤データのコピー。
-func (position *Position) ImportData(boardCopy2 []int) {
-	copy(position.board[:], boardCopy2[:])
 }
 
 // SetBoard - 盤面を設定します

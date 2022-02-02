@@ -5,6 +5,17 @@ const (
 	Author = "Satoshi Takahashi"
 )
 
+const (
+	// Empty - 空点
+	Empty = iota
+	// Black - 黒石
+	Black
+	// White - 白石
+	White
+	// Wall - 壁
+	Wall
+)
+
 func SetBoardSize(boardSize int) {
 	BoardSize = boardSize
 	BoardArea = BoardSize * BoardSize
@@ -32,6 +43,17 @@ var MaxMovesNum int
 
 // Dir4 - ４方向（右、下、左、上）の番地。初期値は仮の値。
 var Dir4 = [4]int{1, 9, -1, 9}
+
+// Dir4に対応
+const (
+	East = iota
+	South
+	West
+	North
+)
+
+// Pass - パス
+const Pass = 0
 
 // FlipColor - 白黒反転させます。
 func FlipColor(col int) int {

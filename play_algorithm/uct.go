@@ -96,7 +96,7 @@ func SearchUct(
 
 	var winner int // 手番が勝ちなら1、引分けなら0、手番の負けなら-1 としてください
 	if c.Games <= 0 {
-		winner = -Playout(position, e.FlipColor(color), GettingOfWinnerOnDuringUCTPlayout)
+		winner = -Playout(position, e.FlipColor(color), GettingOfWinnerOnDuringUCTPlayout, IsDislike)
 	} else {
 		if c.Next == NodeEmpty {
 			c.Next = CreateNode(position)

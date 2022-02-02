@@ -15,7 +15,8 @@ import (
 func Playout(
 	position *e.Position,
 	turnColor int,
-	getWinner *func(int) int) int {
+	getWinner *func(int) int,
+	isDislike *func(int, int) bool) int {
 
 	AllPlayouts++
 
@@ -26,7 +27,7 @@ func Playout(
 	var playoutTrialCount = PlayoutTrialCount
 	for trial := 0; trial < playoutTrialCount; trial++ {
 		var empty = make([]int, boardMax)
-		var emptyNum, r, z int
+		var emptyNum, z int
 
 		// TODO 空点を差分更新できないか？ 毎回スキャンは重くないか？
 		// 空点を記憶します
@@ -38,12 +39,13 @@ func Playout(
 		}
 		position.IterateWithoutWall(onPoint)
 
-		r = 0
+		var r = 0
+		var dislikeZ = e.Pass
 		var randomPigeonX = GetRandomPigeonX(emptyNum) // 見切りを付ける試行回数を算出
 		var i int
 		for i = 0; i < randomPigeonX; i++ {
-			if emptyNum == 0 { // 空点が無ければ投了します
-				z = 0
+			if emptyNum == 0 { // 空点が無ければパスします
+				z = e.Pass
 			} else {
 				r = rand.Intn(emptyNum) // 空点を適当に選びます
 				z = empty[r]
@@ -51,14 +53,20 @@ func Playout(
 
 			var err = e.PutStone(position, z, color)
 			if err == 0 { // 石が置けたなら
-				break
+
+				// if !(*isDislike)(turnColor, z) { // 石を置きたくないわけでなければ
+				break // 確定
+				//}
+
+				// dislikeZ = z // 候補が無かったときに使います
 			}
 
+			// 石を置かなかったら、その選択肢は削除します
 			empty[r] = empty[emptyNum-1]
 			emptyNum--
 		}
 		if i == randomPigeonX {
-			z = 0
+			z = dislikeZ
 		}
 
 		// テストのときは棋譜を残します

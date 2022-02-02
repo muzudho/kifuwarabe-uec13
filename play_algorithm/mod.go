@@ -1,11 +1,15 @@
 package play_algorithm
 
-import e "github.com/muzudho/kifuwarabe-uec13/entities"
+import (
+	e "github.com/muzudho/kifuwarabe-uec13/entities"
+	gd "github.com/muzudho/kifuwarabe-uec13/game_domain"
+)
 
 // AllPlayouts - プレイアウトした回数。
 var AllPlayouts int
 
 var GettingOfWinnerOnDuringUCTPlayout *func(int) int
+var IsDislike *func(int, int) bool
 var SearchingOfUct *func(color int, nodeN int) int
 
 // FlagTestPlayout - ？。
@@ -16,6 +20,7 @@ func InitPosition(position *e.Position) {
 	position.InitPosition()
 
 	GettingOfWinnerOnDuringUCTPlayout = WrapGettingOfWinner(position)
+	IsDislike = gd.WrapIsDislike(position)
 	SearchingOfUct = WrapSearchUct(position)
 	AdjustParameters(position)
 }

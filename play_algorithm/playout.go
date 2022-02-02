@@ -54,11 +54,11 @@ func Playout(
 			var err = e.PutStone(position, z, color)
 			if err == 0 { // 石が置けたなら
 
-				// if !(*isDislike)(turnColor, z) { // 石を置きたくないわけでなければ
-				break // 確定
-				//}
+				if !(*isDislike)(color, z) { // 石を置きたくないわけでなければ
+					break // 確定
+				}
 
-				// dislikeZ = z // 候補が無かったときに使います
+				dislikeZ = z // 候補が無かったときに使います
 			}
 
 			// 石を置かなかったら、その選択肢は削除します

@@ -88,6 +88,11 @@ func (position *Position) ColorAt(z int) int {
 	return position.board[z]
 }
 
+// CheckAt - 指定した交点のチェック
+func (position *Position) CheckAt(z int) int {
+	return position.checkBoard[z]
+}
+
 // ColorAtXy - 指定した交点の石の色
 func (position *Position) ColorAtXy(x int, y int) int {
 	return position.board[(y+1)*SentinelWidth+x+1]

@@ -95,7 +95,6 @@ func PrintBoard(position *e.Position, movesNum int) {
 		b.WriteString("_")
 	} else {
 		b.WriteString(GetGtpZ(position, position.KoZ))
-		// b.WriteString(strconv.Itoa(position.GetZ4(position.KoZ)))
 	}
 	if movesNum != -1 {
 		b.WriteString(",movesNum=")

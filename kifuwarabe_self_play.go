@@ -21,6 +21,7 @@ func SelfPlay(position *e.Position) {
 		var recItem = new(e.RecordItem)
 		recItem.Z = z
 		e.PutStoneOnRecord(position, z, color, recItem)
+		p.PrintCheckBoard(position) // テスト
 		p.PrintBoard(position, position.MovesNum)
 
 		// パスで２手目以降で棋譜の１つ前（相手）もパスなら終了します。

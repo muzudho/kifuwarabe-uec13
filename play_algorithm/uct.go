@@ -23,7 +23,6 @@ const (
 func GetBestZByUct(
 	position *e.Position,
 	color int,
-	searchUct *func(int, int) int,
 	print_calc *func(*e.Position, int, int, float64, int),
 	print_calc_fin *func(*e.Position, int, float64, int, int, int)) (int, float64) {
 
@@ -35,7 +34,7 @@ func GetBestZByUct(
 		// 一時記憶
 		var copiedPosition = position.CopyPosition()
 
-		(*searchUct)(color, next)
+		SearchUct(position, color, next)
 
 		// 復元
 		position.ImportPosition(copiedPosition)
@@ -61,15 +60,6 @@ func GetBestZByUct(
 	//code.Console.Info("(UCT Calculated    ) bestZ=%s,rate=%.4f,games=%d,playouts=%d,nodes=%d\n",
 	//	p.GetGtpZ(position, bestZ), pN.Children[bestI].Rate, max, AllPlayouts, NodeNum)
 	return bestZ, pN.Children[bestI].Rate
-}
-
-// WrapSearchUct - 局面を束縛変数として与えます
-func WrapSearchUct(position *e.Position) *func(int, int) int {
-	var searchUct = func(color int, nodeN int) int {
-		return SearchUct(position, color, nodeN)
-	}
-
-	return &searchUct
 }
 
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます

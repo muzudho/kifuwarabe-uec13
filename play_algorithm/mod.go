@@ -10,7 +10,6 @@ var AllPlayouts int
 
 var GettingOfWinnerOnDuringUCTPlayout *func(int) int
 var IsDislike *func(int, int) bool
-var SearchingOfUct *func(color int, nodeN int) int
 
 // FlagTestPlayout - ？。
 var FlagTestPlayout int
@@ -21,6 +20,5 @@ func InitPosition(position *e.Position) {
 
 	GettingOfWinnerOnDuringUCTPlayout = WrapGettingOfWinner(position)
 	IsDislike = gd.WrapIsDislike(position)
-	SearchingOfUct = WrapSearchUct(position)
 	AdjustParameters(position)
 }

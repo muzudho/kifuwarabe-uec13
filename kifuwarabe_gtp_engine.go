@@ -149,7 +149,6 @@ func PlayComputerMoveLesson09a(
 	var z, winRate = pl.GetBestZByUct(
 		position,
 		color,
-		pl.SearchingOfUct,
 		createPrintingOfCalc(),
 		createPrintingOfCalcFin())
 

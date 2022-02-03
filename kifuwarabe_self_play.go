@@ -13,7 +13,7 @@ import (
 func SelfPlay(position *e.Position) {
 	code.Console.Trace("# GoGo SelfPlay 自己対局開始☆（＾～＾）\n")
 
-	var color = 1
+	var color = e.Black
 
 	for {
 		var z = GetComputerMoveDuringSelfPlay(position, color)
@@ -21,11 +21,13 @@ func SelfPlay(position *e.Position) {
 		var recItem = new(e.RecordItem)
 		recItem.Z = z
 		e.PutStoneOnRecord(position, z, color, recItem)
-		p.PrintCheckBoard(position) // テスト
+
+		code.Console.Print("z=%s,color=%d", p.GetGtpZ(position, z), color) // テスト
+		// p.PrintCheckBoard(position)                                        // テスト
 		p.PrintBoard(position, position.MovesNum)
 
 		// パスで２手目以降で棋譜の１つ前（相手）もパスなら終了します。
-		if z == 0 && 1 < position.MovesNum && position.Record[position.MovesNum-2].GetZ() == 0 {
+		if z == e.Pass && 1 < position.MovesNum && position.Record[position.MovesNum-2].GetZ() == e.Pass {
 			break
 		}
 		// 自己対局は400手で終了します。

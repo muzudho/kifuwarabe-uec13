@@ -38,8 +38,8 @@ func main() {
 
 	// 設定は囲碁GUIから与えられて上書きされる想定です。設定ファイルはデフォルト設定です
 	var config = cnf.LoadGameConf("input/game_conf.toml", OnFatal)
-	e.Komi = config.Komi()
-	e.MaxMovesNum = config.MaxMovesNum()
+	e.Komi = e.KomiType(config.Komi())
+	e.MaxMovesNum = e.MovesNumType(config.MaxMovesNum())
 	e.SetBoardSize(config.BoardSize())
 	var position = e.NewPosition()
 	pl.InitPosition(position)

@@ -46,7 +46,7 @@ func getWinner(position *e.Position, turnColor e.Stone) int {
 	whiteSum = kind[2] + whiteArea
 	score = blackSum - whiteSum
 	var win = 0
-	if 0 < float64(score)-e.Komi {
+	if 0 < e.KomiType(score)-e.Komi {
 		win = 1
 	}
 	if turnColor == 2 {

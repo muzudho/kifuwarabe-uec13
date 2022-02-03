@@ -79,7 +79,7 @@ func RunGtpEngine(position *e.Position) {
 					panic(err)
 				}
 
-				e.Komi = komi
+				e.Komi = e.KomiType(komi)
 				code.Gtp.Print("= %d\n\n", e.Komi)
 			} else {
 				code.Gtp.Print("? unknown_command %s\n\n", command)

@@ -22,7 +22,7 @@ const (
 // (bestZ int, winRate float64)
 func GetBestZByUct(
 	position *e.Position,
-	color int,
+	color e.Stone,
 	print_calc *func(*e.Position, int, int, float64, int),
 	print_calc_fin *func(*e.Position, int, float64, int, int, int)) (int, float64) {
 
@@ -65,7 +65,7 @@ func GetBestZByUct(
 // SearchUct - 再帰関数。 GetBestZByUct() から呼び出されます
 func SearchUct(
 	position *e.Position,
-	color int,
+	color e.Stone,
 	nodeN int) int {
 
 	var pN = &Nodes[nodeN]

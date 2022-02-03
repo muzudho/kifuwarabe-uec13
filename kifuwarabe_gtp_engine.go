@@ -94,7 +94,7 @@ func RunGtpEngine(position *e.Position) {
 		case "genmove":
 			// genmove black
 			// genmove white
-			var color int
+			var color e.Stone
 			if 1 < len(tokens) && strings.ToLower(tokens[1][0:1]) == "w" {
 				color = 2
 			} else {
@@ -115,7 +115,7 @@ func RunGtpEngine(position *e.Position) {
 			// play black PASS
 			// play white PASS
 			if 2 < len(tokens) {
-				var color int
+				var color e.Stone
 				if strings.ToLower(tokens[1][0:1]) == "w" {
 					color = 2
 				} else {
@@ -141,7 +141,7 @@ func RunGtpEngine(position *e.Position) {
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
 	position *e.Position,
-	color int) int {
+	color e.Stone) int {
 
 	var st = time.Now()
 	pl.AllPlayouts = 0

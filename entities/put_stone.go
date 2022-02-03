@@ -7,7 +7,7 @@ import (
 )
 
 // PutStoneOnRecord - SelfPlay, RunGtpEngine から呼び出されます
-func PutStoneOnRecord(position *Position, z int, color int, recItem *RecordItem) {
+func PutStoneOnRecord(position *Position, z int, color Stone, recItem *RecordItem) {
 	var err = PutStone(position, z, color)
 	if err != 0 {
 		code.Console.Error("(PutStoneOnRecord) Err!\n")
@@ -24,7 +24,7 @@ func PutStoneOnRecord(position *Position, z int, color int, recItem *RecordItem)
 //
 // # Returns
 // エラーコード
-func PutStone(position *Position, z int, color int) int {
+func PutStone(position *Position, z int, color Stone) int {
 	var around = [4]*Ren{}          // 隣接する４つの交点
 	var libertyArea int             // 呼吸点の数
 	var renArea int                 // 連の石の数
@@ -34,7 +34,7 @@ func PutStone(position *Position, z int, color int) int {
 	var mycolSafe = 0               // 呼吸できる自分の石と隣接している向きの数
 	var captureSum = 0              // アゲハマの数
 
-	if z == 0 { // 投了なら、コウを消して関数を正常終了
+	if z == Pass { // 投了なら、コウを消して関数を正常終了
 		position.KoZ = 0
 		return 0
 	}

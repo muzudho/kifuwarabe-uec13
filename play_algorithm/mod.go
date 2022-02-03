@@ -8,8 +8,8 @@ import (
 // AllPlayouts - プレイアウトした回数。
 var AllPlayouts int
 
-var GettingOfWinnerOnDuringUCTPlayout *func(int) int
-var IsDislike *func(int, int) bool
+var GettingOfWinnerOnDuringUCTPlayout *func(e.Stone) int
+var IsDislike *func(e.Stone, int) bool
 
 // FlagTestPlayout - ？。
 var FlagTestPlayout int

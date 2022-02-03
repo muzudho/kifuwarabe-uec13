@@ -7,7 +7,7 @@ import (
 // Position - 盤
 type Position struct {
 	// 盤
-	board []int
+	board []Stone
 	// 呼吸点を数えるための一時盤
 	checkBoard []int
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
@@ -25,7 +25,7 @@ type Position struct {
 // TemporaryPosition - 盤をコピーするときの一時メモリーとして使います
 type TemporaryPosition struct {
 	// 盤
-	Board []int
+	Board []Stone
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
 	KoZ int
 }
@@ -33,7 +33,7 @@ type TemporaryPosition struct {
 // CopyPosition - 盤データのコピー。
 func (position *Position) CopyPosition() *TemporaryPosition {
 	var temp = new(TemporaryPosition)
-	temp.Board = make([]int, SentinelBoardArea)
+	temp.Board = make([]Stone, SentinelBoardArea)
 	copy(temp.Board[:], position.board[:])
 	temp.KoZ = position.KoZ
 	return temp
@@ -58,7 +58,7 @@ func (position *Position) InitPosition() {
 
 	// サイズが変わっているケースに対応するため、配列の作り直し
 	var boardMax = SentinelBoardArea
-	position.board = make([]int, boardMax)
+	position.board = make([]Stone, boardMax)
 	position.checkBoard = make([]int, boardMax)
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
 	Dir4 = [4]int{1, -SentinelWidth, -1, SentinelWidth}
@@ -79,12 +79,12 @@ func (position *Position) InitPosition() {
 }
 
 // SetBoard - 盤面を設定します
-func (position *Position) SetBoard(board []int) {
+func (position *Position) SetBoard(board []Stone) {
 	position.board = board
 }
 
 // ColorAt - 指定した交点の石の色
-func (position *Position) ColorAt(z int) int {
+func (position *Position) ColorAt(z int) Stone {
 	return position.board[z]
 }
 
@@ -94,7 +94,7 @@ func (position *Position) CheckAt(z int) int {
 }
 
 // ColorAtXy - 指定した交点の石の色
-func (position *Position) ColorAtXy(x int, y int) int {
+func (position *Position) ColorAtXy(x int, y int) Stone {
 	return position.board[(y+1)*SentinelWidth+x+1]
 }
 
@@ -104,7 +104,7 @@ func (position *Position) IsEmpty(z int) bool {
 }
 
 // SetColor - 盤データ。
-func (position *Position) SetColor(z int, color int) {
+func (position *Position) SetColor(z int, color Stone) {
 	position.board[z] = color
 }
 
@@ -157,7 +157,7 @@ func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
 
 // * `libertyArea` - 呼吸点の数
 // * `renArea` - 連の石の数
-func (position *Position) countLibertySub(z int, color int, libertyArea *int, renArea *int) {
+func (position *Position) countLibertySub(z int, color Stone, libertyArea *int, renArea *int) {
 	position.checkBoard[z] = 1
 	*renArea++
 	for i := 0; i < 4; i++ {
@@ -175,7 +175,7 @@ func (position *Position) countLibertySub(z int, color int, libertyArea *int, re
 }
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
-func (position *Position) TakeStone(z int, color int) {
+func (position *Position) TakeStone(z int, color Stone) {
 	position.board[z] = Empty // 石を消します
 
 	for dir := 0; dir < 4; dir++ {

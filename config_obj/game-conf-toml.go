@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
+	e "github.com/muzudho/kifuwarabe-uec13/entities"
 	"github.com/pelletier/go-toml"
 )
 
@@ -32,15 +34,30 @@ type Game struct {
 }
 
 // GetBoardArray - 盤上の石の色の配列
-func (config *Config) GetBoardArray() []int {
+func (config *Config) GetBoardArray() []e.Stone {
 	// 最後のカンマを削除しないと、要素数が 1 多くなってしまいます
 	var s = strings.TrimRight(config.Game.BoardData, ",")
 	var nodes = strings.Split(s, ",")
-	var array = make([]int, len(nodes))
+	var array = make([]e.Stone, len(nodes))
 	for i, s := range nodes {
 		var s = strings.Trim(s, " ")
 		var color, _ = strconv.Atoi(s)
-		array[i] = color
+		var stone e.Stone
+		switch color {
+		case 0:
+			stone = e.Empty
+		case 1:
+			stone = e.Black
+		case 2:
+			stone = e.White
+		case 3:
+			stone = e.Wall
+		default:
+			var msg = fmt.Sprintf("Unexpected color=%d", color)
+			code.Console.Fatal(msg)
+			panic(msg)
+		}
+		array[i] = stone
 	}
 
 	return array

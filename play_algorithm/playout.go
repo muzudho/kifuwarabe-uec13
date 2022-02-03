@@ -14,9 +14,9 @@ import (
 // 手番が勝ったら 1、引分けなら 0、 相手が勝ったら -1
 func Playout(
 	position *e.Position,
-	turnColor int,
-	getWinner *func(int) int,
-	isDislike *func(int, int) bool) int {
+	turnColor e.Stone,
+	getWinner *func(e.Stone) int,
+	isDislike *func(e.Stone, int) bool) int {
 
 	AllPlayouts++
 

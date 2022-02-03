@@ -5,9 +5,12 @@ const (
 	Author = "Satoshi Takahashi"
 )
 
+// Stone - 石の色
+type Stone int
+
 const (
 	// Empty - 空点
-	Empty = iota
+	Empty Stone = iota
 	// Black - 黒石
 	Black
 	// White - 白石
@@ -56,6 +59,6 @@ const (
 const Pass = 0
 
 // FlipColor - 白黒反転させます。
-func FlipColor(col int) int {
+func FlipColor(col Stone) Stone {
 	return 3 - col
 }

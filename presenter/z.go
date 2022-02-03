@@ -10,15 +10,15 @@ import (
 )
 
 // GetGtpZ - XY座標をアルファベット、数字で表したもの。 例: Q10
-func GetGtpZ(position *e.Position, z int) string {
+func GetGtpZ(position *e.Position, z e.Point) string {
 	if z == 0 {
 		return "PASS"
 	} else if z == pl.IllegalZ {
 		return "ILLEGAL" // GTP の仕様外です
 	}
 
-	var y = z / e.SentinelWidth
-	var x = z % e.SentinelWidth
+	var y = int(z) / e.SentinelWidth
+	var x = int(z) % e.SentinelWidth
 
 	// 筋が25（'Z'）より大きくなることは想定していません
 	var alphabet_x = 'A' + x - 1
@@ -33,7 +33,7 @@ func GetGtpZ(position *e.Position, z int) string {
 
 // GetZFromGtp - GTPの座標符号を z に変換します
 // * `gtp_z` - 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定。 例: q10
-func GetZFromGtp(position *e.Position, gtp_z string) int {
+func GetZFromGtp(position *e.Position, gtp_z string) e.Point {
 	gtp_z = strings.ToUpper(gtp_z)
 	code.Console.Trace("# gtp_z=%s\n", gtp_z)
 

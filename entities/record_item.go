@@ -3,16 +3,16 @@ package entities
 // RecordItem - 棋譜の1手分
 type RecordItem struct {
 	// Z - 着手
-	Z int
+	Z Point
 	// Time - 消費時間
 	Time float64
 }
 
 // SetZ - 着手
-func (recItem *RecordItem) SetZ(z int) {
+func (recItem *RecordItem) SetZ(z Point) {
 	recItem.Z = z
 }
-func (recItem *RecordItem) GetZ() int {
+func (recItem *RecordItem) GetZ() Point {
 	return recItem.Z
 }
 

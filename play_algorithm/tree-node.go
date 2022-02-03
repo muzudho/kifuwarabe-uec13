@@ -10,7 +10,7 @@ import (
 // Child - 子。
 type Child struct {
 	// table index. 盤の交点の配列のインデックス。
-	Z     int
+	Z     e.Point
 	Games int     // UCT検索をした回数？
 	Rate  float64 // 勝率
 	Next  int     // 配列のインデックス
@@ -30,7 +30,7 @@ var Nodes = [NodeMax]Node{}
 var NodeNum = 0
 
 // CreateNode から呼び出されます。
-func addChild(pN *Node, z int) {
+func addChild(pN *Node, z e.Point) {
 	var n = pN.ChildNum
 	pN.Children[n].Z = z
 	pN.Children[n].Games = 0
@@ -51,7 +51,7 @@ func CreateNode(position *e.Position) int {
 	pN.Children = make([]Child, position.UctChildrenSize())
 	pN.ChildGameSum = 0
 
-	var onPoint = func(z int) {
+	var onPoint = func(z e.Point) {
 		if position.IsEmpty(z) { // 空点なら
 			addChild(pN, z)
 		}

@@ -22,7 +22,7 @@ func getWinner(position *e.Position, turnColor e.Stone) int {
 	var kind = [3]int{0, 0, 0}
 	var score, blackArea, whiteArea, blackSum, whiteSum int
 
-	var onPoint = func(z int) {
+	var onPoint = func(z e.Point) {
 		var color2 = position.ColorAt(z)
 		kind[color2]++
 		if color2 == 0 {

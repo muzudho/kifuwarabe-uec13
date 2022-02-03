@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
 	"github.com/pelletier/go-toml"
 )
@@ -42,22 +41,7 @@ func (config *Config) GetBoardArray() []e.Stone {
 	for i, s := range nodes {
 		var s = strings.Trim(s, " ")
 		var color, _ = strconv.Atoi(s)
-		var stone e.Stone
-		switch color {
-		case 0:
-			stone = e.Empty
-		case 1:
-			stone = e.Black
-		case 2:
-			stone = e.White
-		case 3:
-			stone = e.Wall
-		default:
-			var msg = fmt.Sprintf("Unexpected color=%d", color)
-			code.Console.Fatal(msg)
-			panic(msg)
-		}
-		array[i] = stone
+		array[i] = e.Stone(color)
 	}
 
 	return array

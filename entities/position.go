@@ -11,13 +11,13 @@ type Position struct {
 	// 呼吸点を数えるための一時盤
 	checkBoard []int
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
-	KoZ int
+	KoZ Point
 	// MovesNum - 手数
 	MovesNum int
 	// Record - 棋譜
 	Record []*RecordItem
 	// 二重ループ
-	iteratorWithoutWall func(func(int))
+	iteratorWithoutWall func(func(Point))
 	// UCT計算中の子の数
 	uctChildrenSize int
 }
@@ -27,7 +27,7 @@ type TemporaryPosition struct {
 	// 盤
 	Board []Stone
 	// KoZ - コウの交点。Idx（配列のインデックス）表示。 0 ならコウは無し？
-	KoZ int
+	KoZ Point
 }
 
 // CopyPosition - 盤データのコピー。
@@ -61,15 +61,15 @@ func (position *Position) InitPosition() {
 	position.board = make([]Stone, boardMax)
 	position.checkBoard = make([]int, boardMax)
 	position.iteratorWithoutWall = CreateBoardIteratorWithoutWall(position)
-	Dir4 = [4]int{1, -SentinelWidth, -1, SentinelWidth}
+	Dir4 = [4]Point{1, Point(-SentinelWidth), -1, Point(SentinelWidth)}
 
 	// 枠線
-	for z := 0; z < boardMax; z++ {
+	for z := Point(0); z < Point(boardMax); z++ {
 		position.SetColor(z, 3)
 	}
 
 	// 盤上
-	var onPoint = func(z int) {
+	var onPoint = func(z Point) {
 		position.SetColor(z, 0)
 	}
 	position.iteratorWithoutWall(onPoint)
@@ -84,12 +84,12 @@ func (position *Position) SetBoard(board []Stone) {
 }
 
 // ColorAt - 指定した交点の石の色
-func (position *Position) ColorAt(z int) Stone {
+func (position *Position) ColorAt(z Point) Stone {
 	return position.board[z]
 }
 
 // CheckAt - 指定した交点のチェック
-func (position *Position) CheckAt(z int) int {
+func (position *Position) CheckAt(z Point) int {
 	return position.checkBoard[z]
 }
 
@@ -99,34 +99,35 @@ func (position *Position) ColorAtXy(x int, y int) Stone {
 }
 
 // IsEmpty - 指定の交点は空点か？
-func (position *Position) IsEmpty(z int) bool {
+func (position *Position) IsEmpty(z Point) bool {
 	return position.board[z] == Empty
 }
 
 // SetColor - 盤データ。
-func (position *Position) SetColor(z int, color Stone) {
+func (position *Position) SetColor(z Point, color Stone) {
 	position.board[z] = color
 }
 
 // GetZ4 - z（配列のインデックス）を XXYY形式（3～4桁の数）の座標へ変換します。
-func (position *Position) GetZ4(z int) int {
+func (position *Position) GetZ4(z Point) int {
 	if z == 0 {
 		return 0
 	}
-	var y = z / SentinelWidth
-	var x = z - y*SentinelWidth
+	var y = int(z) / SentinelWidth
+	var x = int(z) - y*SentinelWidth
 	return x*100 + y
 }
 
 // GetZFromXy - x,y 形式の座標を、 z （配列のインデックス）へ変換します。
 // x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
-func (position *Position) GetZFromXy(x int, y int) int {
-	return (y+1)*SentinelWidth + x + 1
+func (position *Position) GetZFromXy(x int, y int) Point {
+	return Point((y+1)*SentinelWidth + x + 1)
 }
 
 // GetEmptyZ - 空点の z （配列のインデックス）を返します。
-func (position *Position) GetEmptyZ() int {
-	var x, y, z int
+func (position *Position) GetEmptyZ() Point {
+	var x, y int
+	var z Point
 	for {
 		// ランダムに交点を選んで、空点を見つけるまで繰り返します。
 		x = rand.Intn(9)
@@ -142,12 +143,12 @@ func (position *Position) GetEmptyZ() int {
 // CountLiberty - 呼吸点を数えます。
 // * `libertyArea` - 呼吸点の数
 // * `renArea` - 連の石の数
-func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
+func (position *Position) CountLiberty(z Point, libertyArea *int, renArea *int) {
 	*libertyArea = 0
 	*renArea = 0
 
 	// チェックボードの初期化
-	var onPoint = func(z int) {
+	var onPoint = func(z Point) {
 		position.checkBoard[z] = 0
 	}
 	position.iteratorWithoutWall(onPoint)
@@ -157,7 +158,7 @@ func (position *Position) CountLiberty(z int, libertyArea *int, renArea *int) {
 
 // * `libertyArea` - 呼吸点の数
 // * `renArea` - 連の石の数
-func (position *Position) countLibertySub(z int, color Stone, libertyArea *int, renArea *int) {
+func (position *Position) countLibertySub(z Point, color Stone, libertyArea *int, renArea *int) {
 	position.checkBoard[z] = 1
 	*renArea++
 	for i := 0; i < 4; i++ {
@@ -175,7 +176,7 @@ func (position *Position) countLibertySub(z int, color Stone, libertyArea *int, 
 }
 
 // TakeStone - 石を打ち上げ（取り上げ、取り除き）ます。
-func (position *Position) TakeStone(z int, color Stone) {
+func (position *Position) TakeStone(z Point, color Stone) {
 	position.board[z] = Empty // 石を消します
 
 	for dir := 0; dir < 4; dir++ {
@@ -188,7 +189,7 @@ func (position *Position) TakeStone(z int, color Stone) {
 }
 
 // IterateWithoutWall - 盤イテレーター
-func (position *Position) IterateWithoutWall(onPoint func(int)) {
+func (position *Position) IterateWithoutWall(onPoint func(Point)) {
 	position.iteratorWithoutWall(onPoint)
 }
 
@@ -198,10 +199,10 @@ func (position *Position) UctChildrenSize() int {
 }
 
 // CreateBoardIteratorWithoutWall - 盤の（壁を除く）全ての交点に順にアクセスする boardIterator 関数を生成します
-func CreateBoardIteratorWithoutWall(position *Position) func(func(int)) {
+func CreateBoardIteratorWithoutWall(position *Position) func(func(Point)) {
 
 	var boardSize = BoardSize
-	var boardIterator = func(onPoint func(int)) {
+	var boardIterator = func(onPoint func(Point)) {
 
 		// x,y は壁無しの盤での0から始まる座標、 z は壁有りの盤での0から始まる座標
 		for y := 0; y < boardSize; y++ {

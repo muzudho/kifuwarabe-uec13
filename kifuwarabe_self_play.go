@@ -41,7 +41,7 @@ func SelfPlay(position *e.Position) {
 }
 
 // GetComputerMoveDuringSelfPlay - コンピューターの指し手。 SelfplayLesson09 から呼び出されます
-func GetComputerMoveDuringSelfPlay(position *e.Position, color e.Stone) int {
+func GetComputerMoveDuringSelfPlay(position *e.Position, color e.Stone) e.Point {
 
 	var start = time.Now()
 	pl.AllPlayouts = 0

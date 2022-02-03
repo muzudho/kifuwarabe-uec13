@@ -141,7 +141,7 @@ func RunGtpEngine(position *e.Position) {
 // PlayComputerMoveLesson09a - コンピューター・プレイヤーの指し手。 SelfPlay, RunGtpEngine から呼び出されます。
 func PlayComputerMoveLesson09a(
 	position *e.Position,
-	color e.Stone) int {
+	color e.Stone) e.Point {
 
 	var st = time.Now()
 	pl.AllPlayouts = 0

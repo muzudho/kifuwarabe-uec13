@@ -23,8 +23,8 @@ const (
 func GetBestZByUct(
 	position *e.Position,
 	color e.Stone,
-	print_calc *func(*e.Position, int, int, float64, int),
-	print_calc_fin *func(*e.Position, int, float64, int, int, int)) (int, float64) {
+	print_calc *func(*e.Position, int, e.Point, float64, int),
+	print_calc_fin *func(*e.Position, e.Point, float64, int, int, int)) (e.Point, float64) {
 
 	// UCT計算フェーズ
 	NodeNum = 0 // カウンターリセット

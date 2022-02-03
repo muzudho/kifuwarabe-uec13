@@ -16,22 +16,23 @@ func Playout(
 	position *e.Position,
 	turnColor e.Stone,
 	getWinner *func(e.Stone) int,
-	isDislike *func(e.Stone, int) bool) int {
+	isDislike *func(e.Stone, e.Point) bool) int {
 
 	AllPlayouts++
 
 	var color = turnColor
-	var previousZ = 0
+	var previousZ e.Point = 0
 	var boardMax = e.SentinelBoardArea
 
 	var playoutTrialCount = PlayoutTrialCount
 	for trial := 0; trial < playoutTrialCount; trial++ {
-		var empty = make([]int, boardMax)
-		var emptyNum, z int
+		var empty = make([]e.Point, boardMax)
+		var emptyNum int
+		var z e.Point
 
 		// TODO 空点を差分更新できないか？ 毎回スキャンは重くないか？
 		// 空点を記憶します
-		var onPoint = func(z int) {
+		var onPoint = func(z e.Point) {
 			if position.IsEmpty(z) { // 空点なら
 				empty[emptyNum] = z
 				emptyNum++

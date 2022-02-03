@@ -9,7 +9,7 @@ import (
 var AllPlayouts int
 
 var GettingOfWinnerOnDuringUCTPlayout *func(e.Stone) int
-var IsDislike *func(e.Stone, int) bool
+var IsDislike *func(e.Stone, e.Point) bool
 
 // FlagTestPlayout - ？。
 var FlagTestPlayout int

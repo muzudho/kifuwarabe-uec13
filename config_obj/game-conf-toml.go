@@ -32,7 +32,7 @@ type Game struct {
 }
 
 // GetBoardArray - 盤上の石の色の配列
-func (config Config) GetBoardArray() []int {
+func (config *Config) GetBoardArray() []int {
 	// 最後のカンマを削除しないと、要素数が 1 多くなってしまいます
 	var s = strings.TrimRight(config.Game.BoardData, ",")
 	var nodes = strings.Split(s, ",")
@@ -47,17 +47,17 @@ func (config Config) GetBoardArray() []int {
 }
 
 // BoardSize - 何路盤か
-func (config Config) BoardSize() int {
+func (config *Config) BoardSize() int {
 	return int(config.Game.BoardSize)
 }
 
 // Komi - float 32bit で足りるが、実行速度優先で float 64bit に変換して返します
-func (config Config) Komi() float64 {
+func (config *Config) Komi() float64 {
 	return float64(config.Game.Komi)
 }
 
 // MaxMovesNum - 最大手数
-func (config Config) MaxMovesNum() int {
+func (config *Config) MaxMovesNum() int {
 	return int(config.Game.MaxMoves)
 }
 

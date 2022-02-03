@@ -18,12 +18,12 @@ func NewStdoutLogWriter(logger *StdoutLogger) *StdoutLogWriter {
 }
 
 // Print - 必ず出力します。
-func (writer StdoutLogWriter) Print(text string, args ...interface{}) {
+func (writer *StdoutLogWriter) Print(text string, args ...interface{}) {
 	fmt.Printf(text, args...)          // 標準出力
 	writer.logger.Print(text, args...) // ログ
 }
 
 // Log - ログだけ
-func (writer StdoutLogWriter) Log(text string, args ...interface{}) {
+func (writer *StdoutLogWriter) Log(text string, args ...interface{}) {
 	writer.logger.Print(text, args...) // ログ
 }

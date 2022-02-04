@@ -31,7 +31,7 @@ func PutStone(position *Position, z Point, color Stone) int {
 	var oppColor = FlipColor(color) //相手(opponent)の石の色
 	var space = 0                   // 隣接している空点への向きの数
 	var wall = 0                    // 隣接している壁への向きの数
-	var mycolSafe = 0               // 呼吸できる自分の石と隣接している向きの数
+	var myBreathFriend = 0          // 呼吸できる自分の石と隣接している向きの数
 	var captureSum = 0              // アゲハマの数
 
 	if z == Pass { // 投了なら、コウを消して関数を正常終了
@@ -61,13 +61,13 @@ func PutStone(position *Position, z Point, color Stone) int {
 			captureSum += renArea
 		}
 		if adjColor == color && 2 <= libertyArea { // 隣接する連が自分の石で、その石が呼吸点を２つ持ってるようなら
-			mycolSafe++
+			myBreathFriend++
 		}
 
 	}
 
 	// 石を置くと明らかに損なケース、また、ルール上石を置けないケースなら、石を置きません
-	if captureSum == 0 && space == 0 && mycolSafe == 0 {
+	if captureSum == 0 && space == 0 && myBreathFriend == 0 {
 		// 例えば黒番で 1 の箇所に打つのは損なので、石を置きません
 		//
 		//  ooo
@@ -79,7 +79,7 @@ func PutStone(position *Position, z Point, color Stone) int {
 	if z == position.KoZ { // コウには置けません
 		return 2
 	}
-	if wall+mycolSafe == 4 {
+	if wall+myBreathFriend == 4 {
 		// 例えば黒番で 1, 2 の箇所（眼）に打つのは損なので、石を置きません
 		//
 		// #########

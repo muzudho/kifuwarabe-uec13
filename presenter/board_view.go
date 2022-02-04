@@ -50,8 +50,18 @@ var labelOfRows = [20]string{" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8
 // " ." - 空点
 // " x" - 黒石
 // " o" - 白石
-// " #" - 壁（使いません）
+// " #" - 壁（バグ目視確認用）
 var stoneLabels = [4]string{" .", " x", " o", " #"}
+
+// " ." - 空点（バグ目視確認用）
+// " x" - 黒石（バグ目視確認用）
+// " o" - 白石（バグ目視確認用）
+// "+-" - 壁
+var leftCornerLabels = [4]string{".", "x", "o", "+"}
+var horizontalEdgeLabels = [4]string{" .", " x", " o", "--"}
+var rightCornerLabels = [4]string{" .", " x", " o", "-+"}
+var leftVerticalEdgeLabels = [4]string{".", "x", "o", "|"}
+var rightVerticalEdgeLabels = [4]string{" .", " x", " o", " |"}
 
 // PrintBoard - 盤を描画。
 func PrintBoard(position *e.Position, movesNum int) {
@@ -61,33 +71,40 @@ func PrintBoard(position *e.Position, movesNum int) {
 
 	var boardSize = e.BoardSize
 
-	// Header
+	// Header (numbers)
 	b.WriteString("\n   ")
 	for x := 0; x < boardSize; x++ {
 		b.WriteString(labelOfColumns[x+1])
 	}
-	b.WriteString("\n  +")
+	// Header (line)
+	b.WriteString("\n  ")
+	b.WriteString(leftCornerLabels[position.ColorAt(0)]) // +-
 	for x := 0; x < boardSize; x++ {
-		b.WriteString("--")
+		b.WriteString(horizontalEdgeLabels[position.ColorAt(e.Point(x+1))]) // --
 	}
-	b.WriteString("-+\n")
+	b.WriteString(rightCornerLabels[position.ColorAt(e.Point(boardSize+2))]) // -+
+	b.WriteString("\n")
 
 	// Body
 	for y := 0; y < boardSize; y++ {
 		b.WriteString(labelOfRows[y+1])
-		b.WriteString("|")
+		b.WriteString(leftVerticalEdgeLabels[position.ColorAt(e.Point(y*boardSize))]) // |
 		for x := 0; x < boardSize; x++ {
 			b.WriteString(stoneLabels[position.ColorAtXy(x, y)])
 		}
-		b.WriteString(" |\n")
+		b.WriteString(rightVerticalEdgeLabels[position.ColorAt(e.Point((y+1)*boardSize-1))]) // " |"
+		b.WriteString("\n")
 	}
 
 	// Footer
-	b.WriteString("  +")
+	b.WriteString("  ") // number space
+	var a = (boardSize + 2) * (boardSize + 1)
+	b.WriteString(leftCornerLabels[position.ColorAt(e.Point(a))]) // +
 	for x := 0; x < boardSize; x++ {
-		b.WriteString("--")
+		b.WriteString(horizontalEdgeLabels[position.ColorAt(e.Point(a+x+1))]) // --
 	}
-	b.WriteString("-+\n")
+	b.WriteString(rightCornerLabels[position.ColorAt(e.Point(e.SentinelBoardArea-1))]) // -+
+	b.WriteString("\n")
 
 	// Info
 	b.WriteString("  KoZ=")

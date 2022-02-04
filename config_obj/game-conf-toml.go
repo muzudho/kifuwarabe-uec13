@@ -43,10 +43,9 @@ func (config *Config) GetBoardArray() []e.Stone {
 	var nodes = strings.Split(s, ",")
 	var array = make([]e.Stone, len(nodes))
 	for i, s := range nodes {
-		var s = strings.Trim(s, " ")
+		var s = strings.TrimSpace(s) // 前後の半角空白、改行、タブを除去
 		var color, _ = strconv.Atoi(s)
-		// TODO 消す
-		fmt.Printf("[%d %s %d]", i, s, color) // テスト
+		// fmt.Printf("[%d \"%s\" %d]", i, s, color) // デバッグ出力
 		array[i] = e.Stone(color)
 	}
 

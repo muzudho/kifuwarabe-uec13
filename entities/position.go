@@ -65,7 +65,7 @@ func (position *Position) InitPosition() {
 
 	// 枠線
 	for z := Point(0); z < Point(boardMax); z++ {
-		position.SetColor(z, 3)
+		position.SetColor(z, Wall)
 	}
 
 	// 盤上
@@ -80,6 +80,13 @@ func (position *Position) InitPosition() {
 
 // SetBoard - 盤面を設定します
 func (position *Position) SetBoard(board []Stone) {
+	// TODO 消す
+	// fmt.Print("[[")
+	// for z := 0; z < SentinelBoardArea; z++ {
+	// 	fmt.Printf("%d,", board[z])
+	// 	position.SetColor(Point(z), board[z])
+	// }
+	// fmt.Print("]]")
 	position.board = board
 }
 
@@ -105,6 +112,11 @@ func (position *Position) IsEmpty(z Point) bool {
 
 // SetColor - 盤データ。
 func (position *Position) SetColor(z Point, color Stone) {
+	// TODO 消す
+	// if z == Point(11) && color == Empty { // テスト
+	// 	panic(fmt.Sprintf("z=%d color=%d SentinelWidth=%d", z, color, SentinelWidth))
+	// }
+
 	position.board[z] = color
 }
 
@@ -119,7 +131,7 @@ func (position *Position) GetZ4(z Point) int {
 }
 
 // GetZFromXy - x,y 形式の座標を、 z （配列のインデックス）へ変換します。
-// x,y は壁を含まない領域での座標です。 z は壁を含む領域での座標です
+// x,y は壁を含まない領域での 0 から始まる座標です。 z は壁を含む盤上での座標です
 func (position *Position) GetZFromXy(x int, y int) Point {
 	return Point((y+1)*SentinelWidth + x + 1)
 }

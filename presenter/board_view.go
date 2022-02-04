@@ -77,28 +77,28 @@ func PrintBoard(position *e.Position, movesNum int) {
 		b.WriteString(labelOfColumns[x+1])
 	}
 	// Header (line)
-	b.WriteString("\n  ")
-	b.WriteString(leftCornerLabels[position.ColorAt(0)]) // +-
+	b.WriteString("\n  ")                                // number space
+	b.WriteString(leftCornerLabels[position.ColorAt(0)]) // +
 	for x := 0; x < boardSize; x++ {
 		b.WriteString(horizontalEdgeLabels[position.ColorAt(e.Point(x+1))]) // --
 	}
-	b.WriteString(rightCornerLabels[position.ColorAt(e.Point(boardSize+2))]) // -+
+	b.WriteString(rightCornerLabels[position.ColorAt(e.Point(e.SentinelWidth-1))]) // -+
 	b.WriteString("\n")
 
 	// Body
 	for y := 0; y < boardSize; y++ {
-		b.WriteString(labelOfRows[y+1])
-		b.WriteString(leftVerticalEdgeLabels[position.ColorAt(e.Point(y*boardSize))]) // |
+		b.WriteString(labelOfRows[y+1])                                                         // number
+		b.WriteString(leftVerticalEdgeLabels[position.ColorAt(e.Point((y+1)*e.SentinelWidth))]) // |
 		for x := 0; x < boardSize; x++ {
 			b.WriteString(stoneLabels[position.ColorAtXy(x, y)])
 		}
-		b.WriteString(rightVerticalEdgeLabels[position.ColorAt(e.Point((y+1)*boardSize-1))]) // " |"
+		b.WriteString(rightVerticalEdgeLabels[position.ColorAt(e.Point((y+2)*e.SentinelWidth-1))]) // " |"
 		b.WriteString("\n")
 	}
 
 	// Footer
 	b.WriteString("  ") // number space
-	var a = (boardSize + 2) * (boardSize + 1)
+	var a = e.SentinelWidth * (e.SentinelWidth - 1)
 	b.WriteString(leftCornerLabels[position.ColorAt(e.Point(a))]) // +
 	for x := 0; x < boardSize; x++ {
 		b.WriteString(horizontalEdgeLabels[position.ColorAt(e.Point(a+x+1))]) // --

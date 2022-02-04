@@ -33,6 +33,10 @@ type Game struct {
 }
 
 // GetBoardArray - 盤上の石の色の配列
+// 0: 空点
+// 1: 黒石
+// 2: 白石
+// 3: 壁
 func (config *Config) GetBoardArray() []e.Stone {
 	// 最後のカンマを削除しないと、要素数が 1 多くなってしまいます
 	var s = strings.TrimRight(config.Game.BoardData, ",")
@@ -41,6 +45,8 @@ func (config *Config) GetBoardArray() []e.Stone {
 	for i, s := range nodes {
 		var s = strings.Trim(s, " ")
 		var color, _ = strconv.Atoi(s)
+		// TODO 消す
+		fmt.Printf("[%d %s %d]", i, s, color) // テスト
 		array[i] = e.Stone(color)
 	}
 

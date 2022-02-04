@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	code "github.com/muzudho/kifuwarabe-uec13/coding_obj"
 	e "github.com/muzudho/kifuwarabe-uec13/entities"
 	pl "github.com/muzudho/kifuwarabe-uec13/play_algorithm"
 )
@@ -35,7 +34,6 @@ func GetGtpZ(position *e.Position, z e.Point) string {
 // * `gtp_z` - 最初の１文字はアルファベット、２文字目（あれば３文字目）は数字と想定。 例: q10
 func GetZFromGtp(position *e.Position, gtp_z string) e.Point {
 	gtp_z = strings.ToUpper(gtp_z)
-	code.Console.Trace("# gtp_z=%s\n", gtp_z)
 
 	if gtp_z == "PASS" {
 		return 0
@@ -56,6 +54,6 @@ func GetZFromGtp(position *e.Position, gtp_z string) e.Point {
 
 	// インデックス
 	var z = position.GetZFromXy(int(x)-1, y-1)
-	code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, position.GetZ4(z))
+	// code.Console.Trace("# x=%d y=%d z=%d z4=%04d\n", x, y, z, position.GetZ4(z))
 	return z
 }
